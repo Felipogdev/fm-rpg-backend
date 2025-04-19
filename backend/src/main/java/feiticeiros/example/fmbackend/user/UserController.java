@@ -1,15 +1,28 @@
 package feiticeiros.example.fmbackend.user;
 
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @GetMapping
-    public String Hello() {
-        return "Hello World";
+    private final UserService userService;
+
+    public UserController(UserService userService) {
+        this.userService = userService;
     }
+
+    @GetMapping
+    public List<User> getUsers() {
+        return userService.getAllUsers();
+    }
+
+    @PostMapping
+    public User registerUser(@RequestBody User user) {
+        user.setId(null);
+        return userService.registerUser(user);
+    }
+
 }
