@@ -15,14 +15,17 @@ public class UserController {
     }
 
     @GetMapping
-    public List<User> getUsers() {
-        return userService.getAllUsers();
+    public List<UserDTO> getUsers() {
+        return userService.getAllUsers()
+                .stream()
+                .map(UserMapper::toDTO)
+                .toList();
     }
 
     @PostMapping
-    public User registerUser(@RequestBody User user) {
-        user.setId(null);
-        return userService.registerUser(user);
+    public UserDTO registerUser(@RequestBody UserDTO userDTO) {
+        User savedUser = userService.registerUser(userDTO);
+        return UserMapper.toDTO(savedUser);
     }
 }
 

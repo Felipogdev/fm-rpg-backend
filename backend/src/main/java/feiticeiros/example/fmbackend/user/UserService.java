@@ -20,18 +20,18 @@ public class UserService {
         return userRepository.findAll();
     }
 
-    public User registerUser(User user) {
+    public User registerUser(UserDTO userDTO) {
         // Check if the user email is already in use
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email já está em uso");
         }
         // Check if the username is already in use
-        if (userRepository.findByUsername(user.getUsername()).isPresent()) {
+        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
             throw new IllegalArgumentException("Nome de usuário já está em uso");
         }
 
-        String encryptedPassword = passwordEncoder.encode(user.getPassword());
-        user.setPassword(encryptedPassword);
+        User user = UserMapper.toEntity(userDTO);
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
 }
