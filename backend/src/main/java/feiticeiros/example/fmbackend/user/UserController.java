@@ -24,5 +24,5 @@ public class UserController {
         user.setId(null);
         return userService.registerUser(user);
     }
-
 }
+
