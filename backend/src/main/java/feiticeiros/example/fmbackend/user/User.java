@@ -1,6 +1,7 @@
 package feiticeiros.example.fmbackend.user;
 
 
+import feiticeiros.example.fmbackend.character.CharacterEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -9,7 +10,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
+import org.hibernate.annotations.UpdateTimestamp;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -25,9 +31,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @CreationTimestamp
+    private Date createdAt;
+
+    @UpdateTimestamp
+    private Date updatedAt;
+
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
     private String name;
+
+    @NotBlank(message = "Nome de usuário é obrigatório")
+    @Size(min = 2, max = 100, message = "Nome de usuário deve ter entre 2 e 100 caracteres")
+    private String username;
 
     @NotBlank(message = "Email é obrigatório")
     @Email(message= "Email inválido")
@@ -39,7 +55,7 @@ public class User {
 
     private String image;
 
-    @NotBlank(message = "Nome de usuário é obrigatório")
-    @Size(min = 2, max = 100, message = "Nome de usuário deve ter entre 2 e 100 caracteres")
-    private String username;
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CharacterEntity> characters = new ArrayList<>();
+
 }

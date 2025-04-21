@@ -15,7 +15,7 @@ public class UserMapper {
         UserDTO dto = new UserDTO();
         dto.setName(user.getName());
         dto.setEmail(user.getEmail());
-
+        //Dont return password
         dto.setImage(user.getImage());
         dto.setUsername(user.getUsername());
         return dto;
