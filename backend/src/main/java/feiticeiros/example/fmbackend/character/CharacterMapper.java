@@ -1,6 +1,9 @@
 package feiticeiros.example.fmbackend.character;
 
-public class CharacterMapper {
+import org.mapstruct.Mapper;
 
-    //ToEntity
+@Mapper
+public interface CharacterMapper {
+    CharacterDTO toDto(CharacterEntity characterEntity);
+    CharacterEntity toEntity(CharacterDTO dto);
 }

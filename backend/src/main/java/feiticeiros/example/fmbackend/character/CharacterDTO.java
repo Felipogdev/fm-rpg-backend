@@ -1,5 +1,7 @@
 package feiticeiros.example.fmbackend.character;
 
+import lombok.Data;
+
 import java.util.UUID;
 
 public record CharacterDTO(

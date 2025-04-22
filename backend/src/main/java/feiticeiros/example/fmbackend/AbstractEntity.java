@@ -27,5 +27,4 @@ public class AbstractEntity implements Serializable {
 
     //private Date createdAt;
 
-
 }
