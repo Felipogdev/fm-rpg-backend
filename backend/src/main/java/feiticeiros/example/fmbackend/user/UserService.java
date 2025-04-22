@@ -10,10 +10,12 @@ public class UserService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder passwordEncoder;
+    private final UserMapper userMapper;
 
-    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PasswordEncoder passwordEncoder1) {
+    public UserService(UserRepository userRepository, PasswordEncoder passwordEncoder, PasswordEncoder passwordEncoder1, UserMapper userMapper) {
         this.userRepository = userRepository;
         this.passwordEncoder = passwordEncoder;
+        this.userMapper = userMapper;
     }
 
     public List<User> getAllUsers() {
@@ -30,7 +32,7 @@ public class UserService {
             throw new IllegalArgumentException("Nome de usuário já está em uso");
         }
 
-        User user = UserMapper.toEntity(userDTO);
+        User user = userMapper.toEntity(userDTO);
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         return userRepository.save(user);
     }
