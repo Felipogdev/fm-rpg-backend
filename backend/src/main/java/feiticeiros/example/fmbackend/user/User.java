@@ -1,6 +1,7 @@
 package feiticeiros.example.fmbackend.user;
 
 
+import feiticeiros.example.fmbackend.AbstractEntity;
 import feiticeiros.example.fmbackend.character.CharacterEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
@@ -16,8 +17,6 @@ import org.hibernate.annotations.UpdateTimestamp;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
-
 
 @Getter
 @AllArgsConstructor
@@ -25,21 +24,13 @@ import java.util.UUID;
 @Entity
 @Setter
 @Table(name = "users")
-public class User {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class User extends AbstractEntity {
 
     @CreationTimestamp
     private Date createdAt;
 
     @UpdateTimestamp
     private Date updatedAt;
-
-    @NotBlank(message = "Nome é obrigatório")
-    @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
-    private String name;
 
     @NotBlank(message = "Nome de usuário é obrigatório")
     @Size(min = 2, max = 100, message = "Nome de usuário deve ter entre 2 e 100 caracteres")

@@ -1,5 +1,6 @@
 package feiticeiros.example.fmbackend.character;
 
+import feiticeiros.example.fmbackend.AbstractEntity;
 import feiticeiros.example.fmbackend.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -7,8 +8,9 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.hibernate.annotations.CreationTimestamp;
 
-import java.util.UUID;
+import java.util.Date;
 
 @Entity
 @Table(name = "characters")
@@ -16,17 +18,11 @@ import java.util.UUID;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class CharacterEntity {
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+public class CharacterEntity extends AbstractEntity {
 
     @ManyToOne
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
-
-    @NotBlank(message = "Nome é obrigatório")
-    private String name;
 
     private String origin;
 
@@ -35,6 +31,10 @@ public class CharacterEntity {
     private String character_class;
 
     private String image;
+
+    @CreationTimestamp
+    private Date createdAt;
+
 
     //TODO: Adicionar atributo de campanha, inventário, status, descrição, técnica, rolls (talvez só fazer no front),
 }

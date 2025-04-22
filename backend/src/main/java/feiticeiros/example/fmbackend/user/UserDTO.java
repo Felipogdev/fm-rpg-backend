@@ -11,7 +11,6 @@ import lombok.Setter;
 @Setter
 public class UserDTO {
 
-
     @NotBlank(message = "Nome é obrigatório")
     @Size(min = 2, max = 100, message = "Nome deve ter entre 2 e 100 caracteres")
     private String name;
@@ -29,8 +28,5 @@ public class UserDTO {
     @NotBlank(message = "Nome de usuário é obrigatório")
     @Size(min = 2, max = 100, message = "Nome de usuário deve ter entre 2 e 100 caracteres")
     private String username;
-
-
-
 
 }
