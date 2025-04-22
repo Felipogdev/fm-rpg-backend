@@ -1,23 +1,15 @@
 package feiticeiros.example.fmbackend.user;
 
-public class UserMapper {
-    public static User toEntity(UserDTO dto) {
-        User user = new User();
-        user.setName(dto.getName());
-        user.setEmail(dto.getEmail());
-        user.setPassword(dto.getPassword());
-        user.setImage(dto.getImage());
-        user.setUsername(dto.getUsername());
-        return user;
-    }
 
-    public static UserDTO toDTO(User user) {
-        UserDTO dto = new UserDTO();
-        dto.setName(user.getName());
-        dto.setEmail(user.getEmail());
-        //Dont return password
-        dto.setImage(user.getImage());
-        dto.setUsername(user.getUsername());
-        return dto;
-    }
+import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
+import org.mapstruct.Mappings;
+
+@Mapper(componentModel = "spring")
+public interface UserMapper {
+
+    User toEntity(UserDTO userDTO);
+
+    @Mappings({@Mapping(target = "password", ignore = true)})
+    User toDTO(User user);
 }
