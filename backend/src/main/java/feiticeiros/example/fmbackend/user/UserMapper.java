@@ -1,5 +1,4 @@
 package feiticeiros.example.fmbackend.user;
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
