@@ -37,5 +37,4 @@ public class CharacterEntity extends AbstractEntity {
     private Date createdAt;
 
 
-    //TODO: Adicionar atributo de campanha, inventário, status, descrição, técnica, rolls (talvez só fazer no front),
 }

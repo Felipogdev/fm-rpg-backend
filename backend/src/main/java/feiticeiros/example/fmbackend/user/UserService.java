@@ -39,6 +39,7 @@ public class UserService {
                 .orElseThrow(() -> new IllegalArgumentException("Usuario não encontrado com o id: " + id));
     }
 
+
     public User registerUser(UserDTO userDTO) {
         // Check if the user email is already in use
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {

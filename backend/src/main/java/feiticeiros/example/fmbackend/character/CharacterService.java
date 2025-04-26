@@ -2,9 +2,11 @@ package feiticeiros.example.fmbackend.character;
 
 import feiticeiros.example.fmbackend.user.User;
 import feiticeiros.example.fmbackend.user.UserService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.UUID;
 
 @Service
 public class CharacterService {
@@ -18,6 +20,7 @@ public class CharacterService {
         this.characterMapper = characterMapper;
         this.userService = userService;
     }
+
 
     public List<CharacterEntity> getAllCharacters() {
         return characterRepository.findAll();
@@ -36,5 +39,29 @@ public class CharacterService {
         return characterRepository.save(characterEntity);
     }
 
+    public void deleteCharacter(CharacterEntity characterEntity) {
+        User user = characterEntity.getUser();
+        //Não vejo sentido para isso não achar, mas é bom ter isso né
+        if (user == null) {
+            throw new IllegalArgumentException("User não pode ser nulo ao criar um personagem");
+        }
+
+        UUID characterId = characterEntity.getId();
+        characterRepository.deleteById(characterId);
+    }
+
+    public CharacterEntity findCharacterById(UUID id) {
+        return characterRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Personagem não encontrado para o id: " + id));
+    }
+
+    public void deleteCharacterById(UUID id) {
+        CharacterEntity character = findCharacterById(id);
+        deleteCharacter(character);
+    }
+
 
 }
+
+
+
