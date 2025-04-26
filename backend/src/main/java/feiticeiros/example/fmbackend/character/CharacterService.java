@@ -23,15 +23,16 @@ public class CharacterService {
         return characterRepository.findAll();
     }
 
+
     public CharacterEntity createCharacter(CharacterDTO characterDTO) {
         CharacterEntity characterEntity = characterMapper.toEntity(characterDTO);
-        System.out.println(characterEntity);
-        System.out.println(characterEntity.getUser());
         User user = characterEntity.getUser();
+
         if (user == null) {
 
             throw new IllegalArgumentException("User não pode ser nulo ao criar um personagem");
         }
+        userService.addCharacter(characterEntity);
         return characterRepository.save(characterEntity);
     }
 
