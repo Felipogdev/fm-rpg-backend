@@ -41,7 +41,6 @@ public class CharacterService {
 
     public void deleteCharacter(CharacterEntity characterEntity) {
         User user = characterEntity.getUser();
-        //Não vejo sentido para isso não achar, mas é bom ter isso né
         if (user == null) {
             throw new IllegalArgumentException("User não pode ser nulo ao criar um personagem");
         }
