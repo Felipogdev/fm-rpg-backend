@@ -18,6 +18,7 @@ import java.util.Date;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@Embeddable
 public class CharacterEntity extends AbstractEntity {
 
     @ManyToOne

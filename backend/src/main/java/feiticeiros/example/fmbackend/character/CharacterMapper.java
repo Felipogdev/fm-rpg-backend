@@ -1,10 +1,15 @@
 package feiticeiros.example.fmbackend.character;
 
+import feiticeiros.example.fmbackend.user.UserMapperHelper;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 
-@Mapper
+@Mapper(componentModel = "spring", uses = UserMapperHelper.class)
 public interface CharacterMapper {
+
     CharacterDTO toDto(CharacterEntity characterEntity);
-    CharacterEntity toEntity(CharacterDTO dto);   
-    }
+
+    @Mapping(target = "user", source = "userId", qualifiedByName = "mapUserIdToUser")
+    CharacterEntity toEntity(CharacterDTO dto);
+}
 

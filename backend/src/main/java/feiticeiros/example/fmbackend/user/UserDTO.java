@@ -7,6 +7,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 
+//TODO: Mudar o DTO para record
 @Getter
 @Setter
 public class UserDTO {

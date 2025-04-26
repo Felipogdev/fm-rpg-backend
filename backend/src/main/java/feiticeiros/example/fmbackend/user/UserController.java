@@ -27,7 +27,7 @@ public class UserController {
     @PostMapping
     public UserDTO registerUser(@RequestBody UserDTO userDTO) {
         User savedUser = userService.registerUser(userDTO);
-        return userMapper.toDTO(savedUser);
+         return userMapper.toDTO(savedUser);
     }
 }
 

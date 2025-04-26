@@ -1,5 +1,7 @@
 package feiticeiros.example.fmbackend.character;
 
+import feiticeiros.example.fmbackend.user.User;
+import feiticeiros.example.fmbackend.user.UserDTO;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -8,8 +10,24 @@ import java.util.List;
 @RequestMapping("api/v1/characters")
 public class CharacterController {
 
-    @PostMapping
-    public CharacterDTO createCharacter(@RequestBody CharacterDTO dto) {
-        return dto;
+    private final CharacterService characterService;
+    private final CharacterMapper characterMapper;
+
+    public CharacterController(CharacterService characterService, CharacterMapper characterMapper) {
+        this.characterService = characterService;
+        this.characterMapper = characterMapper;
     }
+
+    @GetMapping
+    public List<CharacterEntity> findAll() {
+       return characterService.getAllCharacters();
+    }
+
+    @PostMapping
+    public CharacterDTO createCharacter(@RequestBody CharacterDTO characterDTO) {
+        CharacterEntity characterEntity = characterService.createCharacter(characterDTO);
+        return characterMapper.toDto(characterEntity);
+    }
+
 }
+
