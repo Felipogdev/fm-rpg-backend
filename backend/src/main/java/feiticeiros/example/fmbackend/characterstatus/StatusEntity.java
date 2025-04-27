@@ -2,6 +2,7 @@ package feiticeiros.example.fmbackend.characterstatus;
 
 import feiticeiros.example.fmbackend.character.CharacterEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -23,14 +24,16 @@ public class StatusEntity {
     short hp;
     short current_hp;
 
+    @Max(100)
     short curse_energy;
     short current_curse_energy;
 
     byte soul;
     byte current_soul;
 
-    //@Min(0)
-    //@Max(30)
+    //@Min(4)
+    //Min Sem o bgl do mechamaru é 8
+    //@Max(32)
     byte con;
     byte dex;
     byte cha;
