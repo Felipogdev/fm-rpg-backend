@@ -1,6 +1,7 @@
 package feiticeiros.example.fmbackend.character;
 
 import feiticeiros.example.fmbackend.AbstractEntity;
+import feiticeiros.example.fmbackend.characterstatus.StatusEntity;
 import feiticeiros.example.fmbackend.user.User;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
@@ -36,5 +37,6 @@ public class CharacterEntity extends AbstractEntity {
     @CreationTimestamp
     private Date createdAt;
 
-
+    @OneToOne(mappedBy = "character")
+    private StatusEntity status;
 }
