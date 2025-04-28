@@ -21,26 +21,26 @@ public class StatusEntity {
     @JoinColumn(name = "character_id", referencedColumnName = "id")
     private CharacterEntity character;
 
-    short hp;
-    short current_hp;
+    Integer max_hp;
+    Integer current_hp;
 
     @Max(100)
-    short curse_energy;
-    short current_curse_energy;
+    Integer max_curse_energy;
+    Integer current_curse_energy;
 
-    byte soul;
-    byte current_soul;
+    Integer soul;
+    Integer current_soul;
 
     //@Min(4)
     //Min Sem o bgl do mechamaru é 8
     //@Max(32)
-    byte con;
-    byte dex;
-    byte cha;
-    byte inte;
-    byte wis;
-    byte str;
+    Integer con;
+    Integer dex;
+    Integer cha;
+    Integer inte;
+    Integer wis;
+    Integer str;
 
-    byte armor_class;
-    byte moviment;
+    Integer armor_class;
+    Integer moviment;
 }
