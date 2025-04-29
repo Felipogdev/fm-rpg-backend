@@ -1,5 +1,7 @@
 package feiticeiros.example.fmbackend.character;
 
+import feiticeiros.example.fmbackend.characterstatus.StatusEntity;
+import feiticeiros.example.fmbackend.characterstatus.StatusService;
 import feiticeiros.example.fmbackend.user.User;
 import feiticeiros.example.fmbackend.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -14,11 +16,18 @@ public class CharacterService {
     private final CharacterRepository characterRepository;
     private final CharacterMapper characterMapper;
     private final UserService userService;
+    private final StatusService statusService;
 
-    public CharacterService(CharacterRepository characterRepository, CharacterMapper characterMapper,UserService userService) {
+
+    public CharacterService(CharacterRepository characterRepository,
+                            CharacterMapper characterMapper,
+                            UserService userService,
+                            StatusService statusService) {
+
         this.characterRepository = characterRepository;
         this.characterMapper = characterMapper;
         this.userService = userService;
+        this.statusService = statusService;
     }
 
 
@@ -27,7 +36,7 @@ public class CharacterService {
     }
 
 
-    public CharacterEntity createCharacter(CharacterDTO characterDTO) {
+        public CharacterEntity createCharacter(CharacterDTO characterDTO) {
         CharacterEntity characterEntity = characterMapper.toEntity(characterDTO);
         User user = characterEntity.getUser();
 
@@ -35,6 +44,9 @@ public class CharacterService {
 
             throw new IllegalArgumentException("User não pode ser nulo ao criar um personagem");
         }
+
+        StatusEntity statusEntity = statusService.createStatus(characterEntity);
+        characterEntity.setStatus(statusEntity);
         userService.addCharacter(characterEntity);
         return characterRepository.save(characterEntity);
     }

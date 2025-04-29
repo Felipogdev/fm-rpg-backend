@@ -1,6 +1,7 @@
 package feiticeiros.example.fmbackend.user;
 
 import feiticeiros.example.fmbackend.character.CharacterEntity;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -10,19 +11,17 @@ import java.util.UUID;
 @Service
 public class UserService {
 
-    private final UserRepository userRepository;
-    private final PasswordEncoder passwordEncoder;
-    private final UserMapper userMapper;
+
+    @Autowired
+            private UserRepository userRepository;
+
+    @Autowired
+            private PasswordEncoder passwordEncoder;
+
+    @Autowired
+            private UserMapper userMapper;
 
     CharacterEntity characterEntity = new CharacterEntity();
-
-    public UserService(UserRepository userRepository,
-                       PasswordEncoder passwordEncoder,
-                       UserMapper userMapper) {
-        this.userRepository = userRepository;
-        this.passwordEncoder = passwordEncoder;
-        this.userMapper = userMapper;
-    }
 
     public void addCharacter(CharacterEntity characterEntity) {
         User user = characterEntity.getUser();

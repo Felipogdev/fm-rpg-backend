@@ -1,7 +1,9 @@
 package feiticeiros.example.fmbackend.character;
 
+import feiticeiros.example.fmbackend.characterstatus.StatusService;
 import feiticeiros.example.fmbackend.user.User;
 import feiticeiros.example.fmbackend.user.UserDTO;
+import jdk.jshell.Snippet;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +17,8 @@ public class CharacterController {
     private final CharacterService characterService;
     private final CharacterMapper characterMapper;
 
-    public CharacterController(CharacterService characterService, CharacterMapper characterMapper) {
+    public CharacterController(CharacterService characterService,
+                               CharacterMapper characterMapper) {
         this.characterService = characterService;
         this.characterMapper = characterMapper;
     }
@@ -30,6 +33,7 @@ public class CharacterController {
         CharacterEntity characterEntity = characterService.createCharacter(characterDTO);
         return characterMapper.toDto(characterEntity);
     }
+
 
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteCharacter(@PathVariable UUID id) {

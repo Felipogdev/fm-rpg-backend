@@ -2,8 +2,32 @@ package feiticeiros.example.fmbackend.characterstatus;
 
 import feiticeiros.example.fmbackend.character.CharacterClasses;
 import feiticeiros.example.fmbackend.character.CharacterEntity;
+import feiticeiros.example.fmbackend.character.CharacterRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
+
+@Service
 public class StatusService {
+
+    @Autowired
+    private StatusRepository statusRepository;
+
+    @Autowired
+    private CharacterRepository characterRepository;
+
+    public StatusEntity createStatus(CharacterEntity characterEntity) {
+        if (characterEntity.getId() == null) {
+            characterEntity = characterRepository.save(characterEntity);
+        }
+
+        StatusEntity status = new StatusEntity();
+        status.setCharacter(characterEntity);
+        return statusRepository.save(status);
+    }
+
+
+
 
     //Provavelmente não usar essa função na primeira versão, porque não está calculado automatico de forma corretamente devido ao mod de CON
     public void setStatusAutomatic(CharacterEntity characterEntity, StatusEntity statusEntity, String techniqueAttribute) {
@@ -43,4 +67,5 @@ public class StatusService {
         statusEntity.setMax_hp(maxHp);
         statusEntity.setMax_curse_energy(maxCursedEnergy);
     }
+
 }

@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 
@@ -15,10 +16,12 @@ import java.util.UUID;
 public class StatusEntity {
 
     @Id
-    private UUID character_id;
+    @GeneratedValue(generator = "UUID")
+    private UUID id;
+
 
     @OneToOne
-    @JoinColumn(name = "character_id", referencedColumnName = "id")
+    @JoinColumn(name = "character_id", referencedColumnName = "id", nullable = false)
     private CharacterEntity character;
 
     Integer max_hp;
@@ -28,7 +31,7 @@ public class StatusEntity {
     Integer max_curse_energy;
     Integer current_curse_energy;
 
-    Integer soul;
+    Integer soul = 100;
     Integer current_soul;
 
     //@Min(4)
