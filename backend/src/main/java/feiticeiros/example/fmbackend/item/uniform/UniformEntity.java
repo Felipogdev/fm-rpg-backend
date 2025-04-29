@@ -12,7 +12,4 @@ public class UniformEntity extends ItemEntity {
 
     private Integer penalty;
 
-
-    private Integer cost;
-
 }

@@ -11,6 +11,4 @@ public class ShieldEntity extends ItemEntity {
     private Integer bonusArmor;
 
     private Integer penalty;
-
-    private Integer cost;
 }

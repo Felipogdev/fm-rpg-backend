@@ -26,6 +26,4 @@ public class WeaponEntity extends ItemEntity {
 
     private String group;
 
-    private Integer cost;
-
 }
