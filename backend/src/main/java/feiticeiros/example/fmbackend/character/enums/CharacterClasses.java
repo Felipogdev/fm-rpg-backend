@@ -1,4 +1,4 @@
-package feiticeiros.example.fmbackend.character;
+package feiticeiros.example.fmbackend.character.enums;
 
 public enum CharacterClasses {
 

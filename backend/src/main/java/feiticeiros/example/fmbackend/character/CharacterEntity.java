@@ -1,12 +1,11 @@
 package feiticeiros.example.fmbackend.character;
 
 import feiticeiros.example.fmbackend.AbstractEntity;
+import feiticeiros.example.fmbackend.character.enums.CharacterClasses;
+import feiticeiros.example.fmbackend.character.enums.CharacterOrigin;
 import feiticeiros.example.fmbackend.characterstatus.StatusEntity;
 import feiticeiros.example.fmbackend.user.User;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
-import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -38,9 +37,11 @@ public class CharacterEntity extends AbstractEntity {
 
     private String image;
 
+    private Integer tier; //TODO: Pode ser tier 4,3,2,1,especial (FAZER A PORRA DISSO)
+
     @CreationTimestamp
     private Date createdAt;
 
-    @OneToOne(mappedBy = "character")
+    @OneToOne(mappedBy = "character", cascade = CascadeType.PERSIST)
     private StatusEntity status;
 }
