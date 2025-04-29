@@ -7,7 +7,7 @@ import jakarta.validation.constraints.Min;
 @Entity
 @Table(name = "items")
 @Inheritance(strategy = InheritanceType.JOINED)
-public class ItemEntity {
+public class ItemAbstractEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
