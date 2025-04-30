@@ -17,5 +17,7 @@ public record WeaponDTO(
         Integer critical_margin,
         DamageType damage_type,
         List<String> properties,
-        String weapon_group
+        String weapon_group,
+        Integer two_handed_damage_dice_quantity,
+        Integer two_handed_damage_dice_type
         ) { }

@@ -21,6 +21,10 @@ public class WeaponEntity extends ItemAbstractEntity {
 
     private Integer damage_dice_type; // Pode ser d4,d6,d8, d10, d12, d16, d20
 
+    private Integer two_handed_damage_dice_quantity;
+
+    private Integer two_handed_damage_dice_type;
+
     private Integer critical_margin;
 
     @Enumerated(EnumType.STRING)

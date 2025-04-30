@@ -1,19 +1,21 @@
 package feiticeiros.example.fmbackend;
 
 public enum DamageType {
-    SLASHING,
-    PIERCING,
-    BLUDGEONING,
-    ACID,
-    LIGHTNING,
-    COLD,
-    REVERSED_ENERGY,
-    FORCE,
-    NECROTIC,
-    PSYCHIC,
-    FIRE,
-    RADIANT,
-    POISON,
-    SOUL,
+    CORTANTE,
+    PERFURANTE,
+    IMPACTO,
+    ÁCIDO,
+    CHOCANTE,
+    CONGELANTE,
+    ENERGIA_REVERSA,
+    FORÇA,
+    NECRÓTICO,
+    PSÍQUICO,
+    QUEIMANTE,
+    RADIANTE,
+    VENENOSO,
+    ALMA,
+    ESPECIAL,
+    NADA
 }
 
