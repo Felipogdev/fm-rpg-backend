@@ -3,10 +3,14 @@ package feiticeiros.example.fmbackend.item;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name = "items")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
 public class ItemAbstractEntity {
 
     @Id
@@ -19,6 +23,7 @@ public class ItemAbstractEntity {
 
     private Integer cost;
 
+    @Enumerated(EnumType.STRING)
     private ItemType type;
 
     @Min(1)

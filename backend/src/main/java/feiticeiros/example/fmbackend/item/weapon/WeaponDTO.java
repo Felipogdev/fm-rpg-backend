@@ -12,10 +12,10 @@ public record WeaponDTO(
         Integer cost,
         ItemType type,
         Integer tier,
-        Integer damageDiceQuantity,
-        Integer damageDiceType,
-        Integer criticalMargin,
-        DamageType damageType,
+        Integer damage_dice_quantity,
+        Integer damage_dice_type,
+        Integer critical_margin,
+        DamageType damage_type,
         List<String> properties,
-        String group
+        String weapon_group
         ) { }
