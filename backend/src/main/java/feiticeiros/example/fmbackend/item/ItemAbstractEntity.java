@@ -30,4 +30,5 @@ public class ItemAbstractEntity {
     @Max(5) //Tratar grau especial como tier 5
     private Integer tier;
 
+    private Integer inventory_space;
 }

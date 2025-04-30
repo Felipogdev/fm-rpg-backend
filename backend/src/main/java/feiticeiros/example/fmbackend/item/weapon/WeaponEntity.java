@@ -35,5 +35,4 @@ public class WeaponEntity extends ItemAbstractEntity {
 
     private String weapon_group;
 
-    private Integer inventory_space;
 }
