@@ -12,7 +12,8 @@
     "critical_margin": 18,
     "damage_type": "PERFURANTE",
     "properties": ["A", "F", "L", "M", "6/18"],
-    "weapon_group": "Faca"
+    "weapon_group": "Faca",
+    "inventory_space" : 1
   },
   {
     "name": "Adaga de Aparar",
@@ -27,7 +28,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["F", "L", "M", "Especial"],
-    "weapon_group": "Faca"
+    "weapon_group": "Faca",
+    "inventory_space": 1
   },
   {
     "name": "Adagas Duplas",
@@ -42,7 +44,8 @@
     "critical_margin": 18,
     "damage_type": "PERFURANTE",
     "properties": ["D", "F", "L", "M", "Especial"],
-    "weapon_group": "Faca"
+    "weapon_group": "Faca",
+    "inventory_space" : 2
   },
   {
     "name": "Alabarda",
@@ -57,7 +60,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["D", "E"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 2
   },
   {
     "name": "Arco Curto",
@@ -72,7 +76,8 @@
     "critical_margin": 20,
     "damage_type": "PERFURANTE",
     "properties": ["D", "24/96"],
-    "weapon_group": "Arco"
+    "weapon_group": "Arco",
+    "inventory_space" : 2
   },
   {
     "name": "Arco Longo",
@@ -87,7 +92,8 @@
     "critical_margin": 20,
     "damage_type": "PERFURANTE",
     "properties": ["D", "P", "30/120"],
-    "weapon_group": "Arco"
+    "weapon_group": "Arco",
+    "inventory_space" : 2
   },
   {
     "name": "Azagaia",
@@ -102,7 +108,8 @@
     "critical_margin": 20,
     "damage_type": "PERFURANTE",
     "properties": ["L", "12/30"],
-    "weapon_group": "Dardo"
+    "weapon_group": "Dardo",
+    "inventory_space" : 1
   },
   {
     "name": "Bastão",
@@ -117,7 +124,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["M", "V"],
-    "weapon_group": "Bastão"
+    "weapon_group": "Bastão",
+    "inventory_space" : 1
   },
   {
     "name": "Besta Leve",
@@ -132,7 +140,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["R", "L", "24/96"],
-    "weapon_group": "Besta"
+    "weapon_group": "Besta",
+    "inventory_space" : 1
   },
   {
     "name": "Besta Pesada",
@@ -147,7 +156,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["R", "D", "P", "45/180"],
-    "weapon_group": "Besta"
+    "weapon_group": "Besta",
+    "inventory_space" : 2
   },
   {
     "name": "Canhão de Mão",
@@ -162,7 +172,8 @@
     "critical_margin": 20,
     "damage_type": "PERFURANTE",
     "properties": ["R", "D", "P", "Especial", "30/90"],
-    "weapon_group": "Tiro"
+    "weapon_group": "Tiro",
+    "inventory_space" : 2
   },
   {
     "name": "Chakram",
@@ -177,7 +188,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["L", "Especial", "18/36"],
-    "weapon_group": "Faca"
+    "weapon_group": "Faca",
+    "inventory_space" : 1
   },
   {
     "name": "Chicote",
@@ -192,7 +204,8 @@
     "critical_margin": 18,
     "damage_type": "CORTANTE",
     "properties": ["E", "F", "L"],
-    "weapon_group": "Chicote"
+    "weapon_group": "Chicote",
+    "inventory_space" : 1
   },
   {
     "name": "Chicote de Corrente",
@@ -207,7 +220,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["E", "P", "V", "Especial"],
-    "weapon_group": "Chicote"
+    "weapon_group": "Chicote",
+    "inventory_space" : 1
   },
   {
     "name": "Chicote Espinhento",
@@ -222,7 +236,8 @@
     "critical_margin": 19,
     "damage_type": "ESPECIAL",
     "properties": ["E", "F", "L", "Especial"],
-    "weapon_group": "Chicote"
+    "weapon_group": "Chicote",
+    "inventory_space" : 1
   },
   {
     "name": "Clava",
@@ -237,7 +252,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["V"],
-    "weapon_group": "Bastão"
+    "weapon_group": "Bastão",
+    "inventory_space" : 1
   },
   {
     "name": "Clava Pesada",
@@ -252,7 +268,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["D", "P"],
-    "weapon_group": "Bastão"
+    "weapon_group": "Bastão",
+    "inventory_space" : 2
   },
   {
     "name": "Corrente de Aço",
@@ -267,7 +284,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["E"],
-    "weapon_group": "Chicote"
+    "weapon_group": "Chicote",
+    "inventory_space" : 1
   },
   {
     "name": "Dardo",
@@ -282,7 +300,8 @@
     "critical_margin": 18,
     "damage_type": "PERFURANTE",
     "properties": ["L", "12/30"],
-    "weapon_group": "Dardo"
+    "weapon_group": "Dardo",
+    "inventory_space": 1
   },
   {
     "name": "Escopeta",
@@ -297,7 +316,8 @@
     "critical_margin": 20,
     "damage_type": "PERFURANTE",
     "properties": ["R", "D", "Especial", "9/18"],
-    "weapon_group": "Tiro"
+    "weapon_group": "Tiro",
+    "inventory_space" : 2
   },
   {
     "name": "Espada Colossal",
@@ -312,7 +332,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["D", "P", "Especial"],
-    "weapon_group": "Espada"
+    "weapon_group": "Espada",
+    "inventory_space" : 4
   },
   {
     "name": "Espada Curta",
@@ -327,7 +348,8 @@
     "critical_margin": 19,
     "damage_type": "CORTANTE",
     "properties": ["F", "L", "M"],
-    "weapon_group": "Espada"
+    "weapon_group": "Espada",
+    "inventory_space" : 1
   },
   {
     "name": "Espada de Gancho",
@@ -342,7 +364,8 @@
     "critical_margin": 19,
     "damage_type": "CORTANTE",
     "properties": ["F", "L", "M", "Especial"],
-    "weapon_group": "Espada"
+    "weapon_group": "Espada",
+    "inventory_space" : 1
   },
   {
     "name": "Espada Grande",
@@ -357,7 +380,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["D", "P"],
-    "weapon_group": "Espada"
+    "weapon_group": "Espada",
+    "inventory_space" : 2
   },
   {
     "name": "Espada Longa",
@@ -372,7 +396,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["V"],
-    "weapon_group": "Espada"
+    "weapon_group": "Espada",
+    "inventory_space" : 1
   },
   {
     "name": "Faixas",
@@ -387,7 +412,8 @@
     "critical_margin": null,
     "damage_type": "IMPACTO",
     "properties": ["L", "M", "Especial"],
-    "weapon_group": "Pugilato"
+    "weapon_group": "Pugilato",
+    "inventory_space" : 1
   },
   {
     "name": "Foice",
@@ -402,7 +428,8 @@
     "critical_margin": 19,
     "damage_type": "CORTANTE",
     "properties": ["F", "L", "M"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 1
   },
   {
     "name": "Foice Grande",
@@ -417,7 +444,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["V"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 2
   },
   {
     "name": "Kunai",
@@ -432,7 +460,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["L", "12/30"],
-    "weapon_group": "Dardo"
+    "weapon_group": "Dardo",
+    "inventory_space" : 1
   },
   {
     "name": "Kusarigama",
@@ -447,7 +476,8 @@
     "critical_margin": 19,
     "damage_type": "ESPECIAL",
     "properties": ["Especial"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 1
   },
   {
     "name": "Lança",
@@ -462,7 +492,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["A", "E", "V", "6/18"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 1
   },
   {
     "name": "Lança Grande",
@@ -477,7 +508,8 @@
     "critical_margin": 20,
     "damage_type": "PERFURANTE",
     "properties": ["D", "E", "Especial"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 2
   },
   {
     "name": "Leque",
@@ -492,7 +524,8 @@
     "critical_margin": 18,
     "damage_type": "IMPACTO",
     "properties": ["F", "L", "Especial"],
-    "weapon_group": "-"
+    "weapon_group": "-",
+    "inventory_space" : 1
   },
   {
     "name": "Machado",
@@ -507,7 +540,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["V"],
-    "weapon_group": "Machado"
+    "weapon_group": "Machado",
+    "inventory_space" : 1
   },
   {
     "name": "Machado Grande",
@@ -522,7 +556,8 @@
     "critical_margin": 20,
     "damage_type": "CORTANTE",
     "properties": ["D", "P"],
-    "weapon_group": "Machado"
+    "weapon_group": "Machado",
+    "inventory_space" : 2
   },
   {
     "name": "Mangual",
@@ -537,7 +572,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": [],
-    "weapon_group": "Chicote"
+    "weapon_group": "Chicote",
+    "inventory_space" : 1
   },
   {
     "name": "Manopla",
@@ -552,7 +588,8 @@
     "critical_margin": 19,
     "damage_type": "IMPACTO",
     "properties": ["L", "M", "Especial"],
-    "weapon_group": "Pugilato"
+    "weapon_group": "Pugilato",
+    "inventory_space" : 1
   },
   {
     "name": "Martelo",
@@ -567,7 +604,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["V"],
-    "weapon_group": "Martelo"
+    "weapon_group": "Martelo",
+    "inventory_space" : 1
   },
   {
     "name": "Martelo Grande",
@@ -582,7 +620,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["D", "P"],
-    "weapon_group": "Martelo"
+    "weapon_group": "Martelo",
+    "inventory_space" : 2
   },
   {
     "name": "Metralhadora",
@@ -597,7 +636,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["R", "D", "Especial", "30/90"],
-    "weapon_group": "Tiro"
+    "weapon_group": "Tiro",
+    "inventory_space" : 2
   },
   {
     "name": "Nunchaku",
@@ -612,7 +652,8 @@
     "critical_margin": 19,
     "damage_type": "IMPACTO",
     "properties": ["E", "F", "M"],
-    "weapon_group": "Bastão"
+    "weapon_group": "Bastão",
+    "inventory_space" : 1
   },
   {
     "name": "Nunchaku Pesado",
@@ -627,7 +668,8 @@
     "critical_margin": 19,
     "damage_type": "IMPACTO",
     "properties": ["D", "E", "P", "M"],
-    "weapon_group": "Bastão"
+    "weapon_group": "Bastão",
+    "inventory_space" : 2
   },
   {
     "name": "Pistola",
@@ -642,7 +684,8 @@
     "critical_margin": 19,
     "damage_type": "IMPACTO",
     "properties": ["R", "30/90"],
-    "weapon_group": "Tiro"
+    "weapon_group" : "Tiro",
+    "inventory_space" : 1
   },
   {
     "name": "Rapieira",
@@ -657,7 +700,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["F"],
-    "weapon_group": "Espada"
+    "weapon_group": "Espada",
+    "inventory_space" : 1
   },
   {
     "name": "Rede",
@@ -672,7 +716,8 @@
     "critical_margin": null,
     "damage_type": "NADA",
     "properties": ["Especial", "9/27"],
-    "weapon_group": "-"
+    "weapon_group": "-",
+    "inventory_space" : 1
   },
   {
     "name": "Rifle",
@@ -687,7 +732,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["R", "D", "60/180"],
-    "weapon_group": "Tiro"
+    "weapon_group": "Tiro",
+    "inventory_space" : 2
   },
   {
     "name": "Rifle de Precisão",
@@ -702,7 +748,8 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["R", "D", "P", "180/360"],
-    "weapon_group": "Tiro"
+    "weapon_group": "Tiro",
+    "inventory_space" : 2
   },
   {
     "name": "Shuriken",
@@ -717,7 +764,8 @@
     "critical_margin": 18,
     "damage_type": "CORTANTE",
     "properties": ["L", "12/30"],
-    "weapon_group": "Dardo"
+    "weapon_group": "Dardo",
+    "inventory_space" : 1
   },
   {
     "name": "Soco Inglês",
@@ -732,7 +780,8 @@
     "critical_margin": 20,
     "damage_type": "IMPACTO",
     "properties": ["D", "M", "Especial"],
-    "weapon_group": "Pugilato"
+    "weapon_group": "Pugilato",
+    "inventory_space" : 1
   },
   {
     "name": "Tridente",
@@ -747,6 +796,7 @@
     "critical_margin": 19,
     "damage_type": "PERFURANTE",
     "properties": ["A", "E", "V", "6/18"],
-    "weapon_group": "Haste"
+    "weapon_group": "Haste",
+    "inventory_space" : 1
   }
 ]
