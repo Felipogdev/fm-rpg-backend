@@ -1,5 +1,6 @@
 package feiticeiros.example.fmbackend.item;
 
+import feiticeiros.example.fmbackend.character.CharacterEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

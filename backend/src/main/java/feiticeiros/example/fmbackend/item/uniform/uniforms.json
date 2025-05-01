@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Revestimento Leve",
+    "description": "Um revestimento leve é colocado no uniforme, concedendo-o um leve reforço defensivo.",
+    "cost": 1,
+    "type": "UNIFORM",
+    "tier": 1,
+    "inventory_space" :1,
+    "bonus_armor" : 2,
+    "penalty": 0
+  },
+  {
+    "name": "Revestimento Médio",
+    "description": "O uniforme tem uma quantidade demorada revestimentos colocados, através de algumas placas e camadas adicionais, o que dá um peso considerável ao uniforme",
+    "cost": 2,
+    "type": "UNIFORM",
+    "tier": 1,
+    "inventory_space" :1,
+    "bonus_armor" : 4,
+    "penalty": -2
+  },
+  {
+    "name": "Revestimento Robusto",
+    "description": "Um revestimento pesado é implementado no uniforme, com placas fortes, camadas densas e a adição de peças que se assemelham a armaduras ou coletes, o que dá um peso equivalente.",
+    "cost": 3,
+    "type": "UNIFORM",
+    "tier": 1,
+    "inventory_space" :1,
+    "bonus_armor" : 6,
+    "penalty": -4
+  },
+  {
+    "name": "Sob Medida",
+    "description": "O uniforme é feito sob medida, encaixando-se perfeitamente no corpo do feiticeiro, beneficiando-o em acrobacias e destacando a sua agilidade. Enquanto estiver usando um uniforme sob medida, você recebe +2 em testes de Acrobacia, Furtividade e Relfexos",
+    "cost": 2,
+    "type": "UNIFORM",
+    "tier": 1,
+    "inventory_space" : 1,
+    "bonus_armor" : 1,
+    "penalty": 0
+  }
+]

@@ -12,6 +12,7 @@ public record WeaponDTO(
         Integer cost,
         ItemType type,
         Integer tier,
+        Integer inventory_space,
         Integer damage_dice_quantity,
         Integer damage_dice_type,
         Integer critical_margin,
@@ -19,6 +20,5 @@ public record WeaponDTO(
         List<String> properties,
         String weapon_group,
         Integer two_handed_damage_dice_quantity,
-        Integer two_handed_damage_dice_type,
-        Integer inventory_space
+        Integer two_handed_damage_dice_type
         ) { }

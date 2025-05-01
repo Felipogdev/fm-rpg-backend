@@ -34,5 +34,4 @@ public class WeaponEntity extends ItemAbstractEntity {
     private List<String> properties;
 
     private String weapon_group;
-
 }
