@@ -1,9 +1,6 @@
 package feiticeiros.example.fmbackend.item;
 
-import feiticeiros.example.fmbackend.character.CharacterEntity;
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Max;
-import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -20,16 +17,13 @@ public class ItemAbstractEntity {
 
     private String name;
 
+    @Column(columnDefinition = "TEXT")
     private String description;
 
     private Integer cost;
 
     @Enumerated(EnumType.STRING)
     private ItemType type;
-
-    @Min(1)
-    @Max(5) //Tratar grau especial como tier 5
-    private Integer tier;
 
     private Integer inventory_space;
 }

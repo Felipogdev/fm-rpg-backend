@@ -5,6 +5,7 @@ import feiticeiros.example.fmbackend.characterstatus.StatusService;
 import feiticeiros.example.fmbackend.user.User;
 import feiticeiros.example.fmbackend.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Service
 public class CharacterService {
+
 
     private final CharacterRepository characterRepository;
     private final CharacterMapper characterMapper;
