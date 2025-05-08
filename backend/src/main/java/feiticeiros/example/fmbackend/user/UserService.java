@@ -1,6 +1,6 @@
 package feiticeiros.example.fmbackend.user;
 
-import feiticeiros.example.fmbackend.character.CharacterEntity;
+import feiticeiros.example.fmbackend.characterpackages.character.CharacterEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,10 +43,6 @@ public class UserService {
         // Check if the user email is already in use
         if (userRepository.findByEmail(userDTO.getEmail()).isPresent()) {
             throw new IllegalArgumentException("Email já está em uso");
-        }
-        // Check if the username is already in use
-        if (userRepository.findByUsername(userDTO.getUsername()).isPresent()) {
-            throw new IllegalArgumentException("Nome de usuário já está em uso");
         }
 
         User user = userMapper.toEntity(userDTO);

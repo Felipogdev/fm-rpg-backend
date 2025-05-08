@@ -1,8 +1,7 @@
 package feiticeiros.example.fmbackend.user;
 
-import feiticeiros.example.fmbackend.character.CharacterDTO;
-import feiticeiros.example.fmbackend.character.CharacterEntity;
-import feiticeiros.example.fmbackend.character.CharacterMapper;
+import feiticeiros.example.fmbackend.characterpackages.character.CharacterDTO;
+import feiticeiros.example.fmbackend.characterpackages.character.CharacterMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
