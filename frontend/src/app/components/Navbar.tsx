@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { useState } from 'react';
 import { Menu, X } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import LoginButton from "@/app/components/LoginButton";
 
 
 const Navbar = () => {
@@ -26,7 +27,8 @@ const Navbar = () => {
                       <Link href="/maldicoes" className="text-red-800 hover:text-pink-50">Maldições</Link>
                   </div>
                     <div className="hidden md:flex">
-                        <Button className="ml-auto bg-red-800">Login</Button>
+                       <LoginButton />
+
                     </div>
                     {/* Mobile Menu Button */}
                     <div className="md:hidden">
@@ -41,7 +43,7 @@ const Navbar = () => {
             {isOpen && (
                 <div className="md:hidden bg-black  shadow-md">
                     <div className="px-2 pt-2 pb-3 space-y-1">
-                        <Button className="ml-auto bg-red-800">Login</Button>
+                        <LoginButton />
                         <Link href="/feiticeiros" className="block px-3 py-2 text-red-800 hover:text-pink-50">Feiticeiros</Link>
                         <Link href="/campanhas" className=" block px-3 py-2 text-red-800 hover:text-pink-50">Campanhas</Link>
                         <Link href="/maldicoes" className="block px-3 py-2 text-red-800 hover:text-pink-50">Maldições</Link>
