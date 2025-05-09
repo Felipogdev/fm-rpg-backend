@@ -11,10 +11,10 @@ import java.util.Map;
 @RestController
 public class OAuth2Controller {
 
-    private final OAuth2Service oaUth2Service;
+    private final OAuth2Service oAuth2Service;
 
     public OAuth2Controller(OAuth2Service oaUth2Service) {
-        this.oaUth2Service = oaUth2Service;
+        this.oAuth2Service = oaUth2Service;
     }
 
     @GetMapping("/")
@@ -40,7 +40,7 @@ public class OAuth2Controller {
 //    String email, String googleId, String image, String name
     @GetMapping("/login/success")
     public String loginSuccessPage(@AuthenticationPrincipal OAuth2User principal) {
-        oaUth2Service.createUser(
+        oAuth2Service.createUser(
                 principal.getAttribute("email"),
                 principal.getAttribute("sub"),
                 principal.getAttribute("picture"),

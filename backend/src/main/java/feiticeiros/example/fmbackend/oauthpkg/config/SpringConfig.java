@@ -13,10 +13,14 @@ public class SpringConfig {
         return http
                 .authorizeHttpRequests(registry -> {
                     registry
-                            .requestMatchers(new AntPathRequestMatcher("/")).permitAll();
+                            .requestMatchers(
+                                    new AntPathRequestMatcher("/"),
+                                    new AntPathRequestMatcher("/api/v1/uniforms/**")
+                            ).permitAll();
                     registry
-                            .anyRequest().authenticated();
+                            .anyRequest().permitAll();
                 })
+                .csrf().disable()
                 .oauth2Login(oauth2 -> oauth2
                         .defaultSuccessUrl("/login/success", true)
                         .failureUrl("/login/failure")
