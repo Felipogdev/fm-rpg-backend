@@ -2,30 +2,38 @@ package feiticeiros.example.fmbackend.user;
 
 
 import feiticeiros.example.fmbackend.AbstractEntity;
-import feiticeiros.example.fmbackend.character.CharacterEntity;
+import feiticeiros.example.fmbackend.characterpackages.character.CharacterEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.Type;
 import org.hibernate.annotations.UpdateTimestamp;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
-@Getter
+
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
-@Setter
 @Table(name = "users")
+@Getter
+@Setter
+@Builder
 public class User extends AbstractEntity {
+
+    @NotBlank(message = "Email é obrigatório")
+    @Email(message= "Email inválido")
+    private String email;
+
+    private String googleId;
 
     @CreationTimestamp
     private Date createdAt;
@@ -33,20 +41,9 @@ public class User extends AbstractEntity {
     @UpdateTimestamp
     private Date updatedAt;
 
-    @NotBlank(message = "Nome de usuário é obrigatório")
-    @Size(min = 2, max = 100, message = "Nome de usuário deve ter entre 2 e 100 caracteres")
-    private String username;
-
-    @NotBlank(message = "Email é obrigatório")
-    @Email(message= "Email inválido")
-    private String email;
-
-    @NotBlank(message = "Senha é obrigatória")
-    @Size(min = 6, message = "Senha deve ter no mínimo 6 caracteres")
-    private String password;
-
     private String image;
 
+    @Column(name = "characters")
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CharacterEntity> characters = new ArrayList<>();
 
