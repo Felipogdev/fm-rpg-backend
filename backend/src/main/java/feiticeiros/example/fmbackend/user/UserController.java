@@ -1,8 +1,8 @@
 package feiticeiros.example.fmbackend.user;
 
-import feiticeiros.example.fmbackend.characterpackages.character.CharacterDTO;
-import feiticeiros.example.fmbackend.characterpackages.character.CharacterMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import feiticeiros.example.fmbackend.character.CharacterDTO;
+import feiticeiros.example.fmbackend.character.CharacterEntity;
+import feiticeiros.example.fmbackend.character.CharacterMapper;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -12,16 +12,16 @@ import java.util.UUID;
 @RequestMapping("/api/v1/users")
 public class UserController {
 
-    @Autowired
-    private UserService userService;
+    private final UserService userService;
+    private final UserMapper userMapper;
+    private final CharacterMapper characterMapper;
 
-    @Autowired
-    private CharacterMapper characterMapper;
-
-    @Autowired
-    private UserMapper userMapper;
-
-
+    public UserController(UserService userService, UserMapper userMapper, CharacterMapper characterMapper) {
+        this.userService = userService;
+        this.userMapper = userMapper;
+        this.characterMapper = characterMapper;
+    }
+    
     @GetMapping
     public List<UserDTO> getUsers() {
         return userService.getAllUsers()

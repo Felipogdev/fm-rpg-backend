@@ -15,6 +15,7 @@ import java.util.UUID;
 @Setter
 @NoArgsConstructor
 public class AbstractEntity implements Serializable {
+
     @Id
     @GeneratedValue(generator = "UUID")
     @UuidGenerator
@@ -23,4 +24,7 @@ public class AbstractEntity implements Serializable {
 
     @NotBlank(message = "Nome é obrigatório")
     private String name;
+
+    //private Date createdAt;
+
 }
