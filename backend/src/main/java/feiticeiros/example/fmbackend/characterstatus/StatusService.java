@@ -1,8 +1,8 @@
-package feiticeiros.example.fmbackend.characterpackages.characterstatus;
+package feiticeiros.example.fmbackend.characterstatus;
 
-import feiticeiros.example.fmbackend.characterpackages.character.enums.CharacterClasses;
-import feiticeiros.example.fmbackend.characterpackages.character.CharacterEntity;
-import feiticeiros.example.fmbackend.characterpackages.character.CharacterRepository;
+import feiticeiros.example.fmbackend.character.CharacterClasses;
+import feiticeiros.example.fmbackend.character.CharacterEntity;
+import feiticeiros.example.fmbackend.character.CharacterRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -67,16 +67,5 @@ public class StatusService {
         statusEntity.setMax_hp(maxHp);
         statusEntity.setMax_curse_energy(maxCursedEnergy);
     }
-
-
-    public void SetCAp(StatusEntity statusEntity) {
-        statusEntity.setArmor_class(10 + (int)Math.floor((statusEntity.getDex() - 10) / 2.0));
-    }
-
-    public void setDex(StatusEntity statusEntity, int givenVariable) { statusEntity.setDex(givenVariable);}
-    public void setCon(StatusEntity statusEntity, int givenVariable) { statusEntity.setCon(givenVariable);}
-    public void setInt(StatusEntity statusEntity, int givenVariable) { statusEntity.setInte(givenVariable);}
-    public void setWis(StatusEntity statusEntity, int givenVariable) { statusEntity.setWis(givenVariable);}
-    public void setCha(StatusEntity statusEntity, int givenVariable) { statusEntity.setCha(givenVariable);}
 
 }

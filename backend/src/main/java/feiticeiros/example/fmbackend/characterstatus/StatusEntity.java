@@ -1,10 +1,11 @@
-package feiticeiros.example.fmbackend.characterpackages.characterstatus;
+package feiticeiros.example.fmbackend.characterstatus;
 
-import feiticeiros.example.fmbackend.characterpackages.character.CharacterEntity;
+import feiticeiros.example.fmbackend.character.CharacterEntity;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Max;
 import lombok.Getter;
 import lombok.Setter;
+import org.hibernate.annotations.UuidGenerator;
 
 import java.util.UUID;
 

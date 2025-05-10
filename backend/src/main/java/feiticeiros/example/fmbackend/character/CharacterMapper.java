@@ -1,4 +1,4 @@
-package feiticeiros.example.fmbackend.characterpackages.character;
+package feiticeiros.example.fmbackend.character;
 
 import feiticeiros.example.fmbackend.user.UserMapperHelper;
 import org.mapstruct.Mapper;

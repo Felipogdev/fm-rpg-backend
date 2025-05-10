@@ -1,4 +1,4 @@
-package feiticeiros.example.fmbackend.characterpackages.characterstatus;
+package feiticeiros.example.fmbackend.characterstatus;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

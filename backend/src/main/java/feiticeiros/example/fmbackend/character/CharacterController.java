@@ -1,5 +1,9 @@
-package feiticeiros.example.fmbackend.characterpackages.character;
+package feiticeiros.example.fmbackend.character;
 
+import feiticeiros.example.fmbackend.characterstatus.StatusService;
+import feiticeiros.example.fmbackend.user.User;
+import feiticeiros.example.fmbackend.user.UserDTO;
+import jdk.jshell.Snippet;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

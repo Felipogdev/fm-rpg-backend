@@ -1,7 +1,7 @@
-package feiticeiros.example.fmbackend.characterpackages.character;
+package feiticeiros.example.fmbackend.character;
 
-import feiticeiros.example.fmbackend.characterpackages.characterstatus.StatusEntity;
-import feiticeiros.example.fmbackend.characterpackages.characterstatus.StatusService;
+import feiticeiros.example.fmbackend.characterstatus.StatusEntity;
+import feiticeiros.example.fmbackend.characterstatus.StatusService;
 import feiticeiros.example.fmbackend.user.User;
 import feiticeiros.example.fmbackend.user.UserService;
 import jakarta.persistence.EntityNotFoundException;
@@ -12,7 +12,6 @@ import java.util.UUID;
 
 @Service
 public class CharacterService {
-
 
     private final CharacterRepository characterRepository;
     private final CharacterMapper characterMapper;

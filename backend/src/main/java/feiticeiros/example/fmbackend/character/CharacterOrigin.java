@@ -1,4 +1,4 @@
-package feiticeiros.example.fmbackend.characterpackages.character.enums;
+package feiticeiros.example.fmbackend.character;
 
 public enum CharacterOrigin {
     INATO,
