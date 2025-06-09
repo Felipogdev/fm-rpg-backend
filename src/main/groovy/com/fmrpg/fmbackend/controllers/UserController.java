@@ -31,9 +31,4 @@ public class UserController {
         return "User registered successfully!";
     }
 
-    @GetMapping("/")
-    public String home() {
-        return "Welcome to the User API!";
-    }
-
 }

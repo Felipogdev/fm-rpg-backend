@@ -2,12 +2,9 @@ package com.fmrpg.fmbackend.entities;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.UpdateTimestamp;
-
 
 import java.time.LocalDateTime;
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.UUID;
 
 
@@ -37,7 +34,9 @@ public class User {
     @Column (name = "image_url")
     private String imageUrl;
 
-    // private ArrayList<Characters> characters = new ArrayList<Characters>();
+    @Column (name = "characters")
+    @OneToMany( mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    private ArrayList<Character> characters = new ArrayList<>();
 
     @PrePersist
     protected void onCreate() {
