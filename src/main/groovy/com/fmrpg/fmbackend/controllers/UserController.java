@@ -1,5 +1,9 @@
-package com.fmrpg.fmbackend.userpkg;
+package com.fmrpg.fmbackend.controllers;
 
+import com.fmrpg.fmbackend.entities.User;
+import com.fmrpg.fmbackend.services.UserService;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -19,6 +23,12 @@ public class UserController {
     @GetMapping("/all")
     public List<User> getUsers() {
         return userService.getAllUsers();
+    }
+
+    @GetMapping("/register")
+    public String registerUser(@AuthenticationPrincipal OAuth2User oauth2User) {
+        userService.registerUser(oauth2User);
+        return "User registered successfully!";
     }
 
     @GetMapping("/")

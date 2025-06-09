@@ -1,10 +1,9 @@
-package com.fmrpg.fmbackend.oauth2.config;
+package com.fmrpg.fmbackend.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.web.SecurityFilterChain;
-import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 @Configuration
 public class AuthConfig {
