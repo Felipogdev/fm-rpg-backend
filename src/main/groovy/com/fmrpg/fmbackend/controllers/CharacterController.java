@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.CharacterDto;
+import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 
 
@@ -29,6 +30,11 @@ public class CharacterController {
     @GetMapping("/{id}")
     public List<CharacterEntity> getCharacters(@PathVariable("id") UUID id) {
         return characterService.getAllCharactersFromUser(id);
+    }
+
+    @PatchMapping("/update/{id}")
+    public CharacterEntity updateCharacter(@PathVariable("id") UUID id, @RequestBody UpdateCharacterDto dto) {
+        return characterService.updateCharacter(id, dto);
     }
 
 }

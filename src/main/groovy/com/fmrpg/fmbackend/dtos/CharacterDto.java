@@ -9,5 +9,5 @@ public record CharacterDto(
         String name,
         String imageUrl,
         String characterClass,
-        String origin
+        String characterOrigin
 ) { }

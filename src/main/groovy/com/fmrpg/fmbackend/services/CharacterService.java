@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.CharacterDto;
+import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
@@ -53,5 +54,43 @@ public class CharacterService {
                 .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
 
         return user.getCharacters();
+    }
+
+    public CharacterEntity getCharacterById(UUID id) {
+        return characterRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Character with ID " + id + " does not exist"));
+    }
+
+    public CharacterEntity updateCharacter(UUID id, UpdateCharacterDto dto) {
+        if (dto == null || id == null) {
+            throw new IllegalArgumentException("Json or ID cannot be null");
+        }
+
+        CharacterEntity character = getCharacterById(id);
+
+        if (dto.name() != null) {
+            character.setName(dto.name());
+        }
+
+        if (dto.imageUrl() != null) {
+            character.setImageUrl(dto.imageUrl());
+        }
+
+        if (dto.characterClass() != null) {
+            character.setCharacterClass(dto.characterClass());
+        }
+
+        if (dto.characterOrigin() != null) {
+            character.setCharacterOrigin(dto.characterOrigin());
+        }
+
+        if (dto.level() != null) {
+            character.setLevel(dto.level());
+        }
+
+        if (dto.description() != null) {
+            character.setDescription(dto.description());
+        }
+        return characterRepository.save(character);
     }
 }

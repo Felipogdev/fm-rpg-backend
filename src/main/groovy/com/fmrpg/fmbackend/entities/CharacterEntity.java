@@ -38,13 +38,16 @@ public class CharacterEntity {
 
     @Column (name = "origin")
     @Enumerated(EnumType.STRING)
-    private CharacterOrigin origin;
+    private CharacterOrigin characterOrigin;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
     @Column ( name = "created_at", updatable = false)
     private Timestamp createdAt;
+
+    @Column ( name = "image_url")
+    private String imageUrl;
 
     @PrePersist
     private void onCreate() {
