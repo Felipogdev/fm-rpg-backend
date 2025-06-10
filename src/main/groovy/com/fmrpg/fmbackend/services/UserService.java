@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.OAuth2UserDto;
+import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.OAuthMapper;
 import com.fmrpg.fmbackend.repositories.UserRepository;
@@ -50,5 +51,10 @@ public class UserService {
 
         userRepository.save(user);
         System.out.println("New user registered: " + email);
+    }
+
+    public void addCharacterToUser(CharacterEntity character) {
+        User user = character.getUser();
+        user.getCharacters().add(character);
     }
 }

@@ -1,19 +1,18 @@
 package com.fmrpg.fmbackend.entities;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.sql.Timestamp;
 import java.util.UUID;
 
 @Entity
 @Table(name = "characters")
-@Data
+@Getter
+@Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class Character {
+public class CharacterEntity {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
@@ -21,7 +20,6 @@ public class Character {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
-    @Column(name = "user_id", nullable = false)
     private User user;
 
     @Column (name = "name")
@@ -42,6 +40,7 @@ public class Character {
     @Column ( name = "created_at", updatable = false)
     private Timestamp createdAt;
 
+    @PrePersist
     private void onCreate() {
         if (this.id == null) {
             this.id = UUID.randomUUID();
@@ -49,8 +48,9 @@ public class Character {
         if (this.createdAt == null) {
             this.createdAt = new Timestamp(System.currentTimeMillis());
         }
+
+        if (this.level == null) {
+            this.level = 1;
+        }
     }
-
-
-
 }

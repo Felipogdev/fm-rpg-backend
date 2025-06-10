@@ -20,6 +20,11 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String teste() {
+        return "Hello, this is the UserController!";
+    }
+
     @GetMapping("/all")
     public List<User> getUsers() {
         return userService.getAllUsers();
