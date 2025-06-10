@@ -1,6 +1,8 @@
 package com.fmrpg.fmbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fmrpg.fmbackend.enums.CharacterClass;
+import com.fmrpg.fmbackend.enums.CharacterOrigin;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -31,10 +33,12 @@ public class CharacterEntity {
     private Integer level;
 
     @Column(name = "class")
-    private String characterClass; // TODO: Botar somente as classes do sistema
+    @Enumerated(EnumType.STRING)
+    private CharacterClass characterClass;
 
     @Column (name = "origin")
-    private String origin; // TODO: Colocar as origens do sistema
+    @Enumerated(EnumType.STRING)
+    private CharacterOrigin origin;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
