@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Principal;
 import java.util.List;
 
 @RestController
@@ -34,6 +35,11 @@ public class UserController {
     public String registerUser(@AuthenticationPrincipal OAuth2User oauth2User) {
         userService.registerUser(oauth2User);
         return "User registered successfully!";
+    }
+
+    @GetMapping("/me")
+    public Principal geCurrentUser(Principal principal) {
+        return principal;
     }
 
 }

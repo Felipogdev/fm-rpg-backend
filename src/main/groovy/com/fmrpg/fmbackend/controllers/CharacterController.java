@@ -5,10 +5,10 @@ import com.fmrpg.fmbackend.entities.CharacterEntity;
 
 
 import com.fmrpg.fmbackend.services.CharacterService;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -22,8 +22,13 @@ public class CharacterController {
     }
 
     @PostMapping("/create")
-    public void createCharacter(@RequestBody CharacterDto dto) {
-        CharacterEntity character= characterService.createCharacter(dto);
+    public CharacterEntity createCharacter(@RequestBody CharacterDto dto) {
+        return characterService.createCharacter(dto);
+    }
+
+    @GetMapping("/{id}")
+    public List<CharacterEntity> getCharacters(@PathVariable("id") UUID id) {
+        return characterService.getAllCharactersFromUser(id);
     }
 
 }

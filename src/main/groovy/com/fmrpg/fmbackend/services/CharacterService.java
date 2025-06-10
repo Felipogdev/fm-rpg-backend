@@ -8,6 +8,7 @@ import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -44,5 +45,13 @@ public class CharacterService {
         userService.addCharacterToUser(character);
 
         return characterRepository.save(character);
+    }
+
+    public List<CharacterEntity> getAllCharactersFromUser(UUID userId) {
+
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
+
+        return user.getCharacters();
     }
 }

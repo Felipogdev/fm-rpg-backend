@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -43,6 +44,7 @@ public class User {
 
     @Column (name = "characters")
     @OneToMany( mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<CharacterEntity> characters = new ArrayList<>();
 
     @PrePersist
