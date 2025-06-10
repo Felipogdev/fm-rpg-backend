@@ -49,6 +49,11 @@ public class CharacterEntity {
     @Column ( name = "image_url")
     private String imageUrl;
 
+
+    @OneToOne(mappedBy = "character", cascade = CascadeType.ALL)
+    @JsonBackReference
+    private CharacterStatus status;
+
     @PrePersist
     private void onCreate() {
         if (this.id == null) {

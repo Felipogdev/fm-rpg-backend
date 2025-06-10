@@ -3,6 +3,7 @@ package com.fmrpg.fmbackend.services;
 import com.fmrpg.fmbackend.dtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
+import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
@@ -19,15 +20,18 @@ public class CharacterService {
     private final CharacterMapper characterMapper;
     private final UserRepository userRepository;
     private final UserService userService;
+    private final CharacterStatusService characterStatusService;
 
     public CharacterService(CharacterRepository characterRepository,
                             CharacterMapper characterMapper,
                             UserRepository userRepository,
-                            UserService userService) {
+                            UserService userService,
+                            CharacterStatusService characterStatusService) {
         this.characterRepository = characterRepository;
         this.characterMapper = characterMapper;
         this.userRepository = userRepository;
         this.userService = userService;
+        this.characterStatusService = characterStatusService;
 
     }
 
@@ -41,11 +45,16 @@ public class CharacterService {
 
         CharacterEntity character = characterMapper.toEntity(characterDto);
 
+
+
         character.setUser(user);
 
         userService.addCharacterToUser(character);
 
-        return characterRepository.save(character);
+        characterRepository.save(character);
+
+        characterStatusService.crateCharacterStatus(character);
+        return character;
     }
 
     public List<CharacterEntity> getAllCharactersFromUser(UUID userId) {
