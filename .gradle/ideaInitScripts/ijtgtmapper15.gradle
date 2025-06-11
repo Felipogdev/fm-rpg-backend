@@ -1,0 +1,11 @@
+ext.pathMapper = [:]
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/lib/util_rt.jar', '/tmp/tmpCPL2dY/util_rt.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/lib/external-system-rt.jar', '/tmp/tmpCPL2dY/external-system-rt.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/plugins/gradle/lib/gradle-tooling-extension-api.jar', '/tmp/tmp92yjsn/gradle-tooling-extension-api.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/plugins/gradle/lib/gradle-tooling-extension-impl.jar', '/tmp/tmp92yjsn/gradle-tooling-extension-impl.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/lib/util_rt.jar', '/tmp/tmpCPL2dY/util_rt.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/lib/external-system-rt.jar', '/tmp/tmpCPL2dY/external-system-rt.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/plugins/gradle/lib/gradle-tooling-extension-api.jar', '/tmp/tmp92yjsn/gradle-tooling-extension-api.jar')
+ext.pathMapper.put('C:/Program Files/JetBrains/IntelliJ IDEA 2025.1.1.1/plugins/gradle/lib/gradle-tooling-extension-impl.jar', '/tmp/tmp92yjsn/gradle-tooling-extension-impl.jar')
+ext.pathMapper.put("<<target java executable path>>", '/usr/lib/jvm/java-21-openjdk/bin/java')
+ext.mapPath = { path -> pathMapper.get(path) ?: path }
