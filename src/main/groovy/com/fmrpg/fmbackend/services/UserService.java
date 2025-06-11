@@ -62,4 +62,21 @@ public class UserService {
         return userRepository.findByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("User with OAuth ID " + oauthId + " does not exist"));
     }
+
+    public User validateUser(OAuth2User oauth2User) {
+        if (oauth2User == null) {
+            throw new RuntimeException("User not Authenticated");
+        }
+
+        String oauthId = oauth2User.getName();
+        User user = findUserByOauthId(oauthId);
+
+        if (user == null) {
+            String email = oauth2User.getAttribute("email");
+            throw new RuntimeException("Usuário com OAuth ID " + oauthId + " (email: " + email + ") não encontrado.");
+        }
+
+
+        return user;
+    }
 }

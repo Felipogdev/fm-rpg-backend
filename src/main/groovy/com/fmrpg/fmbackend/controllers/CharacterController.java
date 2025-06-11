@@ -34,70 +34,45 @@ public class CharacterController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<List<CharacterEntity>> getCharactersForAuthenticatedUser(@AuthenticationPrincipal OAuth2User oauth2User) {
-        if (oauth2User == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
-
-        String oauthId = oauth2User.getName();
-
-        User user = userService.findUserByOauthId(oauthId);
-
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
-        }
-
-            return ResponseEntity.ok(user.getCharacters());
+    public ResponseEntity<List<CharacterEntity>> getCharactersFromAuthenticatedUser(@AuthenticationPrincipal OAuth2User oauth2User) {
+        User user = userService.validateUser(oauth2User);
+        return ResponseEntity.ok(user.getCharacters());
     }
 
 
     @PostMapping
     public ResponseEntity<CharacterEntity> createCharacter(@AuthenticationPrincipal OAuth2User oauth2User, @RequestBody CharacterDto dto) {
-        if (oauth2User == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
 
         if (dto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        User user = userService.findUserByOauthId(oauth2User.getName());
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        CharacterEntity created = characterService.createCharacter(oauth2User.getName(), dto);
+        User user = userService.validateUser(oauth2User);
+        CharacterEntity created = characterService.createCharacter(user.getOauthId(), dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
 
 
     @PatchMapping("/{characterId}")
-    public ResponseEntity<CharacterEntity> updateCharacter(@AuthenticationPrincipal OAuth2User oauth2User, @PathVariable("characterId") UUID characterId, @RequestBody UpdateCharacterDto dto) {
-
-        if (oauth2User == null) {
-            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
-        }
+    public ResponseEntity<CharacterEntity> updateCharacter(@AuthenticationPrincipal OAuth2User oauth2User,
+                                                           @PathVariable("characterId") UUID characterId,
+                                                           @RequestBody UpdateCharacterDto dto) {
 
         if (characterId == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
         }
 
-        User user = userService.findUserByOauthId(oauth2User.getName());
+        User user = userService.validateUser(oauth2User);
 
-        if (user == null) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
-
-        boolean ownsCharacter = user.getCharacters() != null && user.getCharacters().stream()
-                .anyMatch(character -> character.getId().equals(characterId));
+        boolean ownsCharacter = user.getCharacters() != null &&
+                user.getCharacters().stream().anyMatch(c -> c.getId().equals(characterId));
 
         if (!ownsCharacter) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
         }
 
         CharacterEntity updated = characterService.updateCharacter(characterId, dto);
-
         return ResponseEntity.ok(updated);
     }
 
