@@ -57,4 +57,9 @@ public class UserService {
         User user = character.getUser();
         user.getCharacters().add(character);
     }
+
+    public User findUserByOauthId(String oauthId) {
+        return userRepository.findByOauthId(oauthId)
+                .orElseThrow(() -> new IllegalArgumentException("User with OAuth ID " + oauthId + " does not exist"));
+    }
 }
