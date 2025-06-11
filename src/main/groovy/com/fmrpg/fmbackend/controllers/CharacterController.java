@@ -50,9 +50,23 @@ public class CharacterController {
             return ResponseEntity.ok(user.getCharacters());
     }
 
-    @PostMapping("/{userId}")
-    public ResponseEntity<CharacterEntity> createCharacter(@PathVariable ("userId") UUID userId, @RequestBody CharacterDto dto) {
-        CharacterEntity created = characterService.createCharacter(userId, dto);
+
+    @PostMapping
+    public ResponseEntity<CharacterEntity> createCharacter(@AuthenticationPrincipal OAuth2User oauth2User, @RequestBody CharacterDto dto) {
+        if (oauth2User == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (dto == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        User user = userService.findUserByOauthId(oauth2User.getName());
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        CharacterEntity created = characterService.createCharacter(oauth2User.getName(), dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 

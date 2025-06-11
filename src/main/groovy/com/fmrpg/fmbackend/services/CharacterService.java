@@ -34,15 +34,15 @@ public class CharacterService {
 
     }
 
-    public CharacterEntity createCharacter(UUID userId, CharacterDto characterDto) {
-        if (characterDto == null || userId == null) {
+    public CharacterEntity createCharacter(String oauthId, CharacterDto dto) {
+        if (dto == null || oauthId == null) {
             throw new IllegalArgumentException("CharacterDto or UserId cannot be null");
         }
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
+        User user = userRepository.findByOauthId(oauthId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID " + oauthId + " does not exist"));
 
-        CharacterEntity character = characterMapper.toEntity(characterDto);
+        CharacterEntity character = characterMapper.toEntity(dto);
 
         character.setUser(user);
 
