@@ -35,17 +35,15 @@ public class CharacterService {
 
     }
 
-    public CharacterEntity createCharacter(CharacterDto characterDto) {
-        if (characterDto == null || characterDto.userId() == null) {
+    public CharacterEntity createCharacter(UUID userId, CharacterDto characterDto) {
+        if (characterDto == null || userId == null) {
             throw new IllegalArgumentException("CharacterDto or UserId cannot be null");
         }
 
-        User user = userRepository.findById(characterDto.userId())
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + characterDto.userId() + " does not exist"));
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
 
         CharacterEntity character = characterMapper.toEntity(characterDto);
-
-
 
         character.setUser(user);
 
@@ -100,6 +98,7 @@ public class CharacterService {
         if (dto.description() != null) {
             character.setDescription(dto.description());
         }
+
         return characterRepository.save(character);
     }
 }

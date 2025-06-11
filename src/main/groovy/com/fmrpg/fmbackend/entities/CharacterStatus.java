@@ -28,14 +28,14 @@ public class CharacterStatus {
     @JoinColumn(name = "character_id")
     private CharacterEntity character;
 
-    @Column(name = "hp")
-    private Integer hp;
+    @Column(name = "current_hp")
+    private Integer currentHp;
 
     @Column(name = "max_hp")
     private Integer maxHp;
 
-    @Column (name = "cursed_energy")
-    private Integer cursedEnergy;
+    @Column (name = "current_cursed_energy")
+    private Integer currentCursedEnergy;
 
     @Column (name = "max_cursed_energy")
     private Integer maxCursedEnergy;

@@ -22,9 +22,9 @@ public class CharacterController {
         this.characterService = characterService;
     }
 
-    @PostMapping("/create")
-    public CharacterEntity createCharacter(@RequestBody CharacterDto dto) {
-        return characterService.createCharacter(dto);
+    @PostMapping("/{userId}")
+    public CharacterEntity createCharacter(@PathVariable ("userId") UUID userId, @RequestBody CharacterDto dto) {
+        return characterService.createCharacter(userId, dto);
     }
 
     @GetMapping("/{id}")
@@ -32,7 +32,7 @@ public class CharacterController {
         return characterService.getAllCharactersFromUser(id);
     }
 
-    @PatchMapping("/update/{id}")
+    @PatchMapping("/{id}")
     public CharacterEntity updateCharacter(@PathVariable("id") UUID id, @RequestBody UpdateCharacterDto dto) {
         return characterService.updateCharacter(id, dto);
     }
