@@ -33,7 +33,7 @@ public class CharacterStatusService {
         return (int) Math.floor((value - 10) / 2.0);
     }
 
-    private CharacterStatus updateCharacterStatus(UUID id, CharacterStatusDto dto) {
+    public CharacterStatus updateCharacterStatus(UUID id, CharacterStatusDto dto) {
         if (dto == null || id == null) {
             throw new IllegalArgumentException("CharacterStatusDto and ID must not be null");
         }

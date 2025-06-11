@@ -3,7 +3,6 @@ package com.fmrpg.fmbackend.services;
 import com.fmrpg.fmbackend.dtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
-import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
@@ -69,6 +68,7 @@ public class CharacterService {
     }
 
     public CharacterEntity updateCharacter(UUID id, UpdateCharacterDto dto) {
+        //TODO: Validate the user logged in and the character belongs to that user before updating
         if (dto == null || id == null) {
             throw new IllegalArgumentException("Json or ID cannot be null");
         }

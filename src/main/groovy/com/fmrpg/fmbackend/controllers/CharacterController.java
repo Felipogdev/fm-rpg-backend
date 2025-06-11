@@ -6,6 +6,8 @@ import com.fmrpg.fmbackend.entities.CharacterEntity;
 
 
 import com.fmrpg.fmbackend.services.CharacterService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -23,18 +25,21 @@ public class CharacterController {
     }
 
     @PostMapping("/{userId}")
-    public CharacterEntity createCharacter(@PathVariable ("userId") UUID userId, @RequestBody CharacterDto dto) {
-        return characterService.createCharacter(userId, dto);
+    public ResponseEntity<CharacterEntity> createCharacter(@PathVariable ("userId") UUID userId, @RequestBody CharacterDto dto) {
+        CharacterEntity created = characterService.createCharacter(userId, dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }
 
     @GetMapping("/{id}")
-    public List<CharacterEntity> getCharacters(@PathVariable("id") UUID id) {
-        return characterService.getAllCharactersFromUser(id);
+    public ResponseEntity<List<CharacterEntity>> getCharacters(@PathVariable("id") UUID id) {
+        List<CharacterEntity> characters = characterService.getAllCharactersFromUser(id);
+        return ResponseEntity.ok(characters);
     }
 
     @PatchMapping("/{id}")
-    public CharacterEntity updateCharacter(@PathVariable("id") UUID id, @RequestBody UpdateCharacterDto dto) {
-        return characterService.updateCharacter(id, dto);
+    public ResponseEntity<CharacterEntity> updateCharacter(@PathVariable("id") UUID id, @RequestBody UpdateCharacterDto dto) {
+        CharacterEntity updated = characterService.updateCharacter(id, dto);
+        return ResponseEntity.ok(updated);
     }
 
 }

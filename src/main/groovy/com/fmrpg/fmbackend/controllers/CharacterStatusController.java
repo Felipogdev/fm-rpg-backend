@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.CharacterStatusDto;
+import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.services.CharacterStatusService;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,7 +18,7 @@ public class CharacterStatusController {
     }
 
     @PatchMapping("/{characterId}")
-    public CharacterStatusService updateCharacterStatus(@PathVariable ("characterId") UUID characterId, @RequestBody CharacterStatusDto dto) {
+    public CharacterStatus updateCharacterStatus(@PathVariable ("characterId") UUID characterId, @RequestBody CharacterStatusDto dto) {
         if (dto == null || characterId == null) {
             throw new IllegalArgumentException("CharacterStatusDto or CharacterId cannot be null");
         }

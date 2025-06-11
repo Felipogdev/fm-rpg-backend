@@ -5,6 +5,7 @@ import com.fmrpg.fmbackend.enums.CharacterClass;
 import com.fmrpg.fmbackend.enums.CharacterOrigin;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class CharacterEntity {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne
@@ -30,7 +32,7 @@ public class CharacterEntity {
     private String name;
 
     @Column(name = "level")
-    private Integer level;
+    private Integer level = 1;
 
     @Column(name = "class")
     @Enumerated(EnumType.STRING)
@@ -44,6 +46,7 @@ public class CharacterEntity {
     private String description;
 
     @Column ( name = "created_at", updatable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column ( name = "image_url")
@@ -54,17 +57,4 @@ public class CharacterEntity {
     @JsonBackReference
     private CharacterStatus status;
 
-    @PrePersist
-    private void onCreate() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        if (this.createdAt == null) {
-            this.createdAt = new Timestamp(System.currentTimeMillis());
-        }
-
-        if (this.level == null) {
-            this.level = 1;
-        }
-    }
 }

@@ -23,6 +23,7 @@ public class User {
 
     @Id
     @Column(name = "id", updatable = false, nullable = false)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @Column(name = "oauth_id", unique = true, nullable = false)
@@ -47,15 +48,4 @@ public class User {
     @JsonManagedReference
     private List<CharacterEntity> characters = new ArrayList<>();
 
-    @PrePersist
-    protected void onCreate() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-    }
-
-    @PreUpdate
-    protected void onUpdate() {
-        this.updatedAt = LocalDateTime.now();
-    }
 }
