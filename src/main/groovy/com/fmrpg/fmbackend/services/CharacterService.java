@@ -68,7 +68,7 @@ public class CharacterService {
     }
 
     public CharacterEntity updateCharacter(UUID id, UpdateCharacterDto dto) {
-        //TODO: Validate the user logged in and the character belongs to that user before updating
+
         if (dto == null || id == null) {
             throw new IllegalArgumentException("Json or ID cannot be null");
         }

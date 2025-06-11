@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Collections;
 import java.util.List;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 @RestController
 @RequestMapping("/api/characters")
@@ -46,9 +47,7 @@ public class CharacterController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(Collections.emptyList());
         }
 
-        List<CharacterEntity> characters = user.getCharacters();
-
-        return ResponseEntity.ok(characters);
+            return ResponseEntity.ok(user.getCharacters());
     }
 
     @PostMapping("/{userId}")
@@ -59,9 +58,32 @@ public class CharacterController {
 
 
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<CharacterEntity> updateCharacter(@PathVariable("id") UUID id, @RequestBody UpdateCharacterDto dto) {
-        CharacterEntity updated = characterService.updateCharacter(id, dto);
+    @PatchMapping("/{characterId}")
+    public ResponseEntity<CharacterEntity> updateCharacter(@AuthenticationPrincipal OAuth2User oauth2User, @PathVariable("characterId") UUID characterId, @RequestBody UpdateCharacterDto dto) {
+
+        if (oauth2User == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        if (characterId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        User user = userService.findUserByOauthId(oauth2User.getName());
+
+        if (user == null) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+
+        boolean ownsCharacter = user.getCharacters() != null && user.getCharacters().stream()
+                .anyMatch(character -> character.getId().equals(characterId));
+
+        if (!ownsCharacter) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+        CharacterEntity updated = characterService.updateCharacter(characterId, dto);
+
         return ResponseEntity.ok(updated);
     }
 
