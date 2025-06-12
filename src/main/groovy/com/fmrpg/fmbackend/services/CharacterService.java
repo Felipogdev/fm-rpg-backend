@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.services;
 
-import com.fmrpg.fmbackend.dtos.CharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;

@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.services;
 
-import com.fmrpg.fmbackend.dtos.CharacterStatusDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.repositories.CharacterStatusRepository;

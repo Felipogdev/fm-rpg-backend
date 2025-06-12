@@ -1,9 +1,6 @@
 package com.fmrpg.fmbackend.controllers;
 
-import com.fmrpg.fmbackend.dtos.CharacterDto;
-import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
-import com.fmrpg.fmbackend.services.CharacterService;
 import com.fmrpg.fmbackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +12,6 @@ import java.security.Principal;
 import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-import java.util.UUID;
 
 @RestController
 @RequestMapping("/api/users")
