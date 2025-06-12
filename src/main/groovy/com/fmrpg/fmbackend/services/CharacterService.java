@@ -101,4 +101,19 @@ public class CharacterService {
 
         return characterRepository.save(character);
     }
+
+    public User getUserByCharacterId(UUID characterId) {
+        CharacterEntity character = this.getCharacterById(characterId);
+        return character.getUser();
+    }
+
+    public void deleteCharacter(UUID id) {
+        CharacterEntity character = getCharacterById(id);
+        User user = this.getUserByCharacterId(id);
+
+        user.getCharacters().remove(character);
+
+        characterRepository.delete(character);
+    }
+
 }

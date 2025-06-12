@@ -41,7 +41,8 @@ public class CharacterController {
 
 
     @PostMapping
-    public ResponseEntity<CharacterEntity> createCharacter(@AuthenticationPrincipal OAuth2User oauth2User, @RequestBody CharacterDto dto) {
+    public ResponseEntity<CharacterEntity> createCharacter(@AuthenticationPrincipal OAuth2User oauth2User,
+                                                           @RequestBody CharacterDto dto) {
 
         if (dto == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -74,6 +75,30 @@ public class CharacterController {
 
         CharacterEntity updated = characterService.updateCharacter(characterId, dto);
         return ResponseEntity.ok(updated);
+    }
+
+    @DeleteMapping("/{characterId}")
+    public ResponseEntity<CharacterEntity> deleteCharacter(@AuthenticationPrincipal OAuth2User oauth2User,
+                                                           @PathVariable ("characterId") UUID characterId) {
+
+        if (characterId == null) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+        }
+
+        User user = userService.validateUser(oauth2User);
+
+        boolean ownsCharacter = user.getCharacters() != null &&
+                user.getCharacters().stream().anyMatch(c -> c.getId().equals(characterId));
+
+        if (!ownsCharacter) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).build();
+        }
+
+
+        characterService.deleteCharacter(characterId);
+
+        return ResponseEntity.ok().build();
+
     }
 
 }
