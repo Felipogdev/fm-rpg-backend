@@ -52,6 +52,9 @@ public class CharacterEntity {
     @Column ( name = "image_url")
     private String imageUrl;
 
+    @Column (name = "grade")
+    private String grade = "4";
+
 
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL)
     @JsonBackReference

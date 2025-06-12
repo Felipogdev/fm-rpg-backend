@@ -8,6 +8,7 @@ public record CharacterResponseDto(
         String imageUrl,
         CharacterOrigin characterOrigin,
         CharacterClass characterClass,
-        String description
+        String description,
+        String grade
         ) {
 }
