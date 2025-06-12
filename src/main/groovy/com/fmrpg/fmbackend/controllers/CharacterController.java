@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.Collections;
 import java.util.List;
+import java.util.Map;
 import java.util.UUID;
 import java.util.stream.Stream;
 
@@ -78,8 +79,8 @@ public class CharacterController {
     }
 
     @DeleteMapping("/{characterId}")
-    public ResponseEntity<CharacterEntity> deleteCharacter(@AuthenticationPrincipal OAuth2User oauth2User,
-                                                           @PathVariable ("characterId") UUID characterId) {
+    public ResponseEntity<Map<String, String>> deleteCharacter(@AuthenticationPrincipal OAuth2User oauth2User,
+                                                               @PathVariable ("characterId") UUID characterId) {
 
         if (characterId == null) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
@@ -96,8 +97,7 @@ public class CharacterController {
 
 
         characterService.deleteCharacter(characterId);
-
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(Collections.singletonMap("message", "Character Deleted"));
 
     }
 
