@@ -13,12 +13,13 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
+                    .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
                            "/",
                             "/api/characters/create",
-                            "/api/**"
+                            "/api/**",
+                            "/api/characters/me"
                     ).permitAll();
                     registry.anyRequest().authenticated();
                 })
