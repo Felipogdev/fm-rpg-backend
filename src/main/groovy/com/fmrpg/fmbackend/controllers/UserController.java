@@ -29,13 +29,6 @@ public class UserController {
         return ResponseEntity.ok(users);
     }
 
-    @PostMapping("/register")
-    public ResponseEntity<Map<String, String>> registerUser(@AuthenticationPrincipal OAuth2User oauth2User) {
-        userService.registerUser(oauth2User);
-        Map<String, String> response = Collections.singletonMap("message", "User registered successfully!");
-        return ResponseEntity.status(HttpStatus.CREATED).body(response);
-    }
-
     @GetMapping("/me")
     public ResponseEntity<Principal> getCurrentUser(Principal principal) {
         if (principal == null) {

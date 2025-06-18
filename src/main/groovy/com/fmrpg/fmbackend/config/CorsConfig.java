@@ -10,10 +10,11 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @Configuration
 public class CorsConfig {
 
-    private final String frontendUrl = "http://localhost:5173";
-    private final String backendUrl = "http://localhost:8080";
+    @Value("${app.front-url}")
+    private  String frontUrl;
 
-
+    @Value("${app.back-url}")
+    private String backUrl;
 
     @Bean
     public WebMvcConfigurer corsConfigurer() {
@@ -21,7 +22,7 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/api/**")
-                        .allowedOrigins(frontendUrl, backendUrl)
+                        .allowedOrigins(frontUrl, backUrl)
                         .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
                         .allowedHeaders("*")
                         .allowCredentials(true);

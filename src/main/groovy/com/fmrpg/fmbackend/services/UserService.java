@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -59,8 +60,7 @@ public class UserService {
     }
 
     public User findUserByOauthId(String oauthId) {
-        return userRepository.findByOauthId(oauthId)
-                .orElseThrow(() -> new IllegalArgumentException("User with OAuth ID " + oauthId + " does not exist"));
+        return userRepository.findByOauthId(oauthId).orElse(null);
     }
 
     public User validateUser(OAuth2User oauth2User) {
