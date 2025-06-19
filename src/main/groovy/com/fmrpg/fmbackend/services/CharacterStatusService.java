@@ -17,8 +17,15 @@ public class CharacterStatusService {
         this.characterStatusRepository = characterStatusRepository;
     }
 
-    public void crateCharacterStatus(CharacterEntity character) {
+    public void crateCharacterStatus(CharacterEntity character, int[] statusArray) {
         CharacterStatus status = new CharacterStatus();
+        status.setStrength(statusArray[0]);
+        status.setConstitution(statusArray[1]);
+        status.setInitiative(statusArray[2]);
+        status.setDexterity(statusArray[3]);
+        status.setWisdom(statusArray[4]);
+        status.setCharisma(statusArray[5]);
+
 
         character.setStatus(status);
         status.setCharacter(character);

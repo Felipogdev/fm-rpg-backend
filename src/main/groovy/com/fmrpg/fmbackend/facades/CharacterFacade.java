@@ -4,6 +4,7 @@ package com.fmrpg.fmbackend.facades;
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
@@ -40,7 +41,7 @@ public class CharacterFacade {
                 .collect(Collectors.toList());
     }
 
-    public CharacterResponseDto createCharacter(OAuth2User oauth2User, CharacterDto dto) {
+    public CharacterResponseDto createCharacter(OAuth2User oauth2User, CreateCharacterDto dto) {
         User user = userService.validateUser(oauth2User);
         CharacterEntity created = characterService.createCharacter(user.getOauthId(), dto);
         return toDto(created);

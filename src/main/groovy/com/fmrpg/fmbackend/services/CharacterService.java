@@ -2,6 +2,7 @@ package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
@@ -34,7 +35,7 @@ public class CharacterService {
 
     }
 
-    public CharacterEntity createCharacter(String oauthId, CharacterDto dto) {
+    public CharacterEntity createCharacter(String oauthId, CreateCharacterDto dto) {
         if (dto == null || oauthId == null) {
             throw new IllegalArgumentException("CharacterDto or UserId cannot be null");
         }
@@ -42,15 +43,24 @@ public class CharacterService {
         User user = userRepository.findByOauthId(oauthId)
                 .orElseThrow(() -> new IllegalArgumentException("User with ID " + oauthId + " does not exist"));
 
-        CharacterEntity character = characterMapper.toEntity(dto);
+        CharacterEntity character = characterMapper.createToEntity(dto);
 
         character.setUser(user);
-
         userService.addCharacterToUser(character);
 
-        characterRepository.save(character);
+        int[] statusFromDto = new int[6];
+        statusFromDto[0] = dto.strength();
+        statusFromDto[1] = dto.constitution();
+        statusFromDto[2] = dto.intelligence();
+        statusFromDto[3] = dto.dexterity();
+        statusFromDto[4] = dto.wisdom();
+        statusFromDto[5] = dto.charisma();
 
-        characterStatusService.crateCharacterStatus(character);
+
+
+        characterRepository.save(character);
+        characterStatusService.crateCharacterStatus(character, statusFromDto);
+
         return character;
     }
 

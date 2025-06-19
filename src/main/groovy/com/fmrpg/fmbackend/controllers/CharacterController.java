@@ -5,6 +5,7 @@ import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.facades.CharacterFacade;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -37,7 +38,7 @@ public class CharacterController {
     @PostMapping
     public ResponseEntity<CharacterResponseDto> createCharacter(
             @AuthenticationPrincipal OAuth2User oauth2User,
-            @RequestBody CharacterDto dto) {
+            @RequestBody CreateCharacterDto dto) {
         CharacterResponseDto created = characterFacade.createCharacter(oauth2User, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
     }

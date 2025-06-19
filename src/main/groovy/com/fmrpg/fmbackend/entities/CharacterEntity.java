@@ -45,6 +45,16 @@ public class CharacterEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "lore", columnDefinition = "TEXT")
+    private String lore;
+
+    @Column(name = "goal", columnDefinition = "TEXT")
+    private String goal;
+
+    @Column(name = "appearance", columnDefinition = "TEXT")
+    private String appearance;
+
+
     @Column ( name = "created_at", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;
