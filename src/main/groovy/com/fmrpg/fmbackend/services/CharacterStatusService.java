@@ -11,17 +11,21 @@ import java.util.UUID;
 @Service
 public class CharacterStatusService {
 
-    private CharacterStatusRepository characterStatusRepository;
+    private final CharacterStatusRepository characterStatusRepository;
+    private final CharacterSkillsService characterSkillsService;
 
-    public CharacterStatusService(CharacterStatusRepository characterStatusRepository) {
+    public CharacterStatusService(
+            CharacterStatusRepository characterStatusRepository,
+            CharacterSkillsService characterSkillsService) {
         this.characterStatusRepository = characterStatusRepository;
+        this.characterSkillsService = characterSkillsService;
     }
 
     public void crateCharacterStatus(CharacterEntity character, int[] statusArray) {
         CharacterStatus status = new CharacterStatus();
         status.setStrength(statusArray[0]);
         status.setConstitution(statusArray[1]);
-        status.setInitiative(statusArray[2]);
+        status.setIntelligence(statusArray[2]);
         status.setDexterity(statusArray[3]);
         status.setWisdom(statusArray[4]);
         status.setCharisma(statusArray[5]);
@@ -29,6 +33,7 @@ public class CharacterStatusService {
 
         character.setStatus(status);
         status.setCharacter(character);
+        characterSkillsService.createSkill(status);
 
         characterStatusRepository.save(status);
     }

@@ -69,4 +69,5 @@ public class CharacterEntity {
     @JsonBackReference
     private CharacterStatus status;
 
+
 }

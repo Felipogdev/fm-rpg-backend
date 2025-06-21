@@ -70,4 +70,7 @@ public class CharacterStatus {
 
     @Column (name = "soul_point")
     private Integer soulPoint = 100;
+
+    @OneToOne(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CharacterSkill skills;
 }

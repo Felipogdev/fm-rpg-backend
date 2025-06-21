@@ -55,7 +55,7 @@ public class CharacterService {
         int[] statusFromDto = new int[6];
 
 
-        statusFromDto[1] = dto.strength() != null ? dto.strength() : 8;
+        statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
         statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
         statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
         statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
