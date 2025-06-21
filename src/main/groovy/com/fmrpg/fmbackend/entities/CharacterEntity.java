@@ -54,7 +54,6 @@ public class CharacterEntity {
     @Column(name = "appearance", columnDefinition = "TEXT")
     private String appearance;
 
-
     @Column ( name = "created_at", updatable = false)
     @CreationTimestamp
     private Timestamp createdAt;

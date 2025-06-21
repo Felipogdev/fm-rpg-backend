@@ -8,6 +8,7 @@ import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
+import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.services.CharacterService;
 import com.fmrpg.fmbackend.services.UserService;
 import org.springframework.http.HttpStatus;
@@ -25,13 +26,15 @@ public class CharacterFacade {
     private final CharacterService characterService;
     private final UserService userService;
     private final CharacterResponseMapper characterResponseMapper;
+    private final CharacterRepository characterRepository;
 
     public CharacterFacade(CharacterService characterService,
                            UserService userService,
-                           CharacterResponseMapper characterResponseMapper) {
+                           CharacterResponseMapper characterResponseMapper, CharacterRepository characterRepository) {
         this.characterService = characterService;
         this.userService = userService;
         this.characterResponseMapper = characterResponseMapper;
+        this.characterRepository = characterRepository;
     }
 
     public List<CharacterResponseDto> getCharactersFromUser(OAuth2User oauth2User) {
@@ -49,24 +52,27 @@ public class CharacterFacade {
 
     public CharacterResponseDto updateCharacter(OAuth2User oauth2User, UUID characterId, UpdateCharacterDto dto) {
         User user = userService.validateUser(oauth2User);
-        validateOwnership(user, characterId);
+        CharacterEntity character = characterService.getCharacterById(characterId);
+        characterService.validateOwnership(user, character);
         CharacterEntity updated = characterService.updateCharacter(characterId, dto);
         return toDto(updated);
     }
 
+
     public void deleteCharacter(OAuth2User oauth2User, UUID characterId) {
         User user = userService.validateUser(oauth2User);
-        validateOwnership(user, characterId);
+        CharacterEntity character = characterRepository.getCharacterEntityById(characterId);
+        characterService.isCharacterOwnedByUser(user, character);
         characterService.deleteCharacter(characterId);
     }
 
-    private void validateOwnership(User user, UUID characterId) {
-        boolean owns = user.getCharacters() != null &&
-                user.getCharacters().stream().anyMatch(c -> c.getId().equals(characterId));
-        if (!owns) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not own the character.");
-        }
+    public CharacterResponseDto getCharacterInfoFromCharacterId(OAuth2User oauth2User, UUID characterId) {
+        User user = userService.validateUser(oauth2User);
+        CharacterEntity character = characterService.getCharacterById(characterId);
+        characterService.validateOwnership(user, character);
+        return characterResponseMapper.toDto(character);
     }
+
 
     private CharacterResponseDto toDto(CharacterEntity entity) {
         return characterResponseMapper.toDto(entity);

@@ -8,7 +8,10 @@ import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -128,5 +131,21 @@ public class CharacterService {
 
         characterRepository.delete(character);
     }
+
+    public boolean isCharacterOwnedByUser(User user, CharacterEntity character) {
+        if (user == null || character == null) {
+            return false;
+        }
+
+        return user.getCharacters() != null &&
+                user.getCharacters().stream().anyMatch(c -> c.getId().equals(character.getId()));
+    }
+
+    public void validateOwnership(User user, CharacterEntity character) {
+        if (!isCharacterOwnedByUser(user, character)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not own this character.");
+        }
+    }
+
 
 }

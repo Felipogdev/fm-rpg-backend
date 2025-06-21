@@ -6,7 +6,9 @@ import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
+import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.facades.CharacterFacade;
+import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -23,9 +25,11 @@ import java.util.UUID;
 public class CharacterController {
 
     private final CharacterFacade characterFacade;
+    private final CharacterResponseMapper characterResponseMapper;
 
-    public CharacterController(CharacterFacade characterFacade) {
+    public CharacterController(CharacterFacade characterFacade, CharacterResponseMapper characterResponseMapper) {
         this.characterFacade = characterFacade;
+        this.characterResponseMapper = characterResponseMapper;
     }
 
     @GetMapping("/me")
@@ -41,6 +45,15 @@ public class CharacterController {
             @RequestBody CreateCharacterDto dto) {
         CharacterResponseDto created = characterFacade.createCharacter(oauth2User, dto);
         return ResponseEntity.status(HttpStatus.CREATED).body(created);
+    }
+
+    @GetMapping("/{characterId}")
+    public ResponseEntity<CharacterResponseDto> getCharacter(
+            @AuthenticationPrincipal OAuth2User oauth2User,
+            @PathVariable("characterId") UUID characterId
+    ) {
+        CharacterResponseDto character = characterFacade.getCharacterInfoFromCharacterId(oauth2User, characterId);
+        return ResponseEntity.ok(character);
     }
 
     @PatchMapping("/{characterId}")
