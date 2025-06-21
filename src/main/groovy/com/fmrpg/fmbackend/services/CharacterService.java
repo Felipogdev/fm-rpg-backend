@@ -41,7 +41,7 @@ public class CharacterService {
         }
 
         User user = userRepository.findByOauthId(oauthId)
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + oauthId + " does not exist"));
+                .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
 
         CharacterEntity character = characterMapper.createToEntity(dto);
 
