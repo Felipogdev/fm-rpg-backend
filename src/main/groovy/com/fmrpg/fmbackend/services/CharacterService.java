@@ -48,13 +48,16 @@ public class CharacterService {
         character.setUser(user);
         userService.addCharacterToUser(character);
 
+
         int[] statusFromDto = new int[6];
-        statusFromDto[0] = dto.strength();
-        statusFromDto[1] = dto.constitution();
-        statusFromDto[2] = dto.intelligence();
-        statusFromDto[3] = dto.dexterity();
-        statusFromDto[4] = dto.wisdom();
-        statusFromDto[5] = dto.charisma();
+
+
+        statusFromDto[1] = dto.strength() != null ? dto.strength() : 8;
+        statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
+        statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
+        statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
+        statusFromDto[4] = dto.wisdom() != null ? dto.wisdom() : 8;
+        statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
 
 
 

@@ -66,7 +66,7 @@ public class CharacterEntity {
     private String grade = "4";
 
 
-    @OneToOne(mappedBy = "character", cascade = CascadeType.ALL)
+    @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private CharacterStatus status;
 
