@@ -26,7 +26,7 @@ public class AuthConfig {
                 .oauth2Login(oauth2 -> oauth2
                         .loginPage("/login")
                         .successHandler((request, response, authentication) -> {
-                    response.sendRedirect("/login-sucess");
+                    response.sendRedirect("/login-success");
         })
                 )
                 .logout(logout -> logout
