@@ -5,6 +5,7 @@ import com.fmrpg.fmbackend.enums.CharacterClass;
 import com.fmrpg.fmbackend.enums.CharacterOrigin;
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
 import java.util.UUID;
@@ -19,6 +20,7 @@ public class CharacterEntity {
 
     @Id
     @Column(name = "id", nullable = false, unique = true)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
     @ManyToOne
@@ -30,7 +32,7 @@ public class CharacterEntity {
     private String name;
 
     @Column(name = "level")
-    private Integer level;
+    private Integer level = 1;
 
     @Column(name = "class")
     @Enumerated(EnumType.STRING)
@@ -43,28 +45,29 @@ public class CharacterEntity {
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
+    @Column(name = "lore", columnDefinition = "TEXT")
+    private String lore;
+
+    @Column(name = "goal", columnDefinition = "TEXT")
+    private String goal;
+
+    @Column(name = "appearance", columnDefinition = "TEXT")
+    private String appearance;
+
     @Column ( name = "created_at", updatable = false)
+    @CreationTimestamp
     private Timestamp createdAt;
 
     @Column ( name = "image_url")
     private String imageUrl;
 
+    @Column (name = "grade")
+    private String grade = "4";
 
-    @OneToOne(mappedBy = "character", cascade = CascadeType.ALL)
+
+    @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private CharacterStatus status;
 
-    @PrePersist
-    private void onCreate() {
-        if (this.id == null) {
-            this.id = UUID.randomUUID();
-        }
-        if (this.createdAt == null) {
-            this.createdAt = new Timestamp(System.currentTimeMillis());
-        }
 
-        if (this.level == null) {
-            this.level = 1;
-        }
-    }
 }

@@ -9,6 +9,7 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
@@ -56,5 +57,26 @@ public class UserService {
     public void addCharacterToUser(CharacterEntity character) {
         User user = character.getUser();
         user.getCharacters().add(character);
+    }
+
+    public User findUserByOauthId(String oauthId) {
+        return userRepository.findByOauthId(oauthId).orElse(null);
+    }
+
+    public User validateUser(OAuth2User oauth2User) {
+        if (oauth2User == null) {
+            throw new RuntimeException("User not Authenticated");
+        }
+
+        String oauthId = oauth2User.getName();
+        User user = findUserByOauthId(oauthId);
+
+        if (user == null) {
+            String email = oauth2User.getAttribute("email");
+            throw new RuntimeException("Usuário com OAuth ID " + oauthId + " (email: " + email + ") não encontrado.");
+        }
+
+
+        return user;
     }
 }

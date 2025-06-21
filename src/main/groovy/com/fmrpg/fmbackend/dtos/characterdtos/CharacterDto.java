@@ -1,8 +1,4 @@
-package com.fmrpg.fmbackend.dtos;
-
-import com.fmrpg.fmbackend.entities.User;
-
-import java.util.UUID;
+package com.fmrpg.fmbackend.dtos.characterdtos;
 
 public record CharacterDto(
         String name,

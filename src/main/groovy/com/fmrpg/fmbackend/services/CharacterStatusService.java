@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.services;
 
-import com.fmrpg.fmbackend.dtos.CharacterStatusDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.repositories.CharacterStatusRepository;
@@ -11,17 +11,29 @@ import java.util.UUID;
 @Service
 public class CharacterStatusService {
 
-    private CharacterStatusRepository characterStatusRepository;
+    private final CharacterStatusRepository characterStatusRepository;
+    private final CharacterSkillsService characterSkillsService;
 
-    public CharacterStatusService(CharacterStatusRepository characterStatusRepository) {
+    public CharacterStatusService(
+            CharacterStatusRepository characterStatusRepository,
+            CharacterSkillsService characterSkillsService) {
         this.characterStatusRepository = characterStatusRepository;
+        this.characterSkillsService = characterSkillsService;
     }
 
-    public void crateCharacterStatus(CharacterEntity character) {
+    public void crateCharacterStatus(CharacterEntity character, int[] statusArray) {
         CharacterStatus status = new CharacterStatus();
+        status.setStrength(statusArray[0]);
+        status.setConstitution(statusArray[1]);
+        status.setIntelligence(statusArray[2]);
+        status.setDexterity(statusArray[3]);
+        status.setWisdom(statusArray[4]);
+        status.setCharisma(statusArray[5]);
+
 
         character.setStatus(status);
         status.setCharacter(character);
+        characterSkillsService.createSkill(status);
 
         characterStatusRepository.save(status);
     }
@@ -33,7 +45,7 @@ public class CharacterStatusService {
         return (int) Math.floor((value - 10) / 2.0);
     }
 
-    private CharacterStatus updateCharacterStatus(UUID id, CharacterStatusDto dto) {
+    public CharacterStatus updateCharacterStatus(UUID id, CharacterStatusDto dto) {
         if (dto == null || id == null) {
             throw new IllegalArgumentException("CharacterStatusDto and ID must not be null");
         }

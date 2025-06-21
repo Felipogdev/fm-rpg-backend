@@ -13,16 +13,22 @@ public class AuthConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                .csrf(AbstractHttpConfigurer::disable)
+                    .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
                     registry.requestMatchers(
                            "/",
                             "/api/characters/create",
-                            "/api/**"
+                            "/api/**",
+                            "/api/characters/me"
                     ).permitAll();
                     registry.anyRequest().authenticated();
                 })
-                .oauth2Login(Customizer.withDefaults())
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/login")
+                        .successHandler((request, response, authentication) -> {
+                    response.sendRedirect("/login-success");
+        })
+                )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
                         .logoutSuccessUrl("/")

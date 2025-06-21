@@ -1,4 +1,4 @@
-package com.fmrpg.fmbackend.dtos;
+package com.fmrpg.fmbackend.dtos.characterdtos;
 
 public record CharacterStatusDto(
         Integer currentHp,

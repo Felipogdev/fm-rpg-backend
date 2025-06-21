@@ -1,14 +1,17 @@
 package com.fmrpg.fmbackend.services;
 
-import com.fmrpg.fmbackend.dtos.CharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
-import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 import java.util.UUID;
@@ -35,23 +38,35 @@ public class CharacterService {
 
     }
 
-    public CharacterEntity createCharacter(UUID userId, CharacterDto characterDto) {
-        if (characterDto == null || userId == null) {
+    public CharacterEntity createCharacter(String oauthId, CreateCharacterDto dto) {
+        if (dto == null || oauthId == null) {
             throw new IllegalArgumentException("CharacterDto or UserId cannot be null");
         }
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
+        User user = userRepository.findByOauthId(oauthId)
+                .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
 
-        CharacterEntity character = characterMapper.toEntity(characterDto);
+        CharacterEntity character = characterMapper.createToEntity(dto);
 
         character.setUser(user);
-
         userService.addCharacterToUser(character);
 
-        characterRepository.save(character);
 
-        characterStatusService.crateCharacterStatus(character);
+        int[] statusFromDto = new int[6];
+
+
+        statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
+        statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
+        statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
+        statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
+        statusFromDto[4] = dto.wisdom() != null ? dto.wisdom() : 8;
+        statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
+
+
+
+        characterRepository.save(character);
+        characterStatusService.crateCharacterStatus(character, statusFromDto);
+
         return character;
     }
 
@@ -69,6 +84,7 @@ public class CharacterService {
     }
 
     public CharacterEntity updateCharacter(UUID id, UpdateCharacterDto dto) {
+
         if (dto == null || id == null) {
             throw new IllegalArgumentException("Json or ID cannot be null");
         }
@@ -101,4 +117,35 @@ public class CharacterService {
 
         return characterRepository.save(character);
     }
+
+    public User getUserByCharacterId(UUID characterId) {
+        CharacterEntity character = this.getCharacterById(characterId);
+        return character.getUser();
+    }
+
+    public void deleteCharacter(UUID id) {
+        CharacterEntity character = getCharacterById(id);
+        User user = this.getUserByCharacterId(id);
+
+        user.getCharacters().remove(character);
+
+        characterRepository.delete(character);
+    }
+
+    public boolean isCharacterOwnedByUser(User user, CharacterEntity character) {
+        if (user == null || character == null) {
+            return false;
+        }
+
+        return user.getCharacters() != null &&
+                user.getCharacters().stream().anyMatch(c -> c.getId().equals(character.getId()));
+    }
+
+    public void validateOwnership(User user, CharacterEntity character) {
+        if (!isCharacterOwnedByUser(user, character)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not own this character.");
+        }
+    }
+
+
 }

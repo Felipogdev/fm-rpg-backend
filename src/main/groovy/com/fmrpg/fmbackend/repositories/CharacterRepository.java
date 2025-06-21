@@ -9,4 +9,6 @@ import java.util.UUID;
 
 @Repository
 public interface CharacterRepository extends JpaRepository <CharacterEntity, UUID> {
+
+    CharacterEntity getCharacterEntityById(UUID id);
 }
