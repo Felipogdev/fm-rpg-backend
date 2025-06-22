@@ -7,13 +7,13 @@ import com.fmrpg.fmbackend.enums.CharacterOrigin;
 import java.util.UUID;
 
 public record CharacterResponseDto(
-        UUID id,
+        UUID publicId,
         String name,
         String imageUrl,
         CharacterOrigin characterOrigin,
         CharacterClass characterClass,
         String description,
         String grade,
-        CharacterStatus status
+        CharacterStatusResponseDto status
         ) {
 }

@@ -1,6 +1,5 @@
 package com.fmrpg.fmbackend.entities;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
@@ -21,13 +20,17 @@ import java.util.UUID;
 @AllArgsConstructor
 public class User {
 
-    @Id
-    @Column(name = "id", updatable = false, nullable = false)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
 
-    @Column(name = "oauth_id", unique = true, nullable = false)
-    private String oauthId;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column (name = "private_id", updatable = false, nullable = false)
+    private Long privateId;
+
+    @Column(name = "public_id", updatable = false, nullable = false)
+    private UUID publicId = UUID.randomUUID();
+
+    @Column(name = "google_id", unique = true, nullable = false)
+    private String googleId;
 
     @Column(name = "email", unique = true, nullable = false)
     private String email;

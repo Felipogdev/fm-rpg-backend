@@ -19,12 +19,15 @@ import java.util.UUID;
 public class CharacterEntity {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "private_id", nullable = false, unique = true)
+    private Long privateId;
+
+    @Column(name = "public_id", updatable = false, nullable = false)
+    private UUID publicId = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "private_id", nullable = false)
     @JsonBackReference
     private User user;
 

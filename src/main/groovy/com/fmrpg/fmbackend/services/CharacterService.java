@@ -38,12 +38,12 @@ public class CharacterService {
 
     }
 
-    public CharacterEntity createCharacter(String oauthId, CreateCharacterDto dto) {
-        if (dto == null || oauthId == null) {
+    public CharacterEntity createCharacter(String googleId, CreateCharacterDto dto) {
+        if (dto == null || googleId == null) {
             throw new IllegalArgumentException("CharacterDto or UserId cannot be null");
         }
 
-        User user = userRepository.findByOauthId(oauthId)
+        User user = userRepository.findByGoogleId(googleId)
                 .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
 
         CharacterEntity character = characterMapper.createToEntity(dto);
@@ -65,31 +65,24 @@ public class CharacterService {
 
 
         characterRepository.save(character);
-        characterStatusService.crateCharacterStatus(character, statusFromDto);
+        characterStatusService.createCharacterStatus(character, statusFromDto);
 
         return character;
     }
 
-    public List<CharacterEntity> getAllCharactersFromUser(UUID userId) {
+    public List<CharacterEntity> getAllCharactersFromUser(Long privateId) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
+        User user = userRepository.findByPrivateId(privateId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID  does not exist"));
 
         return user.getCharacters();
     }
 
-    public CharacterEntity getCharacterById(UUID id) {
-        return characterRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Character with ID " + id + " does not exist"));
-    }
 
-    public CharacterEntity updateCharacter(UUID id, UpdateCharacterDto dto) {
-
-        if (dto == null || id == null) {
-            throw new IllegalArgumentException("Json or ID cannot be null");
+    public CharacterEntity updateCharacter(CharacterEntity character, UpdateCharacterDto dto) {
+        if (dto == null || character == null) {
+            throw new IllegalArgumentException("DTO or character cannot be null");
         }
-
-        CharacterEntity character = getCharacterById(id);
 
         if (dto.name() != null) {
             character.setName(dto.name());
@@ -118,17 +111,14 @@ public class CharacterService {
         return characterRepository.save(character);
     }
 
-    public User getUserByCharacterId(UUID characterId) {
-        CharacterEntity character = this.getCharacterById(characterId);
+    public User getUserByCharacterId(Long privateId) {
+        CharacterEntity character = characterRepository.findByPrivateId(privateId);
         return character.getUser();
     }
 
-    public void deleteCharacter(UUID id) {
-        CharacterEntity character = getCharacterById(id);
-        User user = this.getUserByCharacterId(id);
-
+    public void deleteCharacter(CharacterEntity character) {
+        User user = character.getUser();
         user.getCharacters().remove(character);
-
         characterRepository.delete(character);
     }
 
@@ -138,7 +128,7 @@ public class CharacterService {
         }
 
         return user.getCharacters() != null &&
-                user.getCharacters().stream().anyMatch(c -> c.getId().equals(character.getId()));
+                user.getCharacters().stream().anyMatch(c -> c.getPrivateId().equals(character.getPrivateId()));
     }
 
     public void validateOwnership(User user, CharacterEntity character) {

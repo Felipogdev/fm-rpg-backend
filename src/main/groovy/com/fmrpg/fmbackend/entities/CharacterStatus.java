@@ -20,12 +20,12 @@ import java.util.UUID;
 public class CharacterStatus {
 
     @Id
-    private UUID characterId;
+    private Long characterPrivateId;
 
     @OneToOne
-    @JsonBackReference
     @MapsId
-    @JoinColumn(name = "character_id")
+    @JsonBackReference
+    @JoinColumn(name = "character_private_id")
     private CharacterEntity character;
 
     @Column(name = "current_hp")

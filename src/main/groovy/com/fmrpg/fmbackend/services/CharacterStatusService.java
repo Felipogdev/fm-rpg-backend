@@ -21,7 +21,7 @@ public class CharacterStatusService {
         this.characterSkillsService = characterSkillsService;
     }
 
-    public void crateCharacterStatus(CharacterEntity character, int[] statusArray) {
+    public void createCharacterStatus(CharacterEntity character, int[] statusArray) {
         CharacterStatus status = new CharacterStatus();
         status.setStrength(statusArray[0]);
         status.setConstitution(statusArray[1]);
@@ -30,12 +30,12 @@ public class CharacterStatusService {
         status.setWisdom(statusArray[4]);
         status.setCharisma(statusArray[5]);
 
-
         character.setStatus(status);
         status.setCharacter(character);
-        characterSkillsService.createSkill(status);
 
         characterStatusRepository.save(status);
+
+        characterSkillsService.createSkill(status);
     }
 
     private Integer getModifiers(Integer value) {

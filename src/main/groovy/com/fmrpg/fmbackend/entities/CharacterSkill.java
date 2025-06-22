@@ -7,8 +7,6 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.UUID;
-
 @Entity
 @Table(name = "character_skills")
 @Setter
@@ -18,7 +16,7 @@ import java.util.UUID;
 public class CharacterSkill {
 
     @Id
-    private UUID characterId;
+    private Long privateId;
 
     @OneToOne
     @MapsId
@@ -26,56 +24,57 @@ public class CharacterSkill {
     @JsonIgnore
     private CharacterStatus status;
 
-    private Integer cunning = 0;
+    private int acrobatics = 0;
 
-    private Integer athletics = 0;
+    private int cunning = 0;
 
-    private Integer driving = 0;
+    private int athletics = 0;
 
-    private Integer deception = 0;
+    private int driving = 0;
 
-    private Integer spellcasting = 0;
+    private int deception = 0;
 
-    private Integer fortitude = 0;
+    private int spellcasting = 0;
 
-    private Integer stealth = 0;
+    private int fortitude = 0;
 
-    private Integer history = 0;
+    private int stealth = 0;
 
-    private Integer integrity = 0;
+    private int history = 0;
 
-    private Integer intimidation = 0;
+    private int integrity = 0;
 
-    private Integer insight = 0;
+    private int intimidation = 0;
 
-    private Integer investigation = 0;
+    private int insight = 0;
 
-    private Integer fighting = 0;
+    private int investigation = 0;
 
-    private Integer medicine = 0;
+    private int fighting = 0;
 
-    private Integer occultism = 0;
+    private int medicine = 0;
 
-    private Integer crafting = 0;
+    private int occultism = 0;
 
-    private Integer perception = 0;
+    private int crafting = 0;
 
-    private Integer persuasion = 0;
+    private int perception = 0;
 
-    private Integer performance = 0;
+    private int persuasion = 0;
 
-    private Integer marksmanship = 0;
+    private int performance = 0;
 
-    private Integer sleightOfHand = 0;
+    private int marksmanship = 0;
 
-    private Integer reflexes = 0;
+    private int sleightOfHand = 0;
 
-    private Integer religion = 0;
+    private int reflexes = 0;
 
-    private Integer survival = 0;
+    private int religion = 0;
 
-    private Integer technology = 0;
+    private int survival = 0;
 
-    private Integer willPower = 0;
+    private int technology = 0;
 
+    private int willPower = 0;
 }
