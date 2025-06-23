@@ -29,16 +29,16 @@ public class CharacterStatus {
     private CharacterEntity character;
 
     @Column(name = "current_hp")
-    private Integer currentHp;
+    private Integer currentHp = 4;
 
     @Column(name = "max_hp")
-    private Integer maxHp;
+    private Integer maxHp = 10;
 
     @Column (name = "current_cursed_energy")
-    private Integer currentCursedEnergy;
+    private Integer currentCursedEnergy= 4;
 
     @Column (name = "max_cursed_energy")
-    private Integer maxCursedEnergy;
+    private Integer maxCursedEnergy=10;
 
     @Column (name = "con")
     private Integer constitution;

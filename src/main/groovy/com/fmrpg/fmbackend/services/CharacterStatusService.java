@@ -1,9 +1,13 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusResponseDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.CharacterStatus;
+import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
+import com.fmrpg.fmbackend.mappers.CharacterStatusMapper;
 import com.fmrpg.fmbackend.repositories.CharacterStatusRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.UUID;
@@ -13,12 +17,15 @@ public class CharacterStatusService {
 
     private final CharacterStatusRepository characterStatusRepository;
     private final CharacterSkillsService characterSkillsService;
+    private final CharacterStatusMapper characterStatusMapper;
 
     public CharacterStatusService(
             CharacterStatusRepository characterStatusRepository,
-            CharacterSkillsService characterSkillsService) {
+            CharacterSkillsService characterSkillsService,
+            CharacterStatusMapper characterStatusMapper) {
         this.characterStatusRepository = characterStatusRepository;
         this.characterSkillsService = characterSkillsService;
+        this.characterStatusMapper = characterStatusMapper;
     }
 
     public void createCharacterStatus(CharacterEntity character, int[] statusArray) {
@@ -45,13 +52,11 @@ public class CharacterStatusService {
         return (int) Math.floor((value - 10) / 2.0);
     }
 
-    public CharacterStatus updateCharacterStatus(UUID id, CharacterStatusDto dto) {
-        if (dto == null || id == null) {
-            throw new IllegalArgumentException("CharacterStatusDto and ID must not be null");
-        }
+    public CharacterStatusResponseDto updateCharacterStatus(UUID characterPublicId, CharacterStatusDto dto) {
 
-        CharacterStatus status = characterStatusRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Character status not found"));
+        CharacterStatus status = characterStatusRepository.findByCharacter_PublicId(characterPublicId)
+                .orElseThrow(() -> new EntityNotFoundException("CharacterStatus not found for character with id " + characterPublicId));
+
 
         if(dto.maxHp() != null) {
             status.setMaxHp(dto.maxHp());
@@ -96,6 +101,8 @@ public class CharacterStatusService {
             status.setSoulPoint(dto.soulPoint());
         }
 
-        return characterStatusRepository.save(status);
+       characterStatusRepository.save(status);
+
+        return characterStatusMapper.toDto(status);
     }
 }

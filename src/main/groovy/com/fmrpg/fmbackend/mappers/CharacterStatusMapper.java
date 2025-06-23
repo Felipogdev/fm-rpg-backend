@@ -5,6 +5,6 @@ import com.fmrpg.fmbackend.entities.CharacterStatus;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")
-public interface CharacterStatusDto {
+public interface CharacterStatusMapper {
     CharacterStatusResponseDto toDto(CharacterStatus characterStatus);
 }
