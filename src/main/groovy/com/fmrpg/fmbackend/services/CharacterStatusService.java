@@ -10,6 +10,7 @@ import com.fmrpg.fmbackend.repositories.CharacterStatusRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
 
 @Service
@@ -59,13 +60,19 @@ public class CharacterStatusService {
 
 
         if(dto.maxHp() != null) {
-            status.setMaxHp(dto.maxHp());
+            if (Objects.equals(status.getMaxHp(), status.getCurrentHp())) {
+                status.setMaxHp(dto.maxHp());
+                status.setCurrentHp(dto.maxHp());
+            } else { status.setMaxHp(dto.maxHp());}
         }
         if(dto.currentHp() != null) {
             status.setCurrentHp(dto.currentHp());
         }
         if(dto.maxCursedEnergy() != null) {
-            status.setMaxCursedEnergy(dto.maxCursedEnergy());
+            if(status.getMaxCursedEnergy() == status.getCurrentCursedEnergy()) {
+                status.setMaxCursedEnergy(dto.maxCursedEnergy());
+                status.setCurrentCursedEnergy(dto.maxCursedEnergy());
+            } else { status.setMaxCursedEnergy(dto.maxCursedEnergy()); }
         }
         if(dto.currentCursedEnergy() != null) {
             status.setCurrentCursedEnergy(dto.currentCursedEnergy());

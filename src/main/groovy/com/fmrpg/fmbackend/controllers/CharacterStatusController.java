@@ -23,9 +23,6 @@ public class CharacterStatusController {
     @PatchMapping("/{characterId}")
     public ResponseEntity<CharacterStatusResponseDto> updateCharacterStatus(@PathVariable ("characterId") UUID characterId,
                                                                             @RequestBody CharacterStatusDto dto) {
-        if (dto == null || characterId == null) {
-            throw new IllegalArgumentException("CharacterStatusDto or CharacterId cannot be null");
-        }
 
         return ResponseEntity.ok(characterStatusService.updateCharacterStatus(characterId, dto));
     }
