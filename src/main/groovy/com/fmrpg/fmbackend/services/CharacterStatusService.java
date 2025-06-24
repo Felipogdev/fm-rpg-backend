@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @Service
 public class CharacterStatusService {
@@ -53,62 +54,50 @@ public class CharacterStatusService {
         return (int) Math.floor((value - 10) / 2.0);
     }
 
+    private <T> void updateIfNotNull(T value, Consumer<T> setter) {
+        if (value != null) {
+            setter.accept(value);
+        }
+    }
+
     public CharacterStatusResponseDto updateCharacterStatus(UUID characterPublicId, CharacterStatusDto dto) {
 
         CharacterStatus status = characterStatusRepository.findByCharacter_PublicId(characterPublicId)
                 .orElseThrow(() -> new EntityNotFoundException("CharacterStatus not found for character with id " + characterPublicId));
 
-
-        if(dto.maxHp() != null) {
+        if (dto.maxHp() != null) {
             if (Objects.equals(status.getMaxHp(), status.getCurrentHp())) {
                 status.setMaxHp(dto.maxHp());
                 status.setCurrentHp(dto.maxHp());
-            } else { status.setMaxHp(dto.maxHp());}
-        }
-        if(dto.currentHp() != null) {
-            status.setCurrentHp(dto.currentHp());
-        }
-        if(dto.maxCursedEnergy() != null) {
-            if(status.getMaxCursedEnergy() == status.getCurrentCursedEnergy()) {
-                status.setMaxCursedEnergy(dto.maxCursedEnergy());
-                status.setCurrentCursedEnergy(dto.maxCursedEnergy());
-            } else { status.setMaxCursedEnergy(dto.maxCursedEnergy()); }
-        }
-        if(dto.currentCursedEnergy() != null) {
-            status.setCurrentCursedEnergy(dto.currentCursedEnergy());
-        }
-        if(dto.constitution() != null) {
-            status.setConstitution(dto.constitution());
-        }
-        if(dto.intelligence() != null) {
-            status.setIntelligence(dto.intelligence());
-        }
-        if(dto.dexterity() != null) {
-            status.setDexterity(dto.dexterity());
-        }
-        if(dto.strength() != null) {
-            status.setStrength(dto.strength());
-        }
-        if(dto.wisdom() != null) {
-            status.setWisdom(dto.wisdom());
-        }
-        if(dto.charisma() != null) {
-            status.setCharisma(dto.charisma());
-        }
-        if(dto.initiative() != null) {
-            status.setInitiative(dto.initiative());
-        }
-        if(dto.movement() != null) {
-            status.setMovement(dto.movement());
-        }
-        if(dto.armorClass() != null) {
-            status.setArmorClass(dto.armorClass());
-        }
-        if(dto.soulPoint() != null) {
-            status.setSoulPoint(dto.soulPoint());
+            } else {
+                status.setMaxHp(dto.maxHp());
+            }
         }
 
-       characterStatusRepository.save(status);
+        updateIfNotNull(dto.currentHp(), status::setCurrentHp);
+
+        if (dto.maxCursedEnergy() != null) {
+            if (Objects.equals(status.getMaxCursedEnergy(), status.getCurrentCursedEnergy())) {
+                status.setMaxCursedEnergy(dto.maxCursedEnergy());
+                status.setCurrentCursedEnergy(dto.maxCursedEnergy());
+            } else {
+                status.setMaxCursedEnergy(dto.maxCursedEnergy());
+            }
+        }
+
+        updateIfNotNull(dto.currentCursedEnergy(), status::setCurrentCursedEnergy);
+        updateIfNotNull(dto.constitution(), status::setConstitution);
+        updateIfNotNull(dto.intelligence(), status::setIntelligence);
+        updateIfNotNull(dto.dexterity(), status::setDexterity);
+        updateIfNotNull(dto.strength(), status::setStrength);
+        updateIfNotNull(dto.wisdom(), status::setWisdom);
+        updateIfNotNull(dto.charisma(), status::setCharisma);
+        updateIfNotNull(dto.initiative(), status::setInitiative);
+        updateIfNotNull(dto.movement(), status::setMovement);
+        updateIfNotNull(dto.armorClass(), status::setArmorClass);
+        updateIfNotNull(dto.soulPoint(), status::setSoulPoint);
+
+        characterStatusRepository.save(status);
 
         return characterStatusMapper.toDto(status);
     }

@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.dtos;
 
-public record CharacterSKillDto(
+public record CharacterSkillDto(
         Integer acrobatics,
          Integer cunning,
          Integer athletics,
