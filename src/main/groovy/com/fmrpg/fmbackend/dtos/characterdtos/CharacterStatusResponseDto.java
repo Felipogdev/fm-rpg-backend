@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.dtos.characterdtos;
 
+
 import java.util.List;
 
 public record CharacterStatusResponseDto(

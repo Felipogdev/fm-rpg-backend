@@ -7,6 +7,7 @@ import com.fmrpg.fmbackend.entities.CharacterSkill;
 import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.entities.Skills;
 import com.fmrpg.fmbackend.enums.SkillProficiency;
+import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterSkillsRepository;
 import com.fmrpg.fmbackend.repositories.SkillsRepository;
 import jakarta.persistence.EntityNotFoundException;
@@ -22,8 +23,10 @@ public class CharacterSkillsService {
     private final CharacterSkillsRepository characterSkillsRepository;
     private final SkillsRepository skillsRepository;
 
-    public CharacterSkillsService(CharacterSkillsRepository characterSkillsRepository,
-                                  SkillsRepository skillsRepository) {
+    public CharacterSkillsService(
+            CharacterSkillsRepository characterSkillsRepository,
+            SkillsRepository skillsRepository
+            ) {
         this.characterSkillsRepository = characterSkillsRepository;
         this.skillsRepository = skillsRepository;
     }
@@ -46,7 +49,7 @@ public class CharacterSkillsService {
     }
 
     @Transactional
-    public void updateCharacterSkill(CharacterEntity character, CharacterSkillsDto dto) {
+    public CharacterEntity updateCharacterSkill(CharacterEntity character, CharacterSkillsDto dto) {
         CharacterStatus status = character.getStatus();
 
         CharacterSkill characterSkill = characterSkillsRepository
@@ -62,6 +65,7 @@ public class CharacterSkillsService {
         }
 
         characterSkillsRepository.save(characterSkill);
+        return character;
     }
 
 

@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fmrpg.fmbackend.enums.SkillProficiency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -29,5 +30,6 @@ public class CharacterSkill {
     @Enumerated(EnumType.STRING)
     private SkillProficiency proficiency;
 
-    private int bonus;
+    @Column(name = "bonus")
+    private int bonus = 0;
 }

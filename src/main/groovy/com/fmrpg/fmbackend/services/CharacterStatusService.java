@@ -62,7 +62,7 @@ public class CharacterStatusService {
 
     public CharacterStatusResponseDto updateCharacterStatus(UUID characterPublicId, CharacterStatusDto dto) {
 
-        CharacterStatus status = characterStatusRepository.findByCharacter_PublicId(characterPublicId)
+        CharacterStatus status = characterStatusRepository.findByCharacterPublicId(characterPublicId)
                 .orElseThrow(() -> new EntityNotFoundException("CharacterStatus not found for character with id " + characterPublicId));
 
         if (dto.maxHp() != null) {

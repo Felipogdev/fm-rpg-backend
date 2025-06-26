@@ -10,5 +10,5 @@ import java.util.UUID;
 @Repository
 public interface CharacterStatusRepository extends JpaRepository<CharacterStatus, Long> {
 
-    Optional<CharacterStatus> findByCharacter_PublicId(UUID publicId);
+    Optional<CharacterStatus> findByCharacterPublicId(UUID publicId);
 }

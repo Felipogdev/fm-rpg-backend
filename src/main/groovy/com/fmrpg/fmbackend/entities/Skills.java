@@ -26,4 +26,5 @@ public class Skills {
     @Enumerated(EnumType.STRING)
     @Column(name = "related_attribute")
     private AttributeType relatedAttribute;
+
 }
