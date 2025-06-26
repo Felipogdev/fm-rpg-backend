@@ -44,7 +44,7 @@ public class CharacterStatusService {
 
         characterStatusRepository.save(status);
 
-        characterSkillsService.createSkill(status);
+        characterSkillsService.createSkillsForCharacter(status);
     }
 
     private Integer getModifiers(Integer value) {
@@ -77,7 +77,7 @@ public class CharacterStatusService {
         updateIfNotNull(dto.currentHp(), status::setCurrentHp);
 
         if (dto.maxCursedEnergy() != null) {
-            if (Objects.equals(status.getMaxCursedEnergy(), status.getCurrentCursedEnergy())) {
+            if (    Objects.equals(status.getMaxCursedEnergy(), status.getCurrentCursedEnergy())) {
                 status.setMaxCursedEnergy(dto.maxCursedEnergy());
                 status.setCurrentCursedEnergy(dto.maxCursedEnergy());
             } else {

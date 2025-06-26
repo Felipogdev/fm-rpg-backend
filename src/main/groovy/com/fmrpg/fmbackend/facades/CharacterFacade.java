@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.facades;
 
 
-import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;

@@ -1,4 +1,4 @@
-package com.fmrpg.fmbackend.dtos;
+package com.fmrpg.fmbackend.dtos.characterdtos;
 
 import com.fmrpg.fmbackend.enums.CharacterClass;
 import com.fmrpg.fmbackend.enums.CharacterOrigin;

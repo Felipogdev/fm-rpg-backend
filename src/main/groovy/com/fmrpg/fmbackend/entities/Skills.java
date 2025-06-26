@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.entities;
 
+import com.fmrpg.fmbackend.enums.AttributeType;
 import com.fmrpg.fmbackend.enums.SkillProficiency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -8,26 +9,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "character_skills")
-@Setter
+@Table(name = "skills")
 @Getter
-@AllArgsConstructor
+@Setter
 @NoArgsConstructor
-public class CharacterSkill {
+@AllArgsConstructor
+public class Skills {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    private CharacterStatus status;
-
-    @ManyToOne
-    @JoinColumn(name = "skill_id")
-    private Skills skill;
+    @Column(name = "name")
+    private String name;
 
     @Enumerated(EnumType.STRING)
-    private SkillProficiency proficiency;
-
-    private int bonus;
+    @Column(name = "related_attribute")
+    private AttributeType relatedAttribute;
 }

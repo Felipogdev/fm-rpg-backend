@@ -8,6 +8,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -71,6 +73,6 @@ public class CharacterStatus {
     @Column (name = "soul_point")
     private Integer soulPoint = 100;
 
-    @OneToOne(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CharacterSkill skills;
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CharacterSkill> skills = new ArrayList<>();
 }

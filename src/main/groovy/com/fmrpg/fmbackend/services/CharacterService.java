@@ -1,7 +1,6 @@
 package com.fmrpg.fmbackend.services;
 
-import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
-import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
@@ -9,12 +8,10 @@ import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CharacterService {

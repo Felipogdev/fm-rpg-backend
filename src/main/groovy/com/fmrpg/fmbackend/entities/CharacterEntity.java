@@ -71,6 +71,4 @@ public class CharacterEntity {
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private CharacterStatus status;
-
-
 }
