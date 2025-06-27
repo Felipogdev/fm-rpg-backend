@@ -2,12 +2,15 @@ package com.fmrpg.fmbackend.entities;
 
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 
@@ -20,25 +23,25 @@ import java.util.UUID;
 public class CharacterStatus {
 
     @Id
-    private UUID characterId;
+    private Long characterPrivateId;
 
     @OneToOne
-    @JsonBackReference
     @MapsId
-    @JoinColumn(name = "character_id")
+    @JsonBackReference
+    @JoinColumn(name = "character_private_id")
     private CharacterEntity character;
 
     @Column(name = "current_hp")
-    private Integer currentHp;
+    private Integer currentHp = 4;
 
     @Column(name = "max_hp")
-    private Integer maxHp;
+    private Integer maxHp = 10;
 
     @Column (name = "current_cursed_energy")
-    private Integer currentCursedEnergy;
+    private Integer currentCursedEnergy= 4;
 
     @Column (name = "max_cursed_energy")
-    private Integer maxCursedEnergy;
+    private Integer maxCursedEnergy=10;
 
     @Column (name = "con")
     private Integer constitution;
@@ -71,6 +74,6 @@ public class CharacterStatus {
     @Column (name = "soul_point")
     private Integer soulPoint = 100;
 
-    @OneToOne(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
-    private CharacterSkill skills;
+    @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CharacterSkill> skills = new ArrayList<>();
 }

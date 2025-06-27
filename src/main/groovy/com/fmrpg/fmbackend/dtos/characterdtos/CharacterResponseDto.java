@@ -1,19 +1,18 @@
 package com.fmrpg.fmbackend.dtos.characterdtos;
 
-import com.fmrpg.fmbackend.entities.CharacterStatus;
-import com.fmrpg.fmbackend.enums.CharacterClass;
-import com.fmrpg.fmbackend.enums.CharacterOrigin;
+import com.fmrpg.fmbackend.entities.CharacterClass;
+import com.fmrpg.fmbackend.entities.CharacterOrigin;
 
 import java.util.UUID;
 
 public record CharacterResponseDto(
-        UUID id,
+        UUID publicId,
         String name,
         String imageUrl,
-        CharacterOrigin characterOrigin,
-        CharacterClass characterClass,
+        CharacterClassResponseDto characterOrigin,
+        CharacterOriginResponseDto characterClass,
         String description,
         String grade,
-        CharacterStatus status
+        CharacterStatusResponseDto status
         ) {
 }

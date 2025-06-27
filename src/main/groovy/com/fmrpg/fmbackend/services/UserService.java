@@ -47,11 +47,9 @@ public class UserService {
                 oauth2User.getAttribute("sub")
         );
 
-
         User user = oAuthMapper.toUser(dto);
 
         userRepository.save(user);
-        System.out.println("New user registered: " + email);
     }
 
     public void addCharacterToUser(CharacterEntity character) {
@@ -59,8 +57,8 @@ public class UserService {
         user.getCharacters().add(character);
     }
 
-    public User findUserByOauthId(String oauthId) {
-        return userRepository.findByOauthId(oauthId).orElse(null);
+    public User findUserByGoogleId(String googleId) {
+        return userRepository.findByGoogleId(googleId).orElse(null);
     }
 
     public User validateUser(OAuth2User oauth2User) {
@@ -68,14 +66,13 @@ public class UserService {
             throw new RuntimeException("User not Authenticated");
         }
 
-        String oauthId = oauth2User.getName();
-        User user = findUserByOauthId(oauthId);
+        String googleId = oauth2User.getName();
+        User user = findUserByGoogleId(googleId);
 
         if (user == null) {
             String email = oauth2User.getAttribute("email");
-            throw new RuntimeException("Usuário com OAuth ID " + oauthId + " (email: " + email + ") não encontrado.");
+            throw new RuntimeException("Usuário com OAuth ID " + googleId + " (email: " + email + ") não encontrado.");
         }
-
 
         return user;
     }

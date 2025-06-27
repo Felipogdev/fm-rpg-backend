@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.mappers;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import org.mapstruct.Mapper;
@@ -14,9 +15,9 @@ public interface CharacterMapper {
     @Mapping(target = "lore", expression = "java(sanitize(createCharacterDto.lore()))")
     @Mapping(target = "goal", expression = "java(sanitize(createCharacterDto.goal()))")
     @Mapping(target = "appearance", expression = "java(sanitize(createCharacterDto.appearance()))")
-    CharacterEntity createToEntity(CreateCharacterDto createCharacterDto);
 
-    CharacterEntity toEntity(CharacterDto characterDto);
+    CharacterEntity createToEntity(CreateCharacterDto createCharacterDto);
+    CharacterResponseDto toResponse(CharacterEntity characterEntity);
     default String sanitize(String input) {
         if (input == null) return null;
         return input.replaceAll("[<>]", "");

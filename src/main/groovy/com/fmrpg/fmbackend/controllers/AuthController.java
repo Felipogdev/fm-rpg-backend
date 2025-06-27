@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.controllers;
 
+import com.fmrpg.fmbackend.repositories.UserRepository;
 import com.fmrpg.fmbackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +19,18 @@ public class AuthController {
 
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    AuthController(UserService userService) {
+    AuthController(UserService userService,
+                   UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
 
     @GetMapping("/login-success")
     public ResponseEntity<String> registerUser(@AuthenticationPrincipal OAuth2User oauth2User) {
-        if (userService.findUserByOauthId(oauth2User.getName()) == null) {
+        if (userRepository.findByGoogleId(oauth2User.getName()).isEmpty()) {
             userService.registerUser(oauth2User);
             return ResponseEntity.ok("Usuário registrado");
         }

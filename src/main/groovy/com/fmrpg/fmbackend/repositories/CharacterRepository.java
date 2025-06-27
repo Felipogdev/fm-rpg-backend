@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 import java.util.UUID;
 
 @Repository
-public interface CharacterRepository extends JpaRepository <CharacterEntity, UUID> {
-
-    CharacterEntity getCharacterEntityById(UUID id);
+public interface CharacterRepository extends JpaRepository <CharacterEntity, Long> {
+    CharacterEntity findByPrivateId(Long privateId);
+    CharacterEntity findByPublicId(UUID publicId);
 }

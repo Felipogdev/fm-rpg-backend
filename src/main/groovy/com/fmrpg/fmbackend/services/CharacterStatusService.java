@@ -1,27 +1,36 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusResponseDto;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.entities.CharacterStatus;
+import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
+import com.fmrpg.fmbackend.mappers.CharacterStatusMapper;
 import com.fmrpg.fmbackend.repositories.CharacterStatusRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.Objects;
 import java.util.UUID;
+import java.util.function.Consumer;
 
 @Service
 public class CharacterStatusService {
 
     private final CharacterStatusRepository characterStatusRepository;
     private final CharacterSkillsService characterSkillsService;
+    private final CharacterStatusMapper characterStatusMapper;
 
     public CharacterStatusService(
             CharacterStatusRepository characterStatusRepository,
-            CharacterSkillsService characterSkillsService) {
+            CharacterSkillsService characterSkillsService,
+            CharacterStatusMapper characterStatusMapper) {
         this.characterStatusRepository = characterStatusRepository;
         this.characterSkillsService = characterSkillsService;
+        this.characterStatusMapper = characterStatusMapper;
     }
 
-    public void crateCharacterStatus(CharacterEntity character, int[] statusArray) {
+    public void createCharacterStatus(CharacterEntity character, int[] statusArray) {
         CharacterStatus status = new CharacterStatus();
         status.setStrength(statusArray[0]);
         status.setConstitution(statusArray[1]);
@@ -30,12 +39,12 @@ public class CharacterStatusService {
         status.setWisdom(statusArray[4]);
         status.setCharisma(statusArray[5]);
 
-
         character.setStatus(status);
         status.setCharacter(character);
-        characterSkillsService.createSkill(status);
 
         characterStatusRepository.save(status);
+
+        characterSkillsService.createSkillsForCharacter(status);
     }
 
     private Integer getModifiers(Integer value) {
@@ -45,57 +54,51 @@ public class CharacterStatusService {
         return (int) Math.floor((value - 10) / 2.0);
     }
 
-    public CharacterStatus updateCharacterStatus(UUID id, CharacterStatusDto dto) {
-        if (dto == null || id == null) {
-            throw new IllegalArgumentException("CharacterStatusDto and ID must not be null");
+    private <T> void updateIfNotNull(T value, Consumer<T> setter) {
+        if (value != null) {
+            setter.accept(value);
+        }
+    }
+
+    public CharacterStatusResponseDto updateCharacterStatus(UUID characterPublicId, CharacterStatusDto dto) {
+
+        CharacterStatus status = characterStatusRepository.findByCharacterPublicId(characterPublicId)
+                .orElseThrow(() -> new EntityNotFoundException("CharacterStatus not found for character with id " + characterPublicId));
+
+        if (dto.maxHp() != null) {
+            if (Objects.equals(status.getMaxHp(), status.getCurrentHp())) {
+                status.setMaxHp(dto.maxHp());
+                status.setCurrentHp(dto.maxHp());
+            } else {
+                status.setMaxHp(dto.maxHp());
+            }
         }
 
-        CharacterStatus status = characterStatusRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Character status not found"));
+        updateIfNotNull(dto.currentHp(), status::setCurrentHp);
 
-        if(dto.maxHp() != null) {
-            status.setMaxHp(dto.maxHp());
-        }
-        if(dto.currentHp() != null) {
-            status.setCurrentHp(dto.currentHp());
-        }
-        if(dto.maxCursedEnergy() != null) {
-            status.setMaxCursedEnergy(dto.maxCursedEnergy());
-        }
-        if(dto.currentCursedEnergy() != null) {
-            status.setCurrentCursedEnergy(dto.currentCursedEnergy());
-        }
-        if(dto.constitution() != null) {
-            status.setConstitution(dto.constitution());
-        }
-        if(dto.intelligence() != null) {
-            status.setIntelligence(dto.intelligence());
-        }
-        if(dto.dexterity() != null) {
-            status.setDexterity(dto.dexterity());
-        }
-        if(dto.strength() != null) {
-            status.setStrength(dto.strength());
-        }
-        if(dto.wisdom() != null) {
-            status.setWisdom(dto.wisdom());
-        }
-        if(dto.charisma() != null) {
-            status.setCharisma(dto.charisma());
-        }
-        if(dto.initiative() != null) {
-            status.setInitiative(dto.initiative());
-        }
-        if(dto.movement() != null) {
-            status.setMovement(dto.movement());
-        }
-        if(dto.armorClass() != null) {
-            status.setArmorClass(dto.armorClass());
-        }
-        if(dto.soulPoint() != null) {
-            status.setSoulPoint(dto.soulPoint());
+        if (dto.maxCursedEnergy() != null) {
+            if (    Objects.equals(status.getMaxCursedEnergy(), status.getCurrentCursedEnergy())) {
+                status.setMaxCursedEnergy(dto.maxCursedEnergy());
+                status.setCurrentCursedEnergy(dto.maxCursedEnergy());
+            } else {
+                status.setMaxCursedEnergy(dto.maxCursedEnergy());
+            }
         }
 
-        return characterStatusRepository.save(status);
+        updateIfNotNull(dto.currentCursedEnergy(), status::setCurrentCursedEnergy);
+        updateIfNotNull(dto.constitution(), status::setConstitution);
+        updateIfNotNull(dto.intelligence(), status::setIntelligence);
+        updateIfNotNull(dto.dexterity(), status::setDexterity);
+        updateIfNotNull(dto.strength(), status::setStrength);
+        updateIfNotNull(dto.wisdom(), status::setWisdom);
+        updateIfNotNull(dto.charisma(), status::setCharisma);
+        updateIfNotNull(dto.initiative(), status::setInitiative);
+        updateIfNotNull(dto.movement(), status::setMovement);
+        updateIfNotNull(dto.armorClass(), status::setArmorClass);
+        updateIfNotNull(dto.soulPoint(), status::setSoulPoint);
+
+        characterStatusRepository.save(status);
+
+        return characterStatusMapper.toDto(status);
     }
 }

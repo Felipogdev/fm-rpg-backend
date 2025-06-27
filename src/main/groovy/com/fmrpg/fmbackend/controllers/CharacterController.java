@@ -1,12 +1,10 @@
 package com.fmrpg.fmbackend.controllers;
 
-import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
-import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
-import com.fmrpg.fmbackend.entities.CharacterEntity;
 import com.fmrpg.fmbackend.facades.CharacterFacade;
 import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
 import org.springframework.http.HttpStatus;

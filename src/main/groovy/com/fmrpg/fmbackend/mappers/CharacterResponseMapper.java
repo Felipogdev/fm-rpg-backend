@@ -8,5 +8,4 @@ import org.mapstruct.factory.Mappers;
 @Mapper(componentModel = "spring")
 public interface CharacterResponseMapper {
     CharacterResponseDto toDto(CharacterEntity characterEntity);
-    CharacterEntity toEntity(CharacterResponseDto characterResponseDto);
 }

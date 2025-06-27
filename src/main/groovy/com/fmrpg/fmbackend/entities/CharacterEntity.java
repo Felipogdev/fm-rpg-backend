@@ -1,8 +1,6 @@
 package com.fmrpg.fmbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fmrpg.fmbackend.enums.CharacterClass;
-import com.fmrpg.fmbackend.enums.CharacterOrigin;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -19,12 +17,15 @@ import java.util.UUID;
 public class CharacterEntity {
 
     @Id
-    @Column(name = "id", nullable = false, unique = true)
-    @GeneratedValue(strategy = GenerationType.UUID)
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "private_id", nullable = false, unique = true)
+    private Long privateId;
+
+    @Column(name = "public_id", updatable = false, nullable = false)
+    private UUID publicId = UUID.randomUUID();
 
     @ManyToOne
-    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "private_id", nullable = false)
     @JsonBackReference
     private User user;
 
@@ -34,12 +35,12 @@ public class CharacterEntity {
     @Column(name = "level")
     private Integer level = 1;
 
-    @Column(name = "class")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "class_id", referencedColumnName = "id", nullable = false)
     private CharacterClass characterClass;
 
-    @Column (name = "origin")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "origin_id", referencedColumnName = "id", nullable = false)
     private CharacterOrigin characterOrigin;
 
     @Column(name = "description", columnDefinition = "TEXT")
@@ -68,6 +69,4 @@ public class CharacterEntity {
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private CharacterStatus status;
-
-
 }

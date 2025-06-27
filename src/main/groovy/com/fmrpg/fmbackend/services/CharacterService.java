@@ -1,20 +1,21 @@
 package com.fmrpg.fmbackend.services;
 
-import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
-import com.fmrpg.fmbackend.dtos.UpdateCharacterDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
+import com.fmrpg.fmbackend.entities.CharacterClass;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
+import com.fmrpg.fmbackend.entities.CharacterOrigin;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
+import com.fmrpg.fmbackend.repositories.CharacterClassRepository;
+import com.fmrpg.fmbackend.repositories.CharacterOriginRepository;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
-import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
-import java.util.UUID;
 
 @Service
 public class CharacterService {
@@ -24,31 +25,45 @@ public class CharacterService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final CharacterStatusService characterStatusService;
+    private final CharacterClassRepository characterClassRepository;
+    private final CharacterOriginRepository characterOriginRepository;
 
     public CharacterService(CharacterRepository characterRepository,
                             CharacterMapper characterMapper,
                             UserRepository userRepository,
                             UserService userService,
-                            CharacterStatusService characterStatusService) {
+                            CharacterStatusService characterStatusService,
+                            CharacterClassRepository characterClassRepository,
+                            CharacterOriginRepository characterOriginRepository) {
         this.characterRepository = characterRepository;
         this.characterMapper = characterMapper;
         this.userRepository = userRepository;
         this.userService = userService;
         this.characterStatusService = characterStatusService;
+        this.characterClassRepository = characterClassRepository;
+        this.characterOriginRepository = characterOriginRepository;
 
     }
 
-    public CharacterEntity createCharacter(String oauthId, CreateCharacterDto dto) {
-        if (dto == null || oauthId == null) {
+    public CharacterEntity createCharacter(String googleId, CreateCharacterDto dto) {
+        if (dto == null || googleId == null) {
             throw new IllegalArgumentException("CharacterDto or UserId cannot be null");
         }
 
-        User user = userRepository.findByOauthId(oauthId)
+        User user = userRepository.findByGoogleId(googleId)
                 .orElseThrow(() -> new IllegalArgumentException("User does not exist"));
 
         CharacterEntity character = characterMapper.createToEntity(dto);
 
+        CharacterClass characterClass = characterClassRepository.findById(dto.characterClassId())
+                .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+
+        CharacterOrigin characterOrigin = characterOriginRepository.findById(dto.characterOriginId())
+                .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
+
         character.setUser(user);
+        character.setCharacterClass(characterClass);
+        character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
 
@@ -65,31 +80,24 @@ public class CharacterService {
 
 
         characterRepository.save(character);
-        characterStatusService.crateCharacterStatus(character, statusFromDto);
+        characterStatusService.createCharacterStatus(character, statusFromDto);
 
         return character;
     }
 
-    public List<CharacterEntity> getAllCharactersFromUser(UUID userId) {
+    public List<CharacterEntity> getAllCharactersFromUser(Long privateId) {
 
-        User user = userRepository.findById(userId)
-                .orElseThrow(() -> new IllegalArgumentException("User with ID " + userId + " does not exist"));
+        User user = userRepository.findByPrivateId(privateId)
+                .orElseThrow(() -> new IllegalArgumentException("User with ID  does not exist"));
 
         return user.getCharacters();
     }
 
-    public CharacterEntity getCharacterById(UUID id) {
-        return characterRepository.findById(id)
-                .orElseThrow(() -> new IllegalArgumentException("Character with ID " + id + " does not exist"));
-    }
 
-    public CharacterEntity updateCharacter(UUID id, UpdateCharacterDto dto) {
-
-        if (dto == null || id == null) {
-            throw new IllegalArgumentException("Json or ID cannot be null");
+    public CharacterEntity updateCharacter(CharacterEntity character, UpdateCharacterDto dto) {
+        if (dto == null || character == null) {
+            throw new IllegalArgumentException("DTO or character cannot be null");
         }
-
-        CharacterEntity character = getCharacterById(id);
 
         if (dto.name() != null) {
             character.setName(dto.name());
@@ -118,17 +126,14 @@ public class CharacterService {
         return characterRepository.save(character);
     }
 
-    public User getUserByCharacterId(UUID characterId) {
-        CharacterEntity character = this.getCharacterById(characterId);
+    public User getUserByCharacterId(Long privateId) {
+        CharacterEntity character = characterRepository.findByPrivateId(privateId);
         return character.getUser();
     }
 
-    public void deleteCharacter(UUID id) {
-        CharacterEntity character = getCharacterById(id);
-        User user = this.getUserByCharacterId(id);
-
+    public void deleteCharacter(CharacterEntity character) {
+        User user = character.getUser();
         user.getCharacters().remove(character);
-
         characterRepository.delete(character);
     }
 
@@ -138,7 +143,7 @@ public class CharacterService {
         }
 
         return user.getCharacters() != null &&
-                user.getCharacters().stream().anyMatch(c -> c.getId().equals(character.getId()));
+                user.getCharacters().stream().anyMatch(c -> c.getPrivateId().equals(character.getPrivateId()));
     }
 
     public void validateOwnership(User user, CharacterEntity character) {
