@@ -3,7 +3,6 @@ package com.fmrpg.fmbackend.entities;
 
 import com.fmrpg.fmbackend.enums.ItemCategory;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 
 
 @MappedSuperclass
@@ -24,4 +23,8 @@ public class ItemAbstract {
 
     @Column(name = "cost")
     Integer cost;
+
+    @Column(name = "description", columnDefinition = "TEXT")
+    String description;
+
 }
