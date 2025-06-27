@@ -9,8 +9,8 @@ public record CharacterResponseDto(
         UUID publicId,
         String name,
         String imageUrl,
-        CharacterOrigin characterOrigin,
-        CharacterClass characterClass,
+        CharacterClassResponseDto characterOrigin,
+        CharacterOriginResponseDto characterClass,
         String description,
         String grade,
         CharacterStatusResponseDto status
