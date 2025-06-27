@@ -2,9 +2,13 @@ package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
+import com.fmrpg.fmbackend.entities.CharacterClass;
 import com.fmrpg.fmbackend.entities.CharacterEntity;
+import com.fmrpg.fmbackend.entities.CharacterOrigin;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
+import com.fmrpg.fmbackend.repositories.CharacterClassRepository;
+import com.fmrpg.fmbackend.repositories.CharacterOriginRepository;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import org.springframework.http.HttpStatus;
@@ -21,17 +25,23 @@ public class CharacterService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final CharacterStatusService characterStatusService;
+    private final CharacterClassRepository characterClassRepository;
+    private final CharacterOriginRepository characterOriginRepository;
 
     public CharacterService(CharacterRepository characterRepository,
                             CharacterMapper characterMapper,
                             UserRepository userRepository,
                             UserService userService,
-                            CharacterStatusService characterStatusService) {
+                            CharacterStatusService characterStatusService,
+                            CharacterClassRepository characterClassRepository,
+                            CharacterOriginRepository characterOriginRepository) {
         this.characterRepository = characterRepository;
         this.characterMapper = characterMapper;
         this.userRepository = userRepository;
         this.userService = userService;
         this.characterStatusService = characterStatusService;
+        this.characterClassRepository = characterClassRepository;
+        this.characterOriginRepository = characterOriginRepository;
 
     }
 
@@ -45,7 +55,15 @@ public class CharacterService {
 
         CharacterEntity character = characterMapper.createToEntity(dto);
 
+        CharacterClass characterClass = characterClassRepository.findById(dto.characterClassId())
+                .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+
+        CharacterOrigin characterOrigin = characterOriginRepository.findById(dto.characterOriginId())
+                .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
+
         character.setUser(user);
+        character.setCharacterClass(characterClass);
+        character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
 

@@ -18,8 +18,6 @@ public interface CharacterMapper {
 
     CharacterEntity createToEntity(CreateCharacterDto createCharacterDto);
     CharacterResponseDto toResponse(CharacterEntity characterEntity);
-
-    CharacterEntity toEntity(CharacterDto characterDto);
     default String sanitize(String input) {
         if (input == null) return null;
         return input.replaceAll("[<>]", "");

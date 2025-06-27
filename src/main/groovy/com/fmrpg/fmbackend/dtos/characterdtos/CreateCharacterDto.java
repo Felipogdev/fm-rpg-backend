@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.dtos.characterdtos;
 
-import com.fmrpg.fmbackend.enums.CharacterClass;
-import com.fmrpg.fmbackend.enums.CharacterOrigin;
+import com.fmrpg.fmbackend.entities.CharacterClass;
+import com.fmrpg.fmbackend.entities.CharacterOrigin;
 
 public record CreateCharacterDto(
         Integer constitution,
@@ -10,8 +10,8 @@ public record CreateCharacterDto(
         Integer strength,
         Integer wisdom,
         Integer charisma,
-        CharacterClass characterClass,
-        CharacterOrigin characterOrigin,
+        Long characterClassId,
+        Long characterOriginId,
         String name,
         String description,
         String appearance,

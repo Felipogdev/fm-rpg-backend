@@ -1,8 +1,6 @@
 package com.fmrpg.fmbackend.entities;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fmrpg.fmbackend.enums.CharacterClass;
-import com.fmrpg.fmbackend.enums.CharacterOrigin;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -37,12 +35,12 @@ public class CharacterEntity {
     @Column(name = "level")
     private Integer level = 1;
 
-    @Column(name = "class")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "class_id", referencedColumnName = "id", nullable = false)
     private CharacterClass characterClass;
 
-    @Column (name = "origin")
-    @Enumerated(EnumType.STRING)
+    @ManyToOne
+    @JoinColumn(name = "origin_id", referencedColumnName = "id", nullable = false)
     private CharacterOrigin characterOrigin;
 
     @Column(name = "description", columnDefinition = "TEXT")
