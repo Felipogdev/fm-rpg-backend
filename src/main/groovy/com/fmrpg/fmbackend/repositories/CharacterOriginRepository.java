@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.repositories;
 
-import com.fmrpg.fmbackend.entities.CharacterOrigin;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

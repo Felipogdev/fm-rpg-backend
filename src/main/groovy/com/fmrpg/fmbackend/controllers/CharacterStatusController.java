@@ -2,7 +2,6 @@ package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusResponseDto;
-import com.fmrpg.fmbackend.entities.CharacterStatus;
 import com.fmrpg.fmbackend.services.CharacterStatusService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

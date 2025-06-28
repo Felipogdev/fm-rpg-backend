@@ -1,19 +1,20 @@
 package com.fmrpg.fmbackend.entities;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 @Entity
 @Table(name = "weapon_properties")
-@AllArgsConstructor
 @NoArgsConstructor
+@Getter
+@Setter
 public class WeaponProperties {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
 
     @Column(name = "name")
@@ -21,4 +22,9 @@ public class WeaponProperties {
 
     @Column(name = "description", columnDefinition = "TEXT")
     String description;
+
+    public WeaponProperties(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

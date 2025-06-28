@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.repositories;
 
-import com.fmrpg.fmbackend.entities.CharacterStatus;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterStatus;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
