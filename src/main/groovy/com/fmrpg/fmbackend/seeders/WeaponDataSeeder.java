@@ -27,6 +27,8 @@ public class WeaponDataSeeder implements CommandLineRunner {
 
 
         if (weaponRepository.count() > 0) return;
+        if (weaponGroupRepository.count() > 0) return;
+        if (weaponPropertiesRepository.count() > 0) return;
 
             List<String> groupNames = List.of(
                 "Faca", "Bastão", "Espada", "Pugilato", "Haste", "Machado",
