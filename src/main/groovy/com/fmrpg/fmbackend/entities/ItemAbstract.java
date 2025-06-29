@@ -4,8 +4,9 @@ package com.fmrpg.fmbackend.entities;
 import com.fmrpg.fmbackend.enums.ItemCategory;
 import jakarta.persistence.*;
 
-
-@MappedSuperclass
+@Entity
+@Table(name= "items")
+@Inheritance(strategy = InheritanceType.JOINED)
 public class ItemAbstract {
 
     @Id
