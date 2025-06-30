@@ -20,6 +20,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.util.ArrayList;
+import java.util.List;
 
 @Service
 public class ItemService {
@@ -213,5 +214,20 @@ public class ItemService {
         return specialItemsCharacterRepository.save(item);
     }
 
+    @Transactional
+    public void deleteItem(OAuth2User oAuth2User, CharacterEntity character, Long itemId) {
+        validateCharacterFromUser(oAuth2User, character);
+
+        CharacterItem item = characterItemRepository.findById(itemId).orElseThrow();
+
+        character.getInventory().remove(item);
+        characterItemRepository.delete(item);
+    }
+
+    public List<CharacterItem> showInventory(OAuth2User oAuth2User, CharacterEntity character) {
+        validateCharacterFromUser(oAuth2User, character);
+
+        return character.getInventory();
+    }
 }
 

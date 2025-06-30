@@ -10,6 +10,7 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.UUID;
 
 
@@ -35,7 +36,7 @@ public class ItemController {
         return ResponseEntity.ok(itemService.createItem(oAuth2User ,character, dto.name()));
     }
 
-    @PutMapping("/{characterId}/{itemId}")
+    @PatchMapping("/{characterId}/{itemId}")
     public ResponseEntity<CharacterItem> updateItem(
             @AuthenticationPrincipal OAuth2User oAuth2User,
             @RequestBody CharacterItemDto dto,
@@ -55,7 +56,6 @@ public class ItemController {
 
         if (dto instanceof UniformItemDto uniformDto){
             return ResponseEntity.ok(itemService.updateUniform(oAuth2User, character, uniformDto, itemId));
-
         }
 
         if (dto instanceof SpecialItemDto specialItemDto) {
@@ -63,6 +63,28 @@ public class ItemController {
         }
 
         throw new IllegalArgumentException("dto null");
+    }
+
+    @DeleteMapping("/{characterId}/{itemId}")
+    public ResponseEntity<String> deleteItem(
+            @AuthenticationPrincipal OAuth2User oAuth2User,
+            @RequestBody CharacterItemDto dto,
+            @PathVariable("characterId") UUID characterId,
+            @PathVariable("itemId") Long itemId
+    ) {
+        CharacterEntity character = characterRepository.findByPublicId(characterId);
+
+        itemService.deleteItem(oAuth2User,character,itemId);
+        return ResponseEntity.ok("Item deletado");
+    }
+
+    @GetMapping("/{characterId}")
+    public ResponseEntity<List<CharacterItem>> getInventory(
+            @AuthenticationPrincipal OAuth2User oAuth2User,
+    @PathVariable("characterId") UUID characterId) {
+        CharacterEntity character = characterRepository.findByPublicId(characterId);
+
+        return ResponseEntity.ok(itemService.showInventory(oAuth2User,character));
     }
 
 

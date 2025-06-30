@@ -19,7 +19,12 @@ public interface CharacterMapper {
     CharacterResponseDto toResponse(CharacterEntity characterEntity);
     default String sanitize(String input) {
         if (input == null) return null;
-        return input.replaceAll("[<>]", "");
+        return input
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
     }
 
 }

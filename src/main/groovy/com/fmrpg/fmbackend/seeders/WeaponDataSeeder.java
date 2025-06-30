@@ -89,11 +89,6 @@ public class WeaponDataSeeder implements CommandLineRunner {
             propertyMap.put(name, prop);
         }
 
-        weaponPropertiesRepository.saveAll(
-                propertiesWithDescriptions.entrySet().stream()
-                        .map(entry -> new WeaponProperties(entry.getKey(), entry.getValue()))
-                        .collect(Collectors.toList())
-        );
 
         weaponRepository.saveAll(
                 List.of(
