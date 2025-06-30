@@ -32,7 +32,7 @@ public class ItemController {
                                                     @RequestBody ItemDto dto) {
 
         CharacterEntity character = characterRepository.findByPublicId(characterId);
-        return ResponseEntity.ok(itemService.createItem(character, dto.name()));
+        return ResponseEntity.ok(itemService.createItem(oAuth2User ,character, dto.name()));
     }
 
 

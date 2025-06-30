@@ -74,4 +74,9 @@ public class UserService {
 
         return user;
     }
+
+    public boolean isCharacterFromuser(User user, CharacterEntity character) {
+        if (user == null || character == null) return false;
+       return user.getCharacters().contains(character);
+    }
 }

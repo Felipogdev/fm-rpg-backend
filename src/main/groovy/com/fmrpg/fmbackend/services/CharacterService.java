@@ -2,6 +2,7 @@ package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
+import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterClass;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
@@ -150,6 +151,11 @@ public class CharacterService {
         if (!isCharacterOwnedByUser(user, character)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN, "User does not own this character.");
         }
+    }
+
+    public boolean isItemFromCharacter(CharacterEntity character, CharacterItem item) {
+        if (character == null || item == null || character.getInventory() == null) return false;
+        return character.getInventory().contains(item);
     }
 
 
