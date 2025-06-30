@@ -35,10 +35,9 @@ public class Weapon extends ItemAbstract {
 
     @ManyToMany
     @JoinTable(name = "weapon_weapon_properties",
-    joinColumns = @JoinColumn(name = "weapon_id"),
-            inverseJoinColumns = @JoinColumn(name = "property_id")
-    )
-    List<WeaponProperties> weaponProperties = new ArrayList<>();
+            joinColumns = @JoinColumn(name = "weapon_id"),
+            inverseJoinColumns = @JoinColumn(name = "property_id"))
+    private List<WeaponProperties> weaponProperties = new ArrayList<>();
 
     public Weapon(String name, Integer weight, Integer cost, String description, List<Integer> diceQuantity, List<Integer> diceValue, Integer critMargin, DamageType damageType, WeaponGroup weaponGroup, List<WeaponProperties> weaponProperties ) {
         this.name = name;

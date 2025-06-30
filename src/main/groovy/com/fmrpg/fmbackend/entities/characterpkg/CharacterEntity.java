@@ -1,8 +1,8 @@
 package com.fmrpg.fmbackend.entities.characterpkg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fmrpg.fmbackend.entities.CharacterItem;
 import com.fmrpg.fmbackend.entities.User;
+import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;

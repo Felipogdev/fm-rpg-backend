@@ -30,7 +30,7 @@ public class WeaponDataSeeder implements CommandLineRunner {
         if (weaponGroupRepository.count() > 0) return;
         if (weaponPropertiesRepository.count() > 0) return;
 
-            List<String> groupNames = List.of(
+        List<String> groupNames = List.of(
                 "Faca", "Bastão", "Espada", "Pugilato", "Haste", "Machado",
                 "Outro", "Chicote", "Martelo", "Arco", "Besta", "Tiro", "Dardo"
         );
@@ -82,7 +82,7 @@ public class WeaponDataSeeder implements CommandLineRunner {
                         .collect(Collectors.toList())
         );
 
-            Map<String, WeaponProperties> propertyMap = new HashMap<>();
+        Map<String, WeaponProperties> propertyMap = new HashMap<>();
         for (String name : propertiesWithDescriptions.keySet()) {
             WeaponProperties prop = weaponPropertiesRepository.findByName(name)
                     .orElseThrow(() -> new RuntimeException("Propriedade " + name + " não encontrada"));
@@ -111,8 +111,8 @@ public class WeaponDataSeeder implements CommandLineRunner {
                         new Weapon("Manopla", 1, 1, "Uma manopla feita de aço, protegendo as mãos e as transformando em efetivas armas. Ocupa um espaço.", null, null, 19, DamageType.IMPACTO, groupMap.get("Pugilato"), List.of(propertyMap.get("Especial"), propertyMap.get("Manopla"))),
                         new Weapon("Martelo", 1, 1, "Uma haste de madeira resistente com uma cabeça de metal na ponta. Ocupa um espaço.", List.of(1), List.of(8), 20, DamageType.IMPACTO, groupMap.get("Martelo"), List.of(propertyMap.get("Versátil"))),
                         new Weapon("Tridente", 1, 1, "Uma arma antiga, semelhante a uma lança, mas com a sua ponta se dividindo em três. Ocupa um espaço.", List.of(1), List.of(6), 19, DamageType.PERFURANTE, groupMap.get("Haste"), List.of(propertyMap.get("Arremessável"), propertyMap.get("Estendida"), propertyMap.get("Versátil"))),
-//
-//                        // Armas Simples a Distância
+
+                        // Armas Simples a Distância
                         new Weapon("Arco Curto", 1, 1, "Um arco curto e comum, normalmente feito de madeira. Não é necessário recarregar com um arco curto, mas você deve estar utilizando uma aljava carregada com flechas. Ocupa dois espaços.", List.of(1), List.of(6), 20, DamageType.PERFURANTE, groupMap.get("Arco"), List.of(propertyMap.get("Duas Mãos"))),
                         new Weapon("Besta Leve", 1, 1, "Um arco montado sobre uma coronha e com um gatilho embutido, disparando com maior potência. Uma besta leve precisa recarregar a cada disparo. Ocupa um espaço.", List.of(1), List.of(8), 19, DamageType.PERFURANTE, groupMap.get("Besta"), List.of(propertyMap.get("Recarga"), propertyMap.get("Leve"))),
                         new Weapon("Pistola", 2, 1, "A mais simples arma de fogo, facilmente manuseada, mas ainda letal. Uma pistola precisa recarregar a cada doze disparos. Ocupa um espaço.", List.of(2), List.of(6), 19, DamageType.PERFURANTE, groupMap.get("Tiro"), List.of(propertyMap.get("Recarga"))),

@@ -3,10 +3,14 @@ package com.fmrpg.fmbackend.entities;
 
 import com.fmrpg.fmbackend.enums.ItemCategory;
 import jakarta.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Table(name= "items")
 @Inheritance(strategy = InheritanceType.JOINED)
+@Getter
+@Setter
 public class ItemAbstract {
 
     @Id
