@@ -1,13 +1,20 @@
 package com.fmrpg.fmbackend.services;
 
+import com.fmrpg.fmbackend.dtos.ShieldItemDto;
+import com.fmrpg.fmbackend.dtos.SpecialItemDto;
+import com.fmrpg.fmbackend.dtos.UniformItemDto;
+import com.fmrpg.fmbackend.dtos.WeaponItemDto;
 import com.fmrpg.fmbackend.entities.*;
 import com.fmrpg.fmbackend.entities.characteritempkg.*;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.repositories.UserRepository;
+import com.fmrpg.fmbackend.repositories.WeaponGroupRepository;
+import com.fmrpg.fmbackend.repositories.WeaponPropertiesRepository;
 import com.fmrpg.fmbackend.repositories.characteritempkg.*;
 import com.fmrpg.fmbackend.repositories.ItemRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
@@ -26,9 +33,11 @@ public class ItemService {
     private final UserRepository userRepository;
     private final UserService userService;
     private final CharacterService characterService;
+    private final WeaponGroupRepository weaponGroupRepository;
+    private final WeaponPropertiesRepository weaponPropertiesRepository;
 
     public ItemService(ItemRepository itemRepository,
-                       CharacterItemRepository characterItemRepository, WeaponCharacterRepository weaponCharacterRepository, UniformCharacterRepository uniformCharacterRepository, ShieldCharacterRepository shieldCharacterRepository, SpecialItemsCharacterRepository specialItemsCharacterRepository, UserRepository userRepository, UserService userService, CharacterService characterService
+                       CharacterItemRepository characterItemRepository, WeaponCharacterRepository weaponCharacterRepository, UniformCharacterRepository uniformCharacterRepository, ShieldCharacterRepository shieldCharacterRepository, SpecialItemsCharacterRepository specialItemsCharacterRepository, UserRepository userRepository, UserService userService, CharacterService characterService, WeaponGroupRepository weaponGroupRepository, WeaponPropertiesRepository weaponPropertiesRepository
     ) {
         this.itemRepository = itemRepository;
         this.characterItemRepository = characterItemRepository;
@@ -40,6 +49,9 @@ public class ItemService {
         this.userRepository = userRepository;
         this.userService = userService;
         this.characterService = characterService;
+
+        this.weaponGroupRepository = weaponGroupRepository;
+        this.weaponPropertiesRepository = weaponPropertiesRepository;
     }
 
 
@@ -129,5 +141,77 @@ public class ItemService {
         throw new IllegalArgumentException("Tipo de item '" + itemName + "' não é suportado.");
     }
 
+    @Transactional
+    public CharacterItem updateWeapon(OAuth2User oAuth2User, CharacterEntity character, WeaponItemDto dto, Long itemId) {
+        validateCharacterFromUser(oAuth2User, character);
+
+        WeaponCharacter item = weaponCharacterRepository.findById(itemId).orElseThrow();
+        validadeItemFromCharacter(character, item);
+
+        if(dto.name() != null) item.setName(dto.name());
+        if(dto.description() != null) item.setDescription(dto.description());
+        if(dto.cost() != null) item.setCost(dto.cost());
+        if(dto.weight() != null) item.setWeight(dto.weight());
+        if(dto.diceQuantity() != null) item.setDiceQuantity(dto.diceQuantity());
+        if(dto.diceValue() != null) item.setDiceValue(dto.diceValue());
+        if(dto.damageType() != null) item.setDamageType(dto.damageType());
+        if(dto.critMargin() != null) item.setCritMargin(dto.critMargin());
+        if(dto.weaponGroup() != null) item.setWeaponGroup(weaponGroupRepository.findByName(dto.weaponGroup()).orElseThrow());
+        if(dto.weaponProperties() != null) item.getWeaponProperties().add(weaponPropertiesRepository.findByName(dto.weaponProperties()).orElseThrow());
+
+        return weaponCharacterRepository.save(item);
     }
+
+    @Transactional
+    public CharacterItem updateShield(OAuth2User oAuth2User, CharacterEntity character, ShieldItemDto dto, Long itemId) {
+
+        validateCharacterFromUser(oAuth2User, character);
+
+        ShieldCharacter item = shieldCharacterRepository.findById(itemId).orElseThrow();
+        validadeItemFromCharacter(character, item);
+
+        if(dto.name() != null) item.setName(dto.name());
+        if(dto.description() != null) item.setDescription(dto.description());
+        if(dto.cost() != null) item.setCost(dto.cost());
+        if(dto.weight() != null) item.setWeight(dto.weight());
+        if(dto.bonusArmor() != null) item.setBonusArmor(dto.bonusArmor());
+        if(dto.penalty() != null) item.setPenalty(dto.penalty());
+
+        return shieldCharacterRepository.save(item);
+    }
+
+    @Transactional
+    public CharacterItem updateUniform(OAuth2User oAuth2User, CharacterEntity character, UniformItemDto dto, Long itemId) {
+        validateCharacterFromUser(oAuth2User, character);
+
+        UniformCharacter item = uniformCharacterRepository.findById(itemId).orElseThrow();
+        validadeItemFromCharacter(character, item);
+
+        if(dto.name() != null) item.setName(dto.name());
+        if(dto.description() != null) item.setDescription(dto.description());
+        if(dto.cost() != null) item.setCost(dto.cost());
+        if(dto.weight() != null) item.setWeight(dto.weight());
+        if(dto.bonusArmor() != null) item.setBonusArmor(dto.bonusArmor());
+        if(dto.penalty() != null) item.setPenalty(dto.penalty());
+
+        return uniformCharacterRepository.save(item);
+    }
+
+    @Transactional
+    public CharacterItem updateSpecialItem(OAuth2User oAuth2User, CharacterEntity character, SpecialItemDto dto, Long itemId) {
+        validateCharacterFromUser(oAuth2User, character);
+
+        SpecialItemCharacter item = specialItemsCharacterRepository.findById(itemId).orElseThrow();
+        validadeItemFromCharacter(character, item);
+
+        if(dto.name() != null) item.setName(dto.name());
+        if(dto.description() != null) item.setDescription(dto.description());
+        if(dto.cost() != null) item.setCost(dto.cost());
+        if(dto.weight() != null) item.setWeight(dto.weight());
+        if(dto.specialItemCategory() != null) item.setSpecialItemCategory(dto.specialItemCategory());
+
+        return specialItemsCharacterRepository.save(item);
+    }
+
+}
 

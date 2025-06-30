@@ -1,6 +1,6 @@
 package com.fmrpg.fmbackend.controllers;
 
-import com.fmrpg.fmbackend.dtos.ItemDto;
+import com.fmrpg.fmbackend.dtos.*;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
@@ -33,6 +33,36 @@ public class ItemController {
 
         CharacterEntity character = characterRepository.findByPublicId(characterId);
         return ResponseEntity.ok(itemService.createItem(oAuth2User ,character, dto.name()));
+    }
+
+    @PutMapping("/{characterId}/{itemId}")
+    public ResponseEntity<CharacterItem> updateItem(
+            @AuthenticationPrincipal OAuth2User oAuth2User,
+            @RequestBody CharacterItemDto dto,
+            @PathVariable("characterId") UUID characterId,
+            @PathVariable("itemId") Long itemId
+    ) {
+
+        CharacterEntity character = characterRepository.findByPublicId(characterId);
+
+        if (dto instanceof  WeaponItemDto weaponDto) {
+            return ResponseEntity.ok(itemService.updateWeapon(oAuth2User, character, weaponDto, itemId));
+        }
+
+        if (dto instanceof ShieldItemDto shieldDto) {
+            return ResponseEntity.ok(itemService.updateShield(oAuth2User, character, shieldDto, itemId));
+        }
+
+        if (dto instanceof UniformItemDto uniformDto){
+            return ResponseEntity.ok(itemService.updateUniform(oAuth2User, character, uniformDto, itemId));
+
+        }
+
+        if (dto instanceof SpecialItemDto specialItemDto) {
+            return ResponseEntity.ok(itemService.updateSpecialItem(oAuth2User, character, specialItemDto, itemId));
+        }
+
+        throw new IllegalArgumentException("dto null");
     }
 
 
