@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.OAuth2UserDto;
-import com.fmrpg.fmbackend.entities.CharacterEntity;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.mappers.OAuthMapper;
 import com.fmrpg.fmbackend.repositories.UserRepository;
@@ -9,8 +9,6 @@ import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
-import java.util.UUID;
 
 @Service
 public class UserService {
@@ -75,5 +73,10 @@ public class UserService {
         }
 
         return user;
+    }
+
+    public boolean isCharacterFromuser(User user, CharacterEntity character) {
+        if (user == null || character == null) return false;
+       return user.getCharacters().contains(character);
     }
 }

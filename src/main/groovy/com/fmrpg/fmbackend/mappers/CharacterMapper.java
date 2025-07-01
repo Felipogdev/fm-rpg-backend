@@ -1,9 +1,8 @@
 package com.fmrpg.fmbackend.mappers;
 
-import com.fmrpg.fmbackend.dtos.characterdtos.CharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
-import com.fmrpg.fmbackend.entities.CharacterEntity;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
@@ -20,7 +19,12 @@ public interface CharacterMapper {
     CharacterResponseDto toResponse(CharacterEntity characterEntity);
     default String sanitize(String input) {
         if (input == null) return null;
-        return input.replaceAll("[<>]", "");
+        return input
+                .replace("&", "&amp;")
+                .replace("<", "&lt;")
+                .replace(">", "&gt;")
+                .replace("\"", "&quot;")
+                .replace("'", "&#x27;");
     }
 
 }

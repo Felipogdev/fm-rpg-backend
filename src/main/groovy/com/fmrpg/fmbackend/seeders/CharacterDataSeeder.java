@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.seeders;
 
-import com.fmrpg.fmbackend.entities.CharacterClass;
-import com.fmrpg.fmbackend.entities.CharacterOrigin;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterClass;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 import com.fmrpg.fmbackend.repositories.CharacterClassRepository;
 import com.fmrpg.fmbackend.repositories.CharacterOriginRepository;
 import org.springframework.boot.CommandLineRunner;

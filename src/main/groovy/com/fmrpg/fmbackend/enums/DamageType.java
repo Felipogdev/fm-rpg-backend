@@ -14,5 +14,6 @@ public enum DamageType {
     QUEIMANTE,
     RADIANTE,
     VENENOSO,
-    ALMA
+    ALMA,
+    ESPECIAL
 }

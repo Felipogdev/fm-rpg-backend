@@ -1,4 +1,4 @@
-package com.fmrpg.fmbackend.entities;
+package com.fmrpg.fmbackend.entities.characterpkg;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -7,18 +7,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 @Entity
-@Table(name = "character_classes")
+@Table(name = "character_origins")
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class CharacterClass{
+public class CharacterOrigin {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name", nullable = false, unique = true)
+    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")

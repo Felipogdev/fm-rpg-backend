@@ -2,9 +2,8 @@ package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterSkillsDto;
-import com.fmrpg.fmbackend.entities.CharacterEntity;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
-import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.services.CharacterSkillsService;
 import org.springframework.http.ResponseEntity;

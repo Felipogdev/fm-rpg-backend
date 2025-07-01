@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.mappers;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterStatusResponseDto;
-import com.fmrpg.fmbackend.entities.CharacterStatus;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterStatus;
 import org.mapstruct.Mapper;
 
 @Mapper(componentModel = "spring")

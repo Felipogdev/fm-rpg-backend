@@ -1,6 +1,6 @@
-package com.fmrpg.fmbackend.entities;
+package com.fmrpg.fmbackend.entities.characterpkg;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fmrpg.fmbackend.entities.Skills;
 import com.fmrpg.fmbackend.enums.SkillProficiency;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

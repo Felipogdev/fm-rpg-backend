@@ -1,11 +1,15 @@
-package com.fmrpg.fmbackend.entities;
+package com.fmrpg.fmbackend.entities.characterpkg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fmrpg.fmbackend.entities.User;
+import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Entity
@@ -69,4 +73,7 @@ public class CharacterEntity {
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private CharacterStatus status;
+
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CharacterItem> inventory = new ArrayList<>();
 }

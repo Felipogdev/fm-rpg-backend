@@ -2,12 +2,11 @@ package com.fmrpg.fmbackend.services;
 
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterSkillsDto;
-import com.fmrpg.fmbackend.entities.CharacterEntity;
-import com.fmrpg.fmbackend.entities.CharacterSkill;
-import com.fmrpg.fmbackend.entities.CharacterStatus;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterSkill;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterStatus;
 import com.fmrpg.fmbackend.entities.Skills;
 import com.fmrpg.fmbackend.enums.SkillProficiency;
-import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterSkillsRepository;
 import com.fmrpg.fmbackend.repositories.SkillsRepository;
 import jakarta.persistence.EntityNotFoundException;

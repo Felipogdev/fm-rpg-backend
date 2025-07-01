@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.dtos.characterdtos;
 
-import com.fmrpg.fmbackend.entities.CharacterClass;
-import com.fmrpg.fmbackend.entities.CharacterOrigin;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterClass;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 
 public record UpdateCharacterDto(
         String name,
