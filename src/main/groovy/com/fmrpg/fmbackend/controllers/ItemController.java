@@ -44,6 +44,7 @@ public class ItemController {
             @PathVariable("itemId") Long itemId
     ) {
 
+
         CharacterEntity character = characterRepository.findByPublicId(characterId);
 
         if (dto instanceof  WeaponItemDto weaponDto) {

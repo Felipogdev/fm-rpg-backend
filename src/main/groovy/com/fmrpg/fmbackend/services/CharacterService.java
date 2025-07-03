@@ -7,6 +7,7 @@ import com.fmrpg.fmbackend.entities.characterpkg.CharacterClass;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 import com.fmrpg.fmbackend.entities.User;
+import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
 import com.fmrpg.fmbackend.mappers.CharacterMapper;
 import com.fmrpg.fmbackend.repositories.CharacterClassRepository;
 import com.fmrpg.fmbackend.repositories.CharacterOriginRepository;
@@ -28,6 +29,7 @@ public class CharacterService {
     private final CharacterStatusService characterStatusService;
     private final CharacterClassRepository characterClassRepository;
     private final CharacterOriginRepository characterOriginRepository;
+    private final CursedTechniqueService cursedTechniqueService;
 
     public CharacterService(CharacterRepository characterRepository,
                             CharacterMapper characterMapper,
@@ -35,7 +37,8 @@ public class CharacterService {
                             UserService userService,
                             CharacterStatusService characterStatusService,
                             CharacterClassRepository characterClassRepository,
-                            CharacterOriginRepository characterOriginRepository) {
+                            CharacterOriginRepository characterOriginRepository, CursedTechniqueService cursedTechniqueService
+                            ) {
         this.characterRepository = characterRepository;
         this.characterMapper = characterMapper;
         this.userRepository = userRepository;
@@ -43,7 +46,7 @@ public class CharacterService {
         this.characterStatusService = characterStatusService;
         this.characterClassRepository = characterClassRepository;
         this.characterOriginRepository = characterOriginRepository;
-
+        this.cursedTechniqueService = cursedTechniqueService;
     }
 
     public CharacterEntity createCharacter(String googleId, CreateCharacterDto dto) {
@@ -79,7 +82,7 @@ public class CharacterService {
         statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
 
 
-
+        cursedTechniqueService.createTechnique(character);
         characterRepository.save(character);
         characterStatusService.createCharacterStatus(character, statusFromDto);
 
@@ -157,6 +160,12 @@ public class CharacterService {
         if (character == null || item == null || character.getInventory() == null) return false;
         return character.getInventory().contains(item);
     }
+
+    public boolean isTechniqueFromCharacter(CursedTechnique technique, CharacterEntity character) {
+        if (character == null || technique == null) return false;
+        return technique.equals(character.getTechnique());
+    }
+
 
 
 }

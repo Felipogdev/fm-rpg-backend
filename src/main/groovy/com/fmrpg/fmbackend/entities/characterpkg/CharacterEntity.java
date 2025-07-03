@@ -3,6 +3,7 @@ package com.fmrpg.fmbackend.entities.characterpkg;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
+import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -76,4 +77,8 @@ public class CharacterEntity {
 
     @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CharacterItem> inventory = new ArrayList<>();
+
+    @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+    private CursedTechnique technique;
+
 }
