@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.entities.techniquepkg;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -24,6 +25,7 @@ public class CursedAbility {
 
     @ManyToOne
     @JoinColumn(name = "character_cursed_technique_id")
+    @JsonIgnore
     private CursedTechnique cursedTechnique;
 
     public CursedAbility(String name, String description ) {

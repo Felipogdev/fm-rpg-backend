@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.entities.techniquepkg;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -25,6 +26,7 @@ public class CursedTechnique {
 
     @OneToOne
     @JoinColumn(name = "character_private_id")
+    @JsonIgnore
     private CharacterEntity character;
 
     @OneToMany(mappedBy = "cursedTechnique", cascade = CascadeType.ALL)
