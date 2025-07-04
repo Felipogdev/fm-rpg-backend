@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.UUID;
 
 @Controller
-@RequestMapping("api/characters/abillity")
+@RequestMapping("/api/characters/ability")
 public class CursedAbilityController {
 
     private final CursedAbilityService cursedAbilityService;
@@ -25,7 +25,7 @@ public class CursedAbilityController {
         this.characterRepository = characterRepository;
     }
 
-    @PostMapping("{characterId}")
+    @PostMapping("/{characterId}")
     public ResponseEntity<CursedAbility> createAbility(
             @AuthenticationPrincipal OAuth2User oAuth2User,
             @PathVariable("characterId")UUID characterId
@@ -34,7 +34,7 @@ public class CursedAbilityController {
         return ResponseEntity.ok(cursedAbilityService.createAbility(oAuth2User,character,character.getTechnique()));
     }
 
-    @PatchMapping("{characterId}/{abilityId}")
+    @PatchMapping("/{characterId}/{abilityId}")
     public ResponseEntity<CursedAbility> updateAbility(
             @AuthenticationPrincipal OAuth2User oAuth2User,
             @RequestBody CursedAbilityDto dto,

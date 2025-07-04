@@ -30,16 +30,15 @@ public class CursedTechniqueController {
     }
 
 
-    @PatchMapping("/{characterId}/{techniqueId}")
+    @PatchMapping("/{characterId}")
     public ResponseEntity<CursedTechniqueDto> updateTechnique(
             @AuthenticationPrincipal OAuth2User oAuth2User,
             @PathVariable("characterId") UUID characterId,
-            @PathVariable("techniqueId") Long techniqueId,
             @RequestBody CursedTechniqueDto dto) {
 
 
         CharacterEntity character = characterRepository.findByPublicId(characterId);
-        cursedTechniqueService.updateTechnique(oAuth2User, character, techniqueId, dto);
+        cursedTechniqueService.updateTechnique(oAuth2User, character, dto);
         return ResponseEntity.ok(dto);
     }
 

@@ -51,12 +51,11 @@ public class CursedTechniqueService {
         cursedTechniqueRepository.save(technique);
     }
 
-    public CursedTechnique updateTechnique(OAuth2User oAuth2User, CharacterEntity character, Long techniqueId, CursedTechniqueDto dto) {
+    public CursedTechnique updateTechnique(OAuth2User oAuth2User, CharacterEntity character, CursedTechniqueDto dto) {
         validateCharacterFromUser(oAuth2User, character);
 
-       CursedTechnique technique = cursedTechniqueRepository.findById(techniqueId).orElseThrow(()-> new RuntimeException("Técnica não achada"));
+    CursedTechnique technique = character.getTechnique();
 
-       validadeTechniqueFromCharacter(character,technique);
 
        if (dto.name() != null) {
            technique.setName(dto.name());
