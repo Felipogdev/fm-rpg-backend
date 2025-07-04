@@ -2,7 +2,6 @@ package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.CursedTechniqueDto;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
-import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.services.CursedTechniqueService;
 import org.springframework.http.ResponseEntity;

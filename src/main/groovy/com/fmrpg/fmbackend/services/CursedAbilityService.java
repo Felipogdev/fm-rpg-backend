@@ -49,7 +49,7 @@ public class CursedAbilityService {
         }
     }
 
-    public CursedAbility cursedTechnique(OAuth2User oAuth2User, CharacterEntity character, CursedTechnique technique) {
+    public CursedAbility createAbility(OAuth2User oAuth2User, CharacterEntity character, CursedTechnique technique) {
         validateCharacterFromUser(oAuth2User, character);
 
 
