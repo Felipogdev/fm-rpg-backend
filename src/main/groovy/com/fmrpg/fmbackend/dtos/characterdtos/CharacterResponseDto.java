@@ -1,5 +1,7 @@
 package com.fmrpg.fmbackend.dtos.characterdtos;
 
+import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
+
 import java.util.UUID;
 
 public record CharacterResponseDto(
@@ -10,6 +12,7 @@ public record CharacterResponseDto(
         CharacterOriginResponseDto characterClass,
         String description,
         String grade,
-        CharacterStatusResponseDto status
+        CharacterStatusResponseDto status,
+        CursedTechnique technique
         ) {
 }
