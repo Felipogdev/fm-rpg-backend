@@ -22,8 +22,6 @@ public class CursedTechniqueController {
     private final CursedTechniqueService cursedTechniqueService;
     private final CharacterRepository characterRepository;
 
-
-
     public CursedTechniqueController(CursedTechniqueService cursedTechniqueService, CharacterRepository characterRepository) {
         this.cursedTechniqueService = cursedTechniqueService;
         this.characterRepository = characterRepository;

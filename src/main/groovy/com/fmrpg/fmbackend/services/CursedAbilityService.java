@@ -8,6 +8,7 @@ import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import com.fmrpg.fmbackend.repositories.cursedtechniquepkg.CursedAbilityRepository;
 import com.fmrpg.fmbackend.repositories.cursedtechniquepkg.CursedTechniqueRepository;
+import jakarta.transaction.Transactional;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 import org.springframework.stereotype.Service;
@@ -36,38 +37,41 @@ public class CursedAbilityService {
     }
 
     private void validateCharacterFromUser(OAuth2User oAuth2User, CharacterEntity character) {
-        User user = userRepository.findByGoogleId(oAuth2User.getName()).orElseThrow();
+        User user = userRepository.findByGoogleId(oAuth2User.getName())
+                .orElseThrow(() -> new ResponseStatusException(HttpStatus.UNAUTHORIZED, "Usuário não encontrado."));
 
-        if(!userService.isCharacterFromuser(user, character)){
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+        if (!userService.isCharacterFromuser(user, character)) {
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Este personagem não pertence ao usuário autenticado.");
         }
     }
 
     private void validateAbilityFromTechnique(CursedTechnique technique, CursedAbility ability) {
         if (!cursedTechniqueService.isAbilityFromTechnique(technique, ability)) {
-            throw new ResponseStatusException(HttpStatus.FORBIDDEN);
+            throw new ResponseStatusException(HttpStatus.FORBIDDEN, "Esta habilidade não pertence à técnica amaldiçoada.");
         }
     }
 
-    public CursedAbility createAbility(OAuth2User oAuth2User, CharacterEntity character, CursedTechnique technique) {
+    @Transactional
+    public CursedAbility createAbility(OAuth2User oAuth2User, CharacterEntity character) {
         validateCharacterFromUser(oAuth2User, character);
-
-
-        List<CursedAbility> abilityList = technique.getAbilities();
-
         CursedAbility newAbility = new CursedAbility("Nome da Abilidade", "Descrição da Abilidade");
-
-        abilityList.add(newAbility);
-        cursedTechniqueRepository.save(technique);
-
+        List<CursedAbility> abilities = character.getTechnique().getAbilities();
+        newAbility.setCursedTechnique(character.getTechnique());
+        abilities.add(newAbility);
+        cursedAbilityRepository.save(newAbility);
         return newAbility;
+    }
+
+    public List<CursedAbility> getAbilities(OAuth2User oAuth2User,CharacterEntity character) {
+        validateCharacterFromUser(oAuth2User,character);
+        return character.getTechnique().getAbilities();
     }
 
     public CursedAbility updateAbility(OAuth2User oAuth2User, CharacterEntity character, CursedAbilityDto dto, Long abilityId) {
 
         validateCharacterFromUser(oAuth2User, character);
         CursedAbility ability = cursedAbilityRepository.findById(abilityId).orElseThrow(()-> new RuntimeException("Ability não encontrada"));
-        validateAbilityFromTechnique(character.getTechnique(), ability);
+       validateAbilityFromTechnique(character.getTechnique(), ability);
 
         if (dto.name() != null) {
             ability.setName(dto.name());
@@ -75,6 +79,10 @@ public class CursedAbilityService {
 
         if (dto.description() != null) {
             ability.setDescription(dto.description());
+        }
+
+        if (dto.abilityCost() != null) {
+            ability.setAbilityCost(dto.abilityCost());
         }
 
         cursedAbilityRepository.save(ability);

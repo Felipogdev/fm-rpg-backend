@@ -65,6 +65,8 @@ public class CursedTechniqueService {
            technique.setDescription(dto.description());
        }
 
+       cursedTechniqueRepository.save(technique);
+
        return technique;
     }
 
