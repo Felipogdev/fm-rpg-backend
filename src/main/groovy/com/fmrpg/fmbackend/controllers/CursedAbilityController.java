@@ -59,15 +59,5 @@ public class CursedAbilityController {
         return ResponseEntity.ok(cursedAbilityService.getAbilities(oAuth2User,character));
     }
 
-    @GetMapping("/")
-    public ResponseEntity<List<CharacterEntity>> test(
-            @AuthenticationPrincipal OAuth2User oAuth2User
-    ) {
-       User user =  userRepository.findByGoogleId(oAuth2User.getName()).orElseThrow();
-        return ResponseEntity.ok(user.getCharacters());
-    }
-
-
-
 
 }
