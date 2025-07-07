@@ -67,7 +67,7 @@ public class CharacterStatus {
     private Integer movement;
 
     @Column (name = "armor_class")
-    private Integer armorClass;
+    private Integer defense;
 
     @Column (name = "soul_point")
     private Integer soulPoint = 100;
