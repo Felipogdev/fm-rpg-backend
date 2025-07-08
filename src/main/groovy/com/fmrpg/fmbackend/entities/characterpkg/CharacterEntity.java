@@ -34,15 +34,14 @@ public class CharacterEntity {
     @JsonBackReference
     private User user;
 
-    @Column (name = "name")
+    @Column(name = "name")
     private String name;
 
     @Column(name = "level")
     private Integer level = 1;
 
-    @ManyToOne
-    @JoinColumn(name = "class_id", referencedColumnName = "id", nullable = false)
-    private CharacterClass characterClass;
+    @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<CharacterMulticlassLevel> classLevels = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "origin_id", referencedColumnName = "id", nullable = false)
@@ -70,7 +69,6 @@ public class CharacterEntity {
     @Column (name = "grade")
     private String grade = "4";
 
-
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonBackReference
     private CharacterStatus status;
@@ -80,5 +78,5 @@ public class CharacterEntity {
 
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private CursedTechnique technique;
-
 }
+
