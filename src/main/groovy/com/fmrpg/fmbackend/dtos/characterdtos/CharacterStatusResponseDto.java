@@ -17,7 +17,8 @@ public record CharacterStatusResponseDto(
         Integer initiative,
         Integer movement,
         Integer armorClass,
-        Integer soulPoint,
+        Integer maxSoulPoint,
+        Integer currentSoulPoint,
         List<CharacterSkillResponseDto> skills
 ) {
 }

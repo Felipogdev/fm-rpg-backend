@@ -5,8 +5,10 @@ import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterResponseDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.facades.CharacterFacade;
 import com.fmrpg.fmbackend.mappers.CharacterResponseMapper;
+import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -24,10 +26,12 @@ public class CharacterController {
 
     private final CharacterFacade characterFacade;
     private final CharacterResponseMapper characterResponseMapper;
+    private final CharacterRepository characterRepository;
 
-    public CharacterController(CharacterFacade characterFacade, CharacterResponseMapper characterResponseMapper) {
+    public CharacterController(CharacterFacade characterFacade, CharacterResponseMapper characterResponseMapper, CharacterRepository characterRepository) {
         this.characterFacade = characterFacade;
         this.characterResponseMapper = characterResponseMapper;
+        this.characterRepository = characterRepository;
     }
 
     @GetMapping("/me")
@@ -70,4 +74,6 @@ public class CharacterController {
         characterFacade.deleteCharacter(oauth2User, characterId);
         return ResponseEntity.ok(Collections.singletonMap("message", "Character Deleted"));
     }
+
+
 }

@@ -1,9 +1,11 @@
 package com.fmrpg.fmbackend.services;
 
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterClassUpdateDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterClass;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterMulticlass;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 import com.fmrpg.fmbackend.entities.User;
@@ -17,7 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CharacterService {
@@ -66,13 +68,16 @@ public class CharacterService {
                 .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
 
         character.setUser(user);
-        character.setCharacterClass(characterClass);
+
+        List<CharacterMulticlass> classLevels = new ArrayList<>();
+        CharacterMulticlass classLevel = new CharacterMulticlass(character, characterClass);
+        classLevels.add(classLevel);
+
+        character.setCharacterMulticlass(classLevels);
         character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
-
         int[] statusFromDto = new int[6];
-
 
         statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
         statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
@@ -80,7 +85,6 @@ public class CharacterService {
         statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
         statusFromDto[4] = dto.wisdom() != null ? dto.wisdom() : 8;
         statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
-
 
         cursedTechniqueService.createTechnique(character);
         characterRepository.save(character);
@@ -111,12 +115,41 @@ public class CharacterService {
             character.setImageUrl(dto.imageUrl());
         }
 
-        if (dto.characterClass() != null) {
-            character.setCharacterClass(dto.characterClass());
+        if (dto.characterClasses() != null && !dto.characterClasses().isEmpty()) {
+            List<CharacterMulticlass> multiclasses = character.getCharacterMulticlass();
+
+            for (CharacterClassUpdateDto classDto : dto.characterClasses()) {
+                CharacterClass characterClass = characterClassRepository.findById(classDto.classId())
+                        .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+
+                Optional<CharacterMulticlass> existing = multiclasses.stream()
+                        .filter(mc -> mc.getCharacterClass().getId().equals(classDto.classId()))
+                        .findFirst();
+
+                if (existing.isPresent()) {
+                    CharacterMulticlass multiclass = existing.get();
+                    int newLevel = multiclass.getLevel() + classDto.levelChange();
+
+                    if (newLevel <= 0) {
+                        multiclasses.remove(multiclass);
+                    } else {
+                        multiclass.setLevel(newLevel);
+                    }
+
+                } else if (classDto.levelChange() > 0) {
+                    CharacterMulticlass newMulticlass = new CharacterMulticlass(character, characterClass);
+                    newMulticlass.setLevel(classDto.levelChange());
+                    multiclasses.add(newMulticlass);
+                }
+            }
+
+            character.setCharacterMulticlass(multiclasses);
         }
 
         if (dto.characterOrigin() != null) {
-            character.setCharacterOrigin(dto.characterOrigin());
+            CharacterOrigin characterOrigin = characterOriginRepository.findById(dto.characterOrigin())
+                    .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
+            character.setCharacterOrigin(characterOrigin);
         }
 
         if (dto.level() != null) {
@@ -165,7 +198,5 @@ public class CharacterService {
         if (character == null || technique == null) return false;
         return technique.equals(character.getTechnique());
     }
-
-
 
 }

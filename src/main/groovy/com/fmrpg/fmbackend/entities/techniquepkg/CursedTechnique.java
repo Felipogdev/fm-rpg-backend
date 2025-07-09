@@ -31,4 +31,9 @@ public class CursedTechnique {
 
     @OneToMany(mappedBy = "cursedTechnique", cascade = CascadeType.ALL)
     private List<CursedAbility> abilities = new ArrayList<>();
+
+    public CursedTechnique() {
+        this.name = "Nome Técnica Amaldiçoada";
+        this.description = "Descriçâo Técnica Amaldiçoada";
+    }
 }
