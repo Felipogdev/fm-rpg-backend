@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.entities.characterpkg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
@@ -41,7 +42,8 @@ public class CharacterEntity {
     private Integer level = 1;
 
     @OneToMany(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<CharacterMulticlassLevel> classLevels = new ArrayList<>();
+    @JsonManagedReference
+    private List<CharacterMulticlass> characterMulticlass = new ArrayList<>();
 
     @ManyToOne
     @JoinColumn(name = "origin_id", referencedColumnName = "id", nullable = false)

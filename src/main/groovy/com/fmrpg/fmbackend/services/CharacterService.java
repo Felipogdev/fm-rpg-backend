@@ -4,7 +4,7 @@ import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterClass;
-import com.fmrpg.fmbackend.entities.characterpkg.CharacterMulticlassLevel;
+import com.fmrpg.fmbackend.entities.characterpkg.CharacterMulticlass;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 import com.fmrpg.fmbackend.entities.User;
@@ -69,11 +69,11 @@ public class CharacterService {
 
         character.setUser(user);
 
-        List<CharacterMulticlassLevel> classLevels = new ArrayList<>();
-        CharacterMulticlassLevel classLevel = new CharacterMulticlassLevel(character, characterClass);
+        List<CharacterMulticlass> classLevels = new ArrayList<>();
+        CharacterMulticlass classLevel = new CharacterMulticlass(character, characterClass);
         classLevels.add(classLevel);
 
-        character.setClassLevels(classLevels);
+        character.setCharacterMulticlass(classLevels);
         character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
@@ -81,6 +81,7 @@ public class CharacterService {
         int[] statusFromDto = new int[6];
 
 
+        // TODO: Make this more elegant to remove magic numbers, maybe with a mapper
         statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
         statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
         statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
@@ -118,13 +119,22 @@ public class CharacterService {
             character.setImageUrl(dto.imageUrl());
         }
 
-        //TODO: Make the update method usable for multiclass characters
+//        TODO: Make the update method usable for multiclass characters
 //        if (dto.characterClass() != null) {
-//            character.setCharacterClass(dto.characterClass());
+//        List<CharacterMulticlassLevel> characterMulticlass =  character.getClassLevels();
+//            CharacterClass characterClass = characterClassRepository.findById(dto.characterClass())
+//                    .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+//
+//            if (characterMulticlass.contains(characterClass)){
+//                characterMulticlass.
+//            }
+//            character.setClassLevels(characterMulticlass);
 //        }
 
         if (dto.characterOrigin() != null) {
-            character.setCharacterOrigin(dto.characterOrigin());
+            CharacterOrigin characterOrigin = characterOriginRepository.findById(dto.characterOrigin())
+                    .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
+            character.setCharacterOrigin(characterOrigin);
         }
 
         if (dto.level() != null) {

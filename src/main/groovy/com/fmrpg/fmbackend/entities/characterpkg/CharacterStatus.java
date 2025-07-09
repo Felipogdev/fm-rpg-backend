@@ -69,8 +69,11 @@ public class CharacterStatus {
     @Column (name = "armor_class")
     private Integer defense;
 
-    @Column (name = "soul_point")
-    private Integer soulPoint = 100;
+    @Column (name = "max_soul_point")
+    private Integer maxSoulPoint;
+
+    @Column( name = "current_soul_point")
+    private Integer currentSoulPoint;
 
     @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CharacterSkill> skills = new ArrayList<>();

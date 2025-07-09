@@ -94,7 +94,7 @@ public class CharacterStatusService {
         updateIfNotNull(dto.initiative(), status::setInitiative);
         updateIfNotNull(dto.movement(), status::setMovement);
         updateIfNotNull(dto.armorClass(), status::setDefense);
-        updateIfNotNull(dto.soulPoint(), status::setSoulPoint);
+//        updateIfNotNull(dto.soulPoint(), status::setSoulPoint);
 
         characterStatusRepository.save(status);
 

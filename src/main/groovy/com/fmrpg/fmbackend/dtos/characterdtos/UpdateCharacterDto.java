@@ -6,8 +6,8 @@ import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 public record UpdateCharacterDto(
         String name,
         String imageUrl,
-        CharacterClass characterClass,
-        CharacterOrigin characterOrigin,
+        Long characterClass,
+        Long characterOrigin,
         Integer level,
         String description
 ) {
