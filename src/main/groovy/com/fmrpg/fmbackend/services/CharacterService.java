@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.services;
 
+import com.fmrpg.fmbackend.dtos.characterdtos.CharacterClassUpdateDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
@@ -18,8 +19,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Service
 public class CharacterService {
@@ -77,18 +77,14 @@ public class CharacterService {
         character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
-
         int[] statusFromDto = new int[6];
 
-
-        // TODO: Make this more elegant to remove magic numbers, maybe with a mapper
         statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
         statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
         statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
         statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
         statusFromDto[4] = dto.wisdom() != null ? dto.wisdom() : 8;
         statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
-
 
         cursedTechniqueService.createTechnique(character);
         characterRepository.save(character);
@@ -119,17 +115,36 @@ public class CharacterService {
             character.setImageUrl(dto.imageUrl());
         }
 
-//        TODO: Make the update method usable for multiclass characters
-//        if (dto.characterClass() != null) {
-//        List<CharacterMulticlassLevel> characterMulticlass =  character.getClassLevels();
-//            CharacterClass characterClass = characterClassRepository.findById(dto.characterClass())
-//                    .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
-//
-//            if (characterMulticlass.contains(characterClass)){
-//                characterMulticlass.
-//            }
-//            character.setClassLevels(characterMulticlass);
-//        }
+        if (dto.characterClasses() != null && !dto.characterClasses().isEmpty()) {
+            List<CharacterMulticlass> multiclasses = character.getCharacterMulticlass();
+
+            for (CharacterClassUpdateDto classDto : dto.characterClasses()) {
+                CharacterClass characterClass = characterClassRepository.findById(classDto.classId())
+                        .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+
+                Optional<CharacterMulticlass> existing = multiclasses.stream()
+                        .filter(mc -> mc.getCharacterClass().getId().equals(classDto.classId()))
+                        .findFirst();
+
+                if (existing.isPresent()) {
+                    CharacterMulticlass multiclass = existing.get();
+                    int newLevel = multiclass.getLevel() + classDto.levelChange();
+
+                    if (newLevel <= 0) {
+                        multiclasses.remove(multiclass);
+                    } else {
+                        multiclass.setLevel(newLevel);
+                    }
+
+                } else if (classDto.levelChange() > 0) {
+                    CharacterMulticlass newMulticlass = new CharacterMulticlass(character, characterClass);
+                    newMulticlass.setLevel(classDto.levelChange());
+                    multiclasses.add(newMulticlass);
+                }
+            }
+
+            character.setCharacterMulticlass(multiclasses);
+        }
 
         if (dto.characterOrigin() != null) {
             CharacterOrigin characterOrigin = characterOriginRepository.findById(dto.characterOrigin())
@@ -183,7 +198,5 @@ public class CharacterService {
         if (character == null || technique == null) return false;
         return technique.equals(character.getTechnique());
     }
-
-
 
 }
