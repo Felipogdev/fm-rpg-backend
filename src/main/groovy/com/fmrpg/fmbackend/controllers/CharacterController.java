@@ -75,14 +75,5 @@ public class CharacterController {
         return ResponseEntity.ok(Collections.singletonMap("message", "Character Deleted"));
     }
 
-    @GetMapping("/teste/{characterId}")
-    public ResponseEntity<CharacterEntity> teste(
-            @AuthenticationPrincipal OAuth2User oauth2User,
-            @PathVariable("characterId") UUID characterId
-    ) {
-//        CharacterResponseDto character = characterFacade.getCharacterInfoFromCharacterId(oauth2User, characterId);
-        CharacterEntity character = characterRepository.findByPublicId(characterId);
-        return ResponseEntity.ok(character);
-    }
 
 }
