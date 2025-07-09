@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterClassUpdateDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterStatusDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
@@ -77,18 +78,20 @@ public class CharacterService {
         character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
-        int[] statusFromDto = new int[6];
+        Integer[] statusFromDto = new Integer[6];
 
-        statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
-        statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
-        statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
-        statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
-        statusFromDto[4] = dto.wisdom() != null ? dto.wisdom() : 8;
-        statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
+        CreateCharacterStatusDto statusDto = new CreateCharacterStatusDto(
+                dto.strength(),
+                dto.constitution(),
+                dto.intelligence(),
+                dto.dexterity(),
+                dto.wisdom(),
+                dto.charisma()
+        );
 
         cursedTechniqueService.createTechnique(character);
         characterRepository.save(character);
-        characterStatusService.createCharacterStatus(character, statusFromDto);
+        characterStatusService.createCharacterStatus(character, statusDto);
 
         return character;
     }
@@ -100,6 +103,7 @@ public class CharacterService {
 
         return user.getCharacters();
     }
+
 
 
     public CharacterEntity updateCharacter(CharacterEntity character, UpdateCharacterDto dto) {
