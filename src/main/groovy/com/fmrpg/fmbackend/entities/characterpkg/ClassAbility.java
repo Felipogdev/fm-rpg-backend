@@ -31,16 +31,14 @@ public class ClassAbility {
     @JoinColumn(name = "allowed_class_id")
     private CharacterClass allowedClass;
 
-    @ManyToOne
-    @JoinColumn(name = "required_ability_id")
-    private ClassAbility requiredAbility;
+    private String requirement;
 
-    public ClassAbility(String name, String description, Integer abilityLevel, CharacterClass allowedClass, ClassAbility requiredAbility) {
+    public ClassAbility(String name, String description, Integer abilityLevel, CharacterClass allowedClass, String requirement) {
         this.name = name;
         this.description = description;
         this.abilityLevel = abilityLevel;
         this.allowedClass = allowedClass;
-        this.requiredAbility = requiredAbility;
+        this.requirement = requirement;
     }
 
     public ClassAbility(String name, String description, Integer abilityLevel, CharacterClass allowedClass) {
@@ -48,6 +46,5 @@ public class ClassAbility {
         this.description = description;
         this.abilityLevel = abilityLevel;
         this.allowedClass = allowedClass;
-        this.requiredAbility = null;
     }
 }
