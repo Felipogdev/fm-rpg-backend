@@ -29,13 +29,8 @@ public class CharacterClass{
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @ManyToMany
-    @JoinTable(
-            name = "class_allowed_abilities",
-            joinColumns = @JoinColumn(name = "class_id"),
-            inverseJoinColumns = @JoinColumn(name = "ability_id")
-    )
-    private List<ClassAbility> availableAbilities = new ArrayList<>();
+    @OneToMany(mappedBy = "allowedClass", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<ClassAbility> abilities = new ArrayList<>();
 
     public CharacterClass(String name, String description){
         this.name = name;

@@ -5,11 +5,13 @@ import com.fmrpg.fmbackend.entities.characterpkg.CharacterOrigin;
 import com.fmrpg.fmbackend.repositories.CharacterClassRepository;
 import com.fmrpg.fmbackend.repositories.CharacterOriginRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@Order(1)
 public class CharacterDataSeeder implements CommandLineRunner {
 
     private final CharacterClassRepository classRepository;

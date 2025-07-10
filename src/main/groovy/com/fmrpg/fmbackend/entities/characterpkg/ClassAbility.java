@@ -27,25 +27,27 @@ public class ClassAbility {
     @Column(name = "ability_level")
     private Integer abilityLevel;
 
-    @ManyToMany(mappedBy = "availableAbilities")
-    private List<CharacterClass> allowedClasses = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "allowed_class_id")
+    private CharacterClass allowedClass;
 
     @ManyToOne
     @JoinColumn(name = "required_ability_id")
     private ClassAbility requiredAbility;
 
-    public ClassAbility(String name, String description, Integer abilityLevel, List<CharacterClass> allowedClasses, ClassAbility requiredAbility) {
+    public ClassAbility(String name, String description, Integer abilityLevel, CharacterClass allowedClass, ClassAbility requiredAbility) {
         this.name = name;
         this.description = description;
         this.abilityLevel = abilityLevel;
-        this.allowedClasses = allowedClasses;
+        this.allowedClass = allowedClass;
         this.requiredAbility = requiredAbility;
     }
 
-    public ClassAbility(String name, String description, Integer abilityLevel, List<CharacterClass> allowedClasses) {
+    public ClassAbility(String name, String description, Integer abilityLevel, CharacterClass allowedClass) {
         this.name = name;
         this.description = description;
         this.abilityLevel = abilityLevel;
+        this.allowedClass = allowedClass;
         this.requiredAbility = null;
     }
 }
