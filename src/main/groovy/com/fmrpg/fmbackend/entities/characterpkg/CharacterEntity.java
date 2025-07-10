@@ -80,5 +80,13 @@ public class CharacterEntity {
 
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private CursedTechnique technique;
+
+    @ManyToMany
+    @JoinTable(
+            name = "character_abilities",
+            joinColumns = @JoinColumn(name = "character_id", referencedColumnName = "private_id"),
+            inverseJoinColumns = @JoinColumn(name = "ability_id")
+    )
+    private List<ClassAbility> chosenAbilities = new ArrayList<>();
 }
 

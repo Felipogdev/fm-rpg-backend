@@ -78,8 +78,6 @@ public class CharacterService {
         character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
-        Integer[] statusFromDto = new Integer[6];
-
         CreateCharacterStatusDto statusDto = new CreateCharacterStatusDto(
                 dto.strength(),
                 dto.constitution(),
@@ -119,6 +117,7 @@ public class CharacterService {
             character.setImageUrl(dto.imageUrl());
         }
 
+        //TODO: Test this
         if (dto.characterClasses() != null && !dto.characterClasses().isEmpty()) {
             List<CharacterMulticlass> multiclasses = character.getCharacterMulticlass();
 

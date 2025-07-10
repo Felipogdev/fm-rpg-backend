@@ -24,12 +24,12 @@ public class CharacterDataSeeder implements CommandLineRunner {
     public void run(String... args) {
         if (classRepository.count() == 0) {
             classRepository.saveAll(List.of(
-                    new CharacterClass(null, "Lutador", "O foco é combate físico ou com armas marciais, sendo resistente, móvel e potente, além de estar armado com várias manobars que se tornam disponíveis enquanto se monta um combo."),
-                    new CharacterClass(null, "Especialista em Combate", "Leva o combate como uma arte a se estudar e praticar, lutando com estratégia, versatilidade e letalidade. Tem várias possibilidades de artes de combate e maneiras de lutar."),
-                    new CharacterClass(null, "Especialista em Técnica", "Estuda ao máximo a energia amaldiçoada, dominando-a e conseguindo até mesmo alterar os seus fundamentos com um controle avançado. Perfeito para aqueles que querem se dedicar a sua técnica."),
-                    new CharacterClass(null, "Controlador", "Cria corpos amaldiçoados ou domina shikigamis e os controla com uma maestria superior, conseguindo melhorar suas invocações como um todo e dominar o campo de batalha com elas."),
-                    new CharacterClass(null, "Suporte", "Dedicado a apoiar os seus aliados, garantir a integridade e saúde deles, motivá-los e abrir novas possibilidades. Tem grande potencial de cura, assim como outras maneiras de fortalecer os aliados em campo."),
-                    new CharacterClass(null, "Restringido", "Foge do padrão ao não possuir energia amaldiçoada, mas ter um desenvolvimento físico anormal, levando o seu corpo e as suas técnicas marciais para outro patamar, além de interagir de maneira peculiar com usuários de energia.")
+                    new CharacterClass( "Lutador", "O foco é combate físico ou com armas marciais, sendo resistente, móvel e potente, além de estar armado com várias manobars que se tornam disponíveis enquanto se monta um combo."),
+                    new CharacterClass("Especialista em Combate", "Leva o combate como uma arte a se estudar e praticar, lutando com estratégia, versatilidade e letalidade. Tem várias possibilidades de artes de combate e maneiras de lutar."),
+                    new CharacterClass("Especialista em Técnica", "Estuda ao máximo a energia amaldiçoada, dominando-a e conseguindo até mesmo alterar os seus fundamentos com um controle avançado. Perfeito para aqueles que querem se dedicar a sua técnica."),
+                    new CharacterClass("Controlador", "Cria corpos amaldiçoados ou domina shikigamis e os controla com uma maestria superior, conseguindo melhorar suas invocações como um todo e dominar o campo de batalha com elas."),
+                    new CharacterClass("Suporte", "Dedicado a apoiar os seus aliados, garantir a integridade e saúde deles, motivá-los e abrir novas possibilidades. Tem grande potencial de cura, assim como outras maneiras de fortalecer os aliados em campo."),
+                    new CharacterClass("Restringido", "Foge do padrão ao não possuir energia amaldiçoada, mas ter um desenvolvimento físico anormal, levando o seu corpo e as suas técnicas marciais para outro patamar, além de interagir de maneira peculiar com usuários de energia.")
             ));
         }
 
