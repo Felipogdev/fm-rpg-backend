@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import net.minidev.json.annotate.JsonIgnore;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class ClassAbility {
 
     @ManyToOne
     @JoinColumn(name = "allowed_class_id")
+    @JsonIgnore
     private CharacterClass allowedClass;
 
     private String requirement;
