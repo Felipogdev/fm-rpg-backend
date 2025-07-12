@@ -6,6 +6,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "character_origins")
 @Getter
@@ -23,4 +26,12 @@ public class CharacterOrigin {
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
+
+    @OneToMany(mappedBy = "origin", cascade = CascadeType.ALL, orphanRemoval = true)
+    List<OriginPerks> perks = new ArrayList<>();
+
+    public CharacterOrigin(String name, String description) {
+        this.name = name;
+        this.description = description;
+    }
 }

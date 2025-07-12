@@ -81,6 +81,8 @@ public class CharacterEntity {
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private CursedTechnique technique;
 
+    //TODO:Implement talents
+
     @ManyToMany
     @JoinTable(
             name = "character_abilities",
