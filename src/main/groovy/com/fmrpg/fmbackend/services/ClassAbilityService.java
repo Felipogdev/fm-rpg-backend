@@ -14,7 +14,9 @@ import com.fmrpg.fmbackend.repositories.ClassAbilityRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.security.oauth2.core.user.OAuth2User;
+import org.springframework.security.web.authentication.Http403ForbiddenEntryPoint;
 import org.springframework.stereotype.Service;
+import org.springframework.web.server.ResponseStatusException;
 
 import java.util.List;
 
@@ -78,7 +80,10 @@ public class ClassAbilityService {
     public void removeClassAbilityFromCharacter(CharacterEntity character, ClassAbility ability, OAuth2User oAuth2User) {
         User user = userRepository.findByGoogleId(oAuth2User.getName())
             .orElseThrow(() -> new EntityNotFoundException("User not found"));
-        userService.isCharacterFromuser(user, character);
+
+        if(!userService.isCharacterFromuser(user, character))
+            throw new ResponseStatusException(
+                org.springframework.http.HttpStatus.FORBIDDEN, "Character does not belong to user");
 
         if (!character.getCharacterMulticlass().getFirst().getCharacterAbilities().contains(ability)) {
             throw new EntityNotFoundException("Character does not have this ability");

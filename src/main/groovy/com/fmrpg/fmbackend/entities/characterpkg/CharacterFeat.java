@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.entities.characterpkg;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -28,6 +29,7 @@ public class CharacterFeat {
     private String requirement;
 
     @ManyToMany(mappedBy = "feats")
+    @JsonIgnore
     private List<CharacterEntity> characters = new ArrayList<>();
 
     public CharacterFeat(String name, String description, String requirement) {
