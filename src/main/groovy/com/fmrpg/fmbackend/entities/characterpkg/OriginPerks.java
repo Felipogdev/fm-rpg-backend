@@ -24,11 +24,6 @@ public class OriginPerks {
     @JoinColumn(name = "origin_id")
     private CharacterOrigin origin;
 
-
-
-
-    
-
     public OriginPerks(String name, String description, CharacterOrigin origin) {
         this.name = name;
         this.description = description;
