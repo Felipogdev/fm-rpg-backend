@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.entities.characterpkg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;

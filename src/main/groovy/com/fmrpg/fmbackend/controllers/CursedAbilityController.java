@@ -1,7 +1,6 @@
 package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.CursedAbilityDto;
-import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.techniquepkg.CursedAbility;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
