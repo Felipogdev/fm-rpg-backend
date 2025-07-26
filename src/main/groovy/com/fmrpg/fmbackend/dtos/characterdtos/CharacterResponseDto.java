@@ -7,7 +7,6 @@ import java.util.List;
 import java.util.UUID;
 
 public record CharacterResponseDto(
-        //TODO: Multiclass Reponse not working
         UUID publicId,
         String name,
         String imageUrl,
