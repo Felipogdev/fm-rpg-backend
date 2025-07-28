@@ -1,7 +1,7 @@
 package com.fmrpg.fmbackend.dtos.characterdtos;
 
 import com.fmrpg.fmbackend.dtos.FeatsResponseDto;
-import com.fmrpg.fmbackend.entities.characterpkg.CharacterMulticlass;
+import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
 
 import java.util.List;
@@ -17,6 +17,7 @@ public record CharacterResponseDto(
         String grade,
         CharacterStatusResponseDto status,
         CursedTechnique technique,
-        List<FeatsResponseDto> feats
+        List<FeatsResponseDto> feats,
+        List<CharacterItem> inventory
         ) {
 }

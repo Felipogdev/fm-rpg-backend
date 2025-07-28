@@ -69,13 +69,12 @@ public class ItemController {
     @DeleteMapping("/{characterId}/{itemId}")
     public ResponseEntity<String> deleteItem(
             @AuthenticationPrincipal OAuth2User oAuth2User,
-            @RequestBody CharacterItemDto dto,
             @PathVariable("characterId") UUID characterId,
             @PathVariable("itemId") Long itemId
     ) {
         CharacterEntity character = characterRepository.findByPublicId(characterId);
 
-        itemService.deleteItem(oAuth2User,character,itemId);
+        itemService.deleteItem(oAuth2User, character, itemId);
         return ResponseEntity.ok("Item deletado");
     }
 
