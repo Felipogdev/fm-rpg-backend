@@ -1,9 +1,11 @@
 package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.dtos.*;
+import com.fmrpg.fmbackend.entities.ItemAbstract;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
+import com.fmrpg.fmbackend.repositories.ItemRepository;
 import com.fmrpg.fmbackend.services.ItemService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -20,10 +22,12 @@ public class ItemController {
 
     private final CharacterRepository characterRepository;
     private final ItemService itemService;
+    private final ItemRepository itemRepository;
 
-    public ItemController(CharacterRepository characterRepository, ItemService itemService) {
+    public ItemController(CharacterRepository characterRepository, ItemService itemService, ItemRepository itemRepository) {
         this.characterRepository = characterRepository;
         this.itemService = itemService;
+        this.itemRepository = itemRepository;
     }
 
 
@@ -34,6 +38,11 @@ public class ItemController {
 
         CharacterEntity character = characterRepository.findByPublicId(characterId);
         return ResponseEntity.ok(itemService.createItem(oAuth2User ,character, dto.name()));
+    }
+
+    @GetMapping("/all")
+    public ResponseEntity<List<ItemAbstract>> getAllItems() {
+        return ResponseEntity.ok(itemRepository.findAll());
     }
 
     @PatchMapping("/{characterId}/{itemId}")
