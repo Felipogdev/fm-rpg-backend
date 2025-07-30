@@ -29,7 +29,7 @@ public class ShieldCharacter extends CharacterItem {
         this.penalty = penalty;
         this.weight = weight;
         this.cost = cost;
-        this.itemCategory = ItemCategory.UNIFORME;
+        this.itemCategory = ItemCategory.ESCUDO;
         this.setCharacter(character);
     }
 
