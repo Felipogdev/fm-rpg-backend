@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.config;
 
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
@@ -10,24 +11,27 @@ import org.springframework.security.web.SecurityFilterChain;
 @Configuration
 public class AuthConfig {
 
+    @Value("${app.front-url}")
+    private  String frontendUrl;
+
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         return http
-                    .csrf(AbstractHttpConfigurer::disable)
+                .csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(registry -> {
-                    registry.requestMatchers(
-                           "/",
-                            "/api/characters/create",
-                            "/api/**",
-                            "/api/characters/me"
-                    ).permitAll();
+                    registry
+                            .requestMatchers(
+                                    "/",
+                                    "/api/characters/create",
+                                    "/api/**",
+                                    "/api/characters/me"
+                            ).permitAll();
                     registry.anyRequest().authenticated();
                 })
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/login")
                         .successHandler((request, response, authentication) -> {
-                    response.sendRedirect("/login-success");
-        })
+                            response.sendRedirect(frontendUrl + "/oauth-success.html");
+                        })
                 )
                 .logout(logout -> logout
                         .logoutUrl("/logout")
