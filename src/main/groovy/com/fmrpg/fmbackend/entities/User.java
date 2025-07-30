@@ -1,5 +1,6 @@
 package com.fmrpg.fmbackend.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import jakarta.persistence.*;
@@ -25,10 +26,14 @@ public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column (name = "private_id", updatable = false, nullable = false)
+    @JsonIgnore
     private Long privateId;
 
     @Column(name = "public_id", updatable = false, nullable = false)
     private UUID publicId = UUID.randomUUID();
+
+    @Column (name = "name")
+    private String name;
 
     @Column(name = "google_id", unique = true, nullable = false)
     private String googleId;
