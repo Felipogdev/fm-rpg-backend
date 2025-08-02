@@ -86,8 +86,9 @@ public class CharacterStatusService {
                 status.setMaxHp(dto.maxHp());
             }
 
-            if (Objects.equals(status.getMaxHp(), status.getMaxSoulPoint())) {
-                updateSoulPoints(status);
+
+            if (status.getMaxSoulPoint() != status.getMaxHp()) {
+                updateMaxSoulPoints(status);
             }
         }
 
@@ -112,8 +113,8 @@ public class CharacterStatusService {
         updateIfNotNull(dto.initiative(), status::setInitiative);
         updateIfNotNull(dto.movement(), status::setMovement);
         updateIfNotNull(dto.armorClass(), status::setDefense);
-//        updateIfNotNull(dto.soulPoint(), status::setSoulPoint);
-        //TODO: Soul points were changed in the new version of the book, so this needs to be updated
+        updateIfNotNull(dto.maxSoulPoint(),status::setMaxSoulPoint);
+        updateIfNotNull(dto.currentSoulPoint(),status::setCurrentSoulPoint);
 
         characterStatusRepository.save(status);
 
@@ -184,7 +185,7 @@ public class CharacterStatusService {
         setSoulPointsOnCreation(character);
     }
 
-    private void updateSoulPoints(CharacterStatus status) {
+    private void updateMaxSoulPoints(CharacterStatus status) {
         if (Objects.equals(status.getMaxSoulPoint(), status.getCurrentSoulPoint())) {
             status.setMaxSoulPoint(status.getMaxHp());
             status.setCurrentSoulPoint(status.getMaxSoulPoint());
