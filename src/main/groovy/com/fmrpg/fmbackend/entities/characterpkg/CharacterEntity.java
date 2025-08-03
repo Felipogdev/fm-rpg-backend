@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.entities.characterpkg;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
@@ -80,5 +81,21 @@ public class CharacterEntity {
 
     @OneToOne(mappedBy = "character", cascade = CascadeType.ALL, orphanRemoval = true)
     private CursedTechnique technique;
+
+    @ManyToMany
+    @JoinTable(
+            name = "character_feats",
+            joinColumns = @JoinColumn(name = "character_id", referencedColumnName = "private_id"),
+            inverseJoinColumns = @JoinColumn(name = "feat_id")
+    )
+    private List<CharacterFeat> feats = new  ArrayList<>();
+
+    @ManyToMany
+    @JoinTable(
+            name = "character_abilities",
+            joinColumns = @JoinColumn(name = "character_id", referencedColumnName = "private_id"),
+            inverseJoinColumns = @JoinColumn(name = "ability_id")
+    )
+    private List<ClassAbility> chosenAbilities = new ArrayList<>();
 }
 

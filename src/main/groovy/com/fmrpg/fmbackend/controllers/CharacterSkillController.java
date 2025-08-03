@@ -29,15 +29,16 @@ public class CharacterSkillController {
         this.characterMapper = characterMapper;
     }
 
-    @PatchMapping("{id}")
+    @PatchMapping("{id}/{skillId}")
     public ResponseEntity<CharacterResponseDto> updateSkill(
             @RequestBody CharacterSkillsDto dto,
-            @PathVariable(name = "id") UUID id
+            @PathVariable(name = "id") UUID id,
+            @PathVariable(name = "skillId") Long skillId
             ) {
 
         CharacterEntity character = characterRepository.findByPublicId(id);
 
-       return ResponseEntity.ok(characterMapper.toResponse(characterSkillsService.updateCharacterSkill(character, dto)));
+       return ResponseEntity.ok(characterMapper.toResponse(characterSkillsService.updateCharacterSkill(character, dto, skillId)));
     }
 
 

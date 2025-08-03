@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.services;
 
 import com.fmrpg.fmbackend.dtos.characterdtos.CharacterClassUpdateDto;
+import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterStatusDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.UpdateCharacterDto;
 import com.fmrpg.fmbackend.dtos.characterdtos.CreateCharacterDto;
 import com.fmrpg.fmbackend.entities.characteritempkg.CharacterItem;
@@ -77,18 +78,18 @@ public class CharacterService {
         character.setCharacterOrigin(characterOrigin);
         userService.addCharacterToUser(character);
 
-        int[] statusFromDto = new int[6];
-
-        statusFromDto[0] = dto.strength() != null ? dto.strength() : 8;
-        statusFromDto[1] = dto.constitution() != null ? dto.constitution() : 8;
-        statusFromDto[2] = dto.intelligence() != null ? dto.intelligence() : 8;
-        statusFromDto[3] = dto.dexterity() != null ? dto.dexterity() : 8;
-        statusFromDto[4] = dto.wisdom() != null ? dto.wisdom() : 8;
-        statusFromDto[5] = dto.charisma() != null ? dto.charisma() : 8;
+        CreateCharacterStatusDto statusDto = new CreateCharacterStatusDto(
+                dto.strength(),
+                dto.constitution(),
+                dto.intelligence(),
+                dto.dexterity(),
+                dto.wisdom(),
+                dto.charisma()
+        );
 
         cursedTechniqueService.createTechnique(character);
         characterRepository.save(character);
-        characterStatusService.createCharacterStatus(character, statusFromDto);
+        characterStatusService.createCharacterStatus(character, statusDto);
 
         return character;
     }
@@ -102,63 +103,13 @@ public class CharacterService {
     }
 
 
+
     public CharacterEntity updateCharacter(CharacterEntity character, UpdateCharacterDto dto) {
-        if (dto == null || character == null) {
-            throw new IllegalArgumentException("DTO or character cannot be null");
-        }
+        validateInputs(character, dto);
 
-        if (dto.name() != null) {
-            character.setName(dto.name());
-        }
-
-        if (dto.imageUrl() != null) {
-            character.setImageUrl(dto.imageUrl());
-        }
-
-        if (dto.characterClasses() != null && !dto.characterClasses().isEmpty()) {
-            List<CharacterMulticlass> multiclasses = character.getCharacterMulticlass();
-
-            for (CharacterClassUpdateDto classDto : dto.characterClasses()) {
-                CharacterClass characterClass = characterClassRepository.findById(classDto.classId())
-                        .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
-
-                Optional<CharacterMulticlass> existing = multiclasses.stream()
-                        .filter(mc -> mc.getCharacterClass().getId().equals(classDto.classId()))
-                        .findFirst();
-
-                if (existing.isPresent()) {
-                    CharacterMulticlass multiclass = existing.get();
-                    int newLevel = multiclass.getLevel() + classDto.levelChange();
-
-                    if (newLevel <= 0) {
-                        multiclasses.remove(multiclass);
-                    } else {
-                        multiclass.setLevel(newLevel);
-                    }
-
-                } else if (classDto.levelChange() > 0) {
-                    CharacterMulticlass newMulticlass = new CharacterMulticlass(character, characterClass);
-                    newMulticlass.setLevel(classDto.levelChange());
-                    multiclasses.add(newMulticlass);
-                }
-            }
-
-            character.setCharacterMulticlass(multiclasses);
-        }
-
-        if (dto.characterOrigin() != null) {
-            CharacterOrigin characterOrigin = characterOriginRepository.findById(dto.characterOrigin())
-                    .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
-            character.setCharacterOrigin(characterOrigin);
-        }
-
-        if (dto.level() != null) {
-            character.setLevel(dto.level());
-        }
-
-        if (dto.description() != null) {
-            character.setDescription(dto.description());
-        }
+        updateBasicFields(character, dto);
+        updateMulticlasses(character, dto.characterClasses());
+        updateOrigin(character, dto.characterOrigin());
 
         return characterRepository.save(character);
     }
@@ -197,6 +148,72 @@ public class CharacterService {
     public boolean isTechniqueFromCharacter(CursedTechnique technique, CharacterEntity character) {
         if (character == null || technique == null) return false;
         return technique.equals(character.getTechnique());
+    }
+
+    private void validateInputs(CharacterEntity character, UpdateCharacterDto dto) {
+        if (dto == null || character == null) {
+            throw new IllegalArgumentException("DTO or character cannot be null");
+        }
+    }
+
+    private void updateBasicFields(CharacterEntity character, UpdateCharacterDto dto) {
+        if (dto.name() != null) {
+            character.setName(dto.name());
+        }
+
+        if (dto.imageUrl() != null) {
+            character.setImageUrl(dto.imageUrl());
+        }
+
+        if (dto.level() != null) {
+            character.setLevel(dto.level());
+        }
+
+        if (dto.description() != null) {
+            character.setDescription(dto.description());
+        }
+    }
+
+    private void updateOrigin(CharacterEntity character, Long originId) {
+        if (originId != null) {
+            CharacterOrigin origin = characterOriginRepository.findById(originId)
+                    .orElseThrow(() -> new IllegalArgumentException("Character origin not found"));
+            character.setCharacterOrigin(origin);
+        }
+    }
+
+    private void updateMulticlasses(CharacterEntity character, List<CharacterClassUpdateDto> classDtos) {
+        if (classDtos == null || classDtos.isEmpty()) {
+            return;
+        }
+
+        List<CharacterMulticlass> multiclasses = character.getCharacterMulticlass();
+
+        for (CharacterClassUpdateDto classDto : classDtos) {
+            CharacterClass characterClass = characterClassRepository.findById(classDto.classId())
+                    .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+
+            Optional<CharacterMulticlass> existing = multiclasses.stream()
+                    .filter(mc -> mc.getCharacterClass().getId().equals(classDto.classId()))
+                    .findFirst();
+
+            if (existing.isPresent()) {
+                CharacterMulticlass multiclass = existing.get();
+                int newLevel = multiclass.getLevel() + classDto.levelChange();
+
+                if (newLevel <= 0) {
+                    multiclasses.remove(multiclass);
+                } else {
+                    multiclass.setLevel(newLevel);
+                }
+            } else if (classDto.levelChange() > 0) {
+                CharacterMulticlass newMulticlass = new CharacterMulticlass(character, characterClass);
+                newMulticlass.setLevel(classDto.levelChange());
+                multiclasses.add(newMulticlass);
+            }
+        }
+
+        character.setCharacterMulticlass(multiclasses);
     }
 
 }

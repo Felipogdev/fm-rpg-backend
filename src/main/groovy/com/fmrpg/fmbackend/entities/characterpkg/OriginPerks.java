@@ -1,37 +1,32 @@
 package com.fmrpg.fmbackend.entities.characterpkg;
 
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.List;
-
 @Entity
-@Table(name = "character_origins")
+@Table(name = "origin_perks")
 @Getter
 @Setter
 @NoArgsConstructor
-@AllArgsConstructor
-public class CharacterOrigin {
-
+public class OriginPerks {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true)
     private String name;
 
     @Column(name = "description", columnDefinition = "TEXT")
     private String description;
 
-    @OneToMany(mappedBy = "origin", cascade = CascadeType.ALL, orphanRemoval = true)
-    List<OriginPerks> perks = new ArrayList<>();
+    @ManyToOne
+    @JoinColumn(name = "origin_id")
+    private CharacterOrigin origin;
 
-    public CharacterOrigin(String name, String description) {
+    public OriginPerks(String name, String description, CharacterOrigin origin) {
         this.name = name;
         this.description = description;
+        this.origin = origin;
     }
 }

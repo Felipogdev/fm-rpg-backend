@@ -14,6 +14,7 @@ public record CharacterStatusDto(
         Integer initiative,
         Integer movement,
         Integer armorClass,
-        Integer soulPoint
+        Integer maxSoulPoint,
+        Integer currentSoulPoint
 ) {
 }

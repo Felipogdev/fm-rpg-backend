@@ -8,6 +8,9 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Table(name = "character_multiclass")
 @Getter
@@ -33,6 +36,14 @@ public class CharacterMulticlass {
 
     @Column(name = "level", nullable = false)
     private Integer level;
+
+    @ManyToMany
+    @JoinTable(
+            name = "character_selected_abilities",
+            joinColumns = @JoinColumn(name = "multiclass_id"),
+            inverseJoinColumns = @JoinColumn(name = "ability_id")
+    )
+    private List<ClassAbility> characterAbilities = new ArrayList<>();
 
     public CharacterMulticlass(CharacterEntity character, CharacterClass characterClass) {
         this.character = character;

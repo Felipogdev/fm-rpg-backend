@@ -42,7 +42,8 @@ public class UserService {
         OAuth2UserDto dto = new OAuth2UserDto(
                 email,
                 oauth2User.getAttribute("picture"),
-                oauth2User.getAttribute("sub")
+                oauth2User.getAttribute("sub"),
+                oauth2User.getAttribute("name")
         );
 
         User user = oAuthMapper.toUser(dto);

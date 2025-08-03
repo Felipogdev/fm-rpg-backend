@@ -64,7 +64,7 @@ public class ItemService {
         }
     }
 
-    private void validadeItemFromCharacter(CharacterEntity character, CharacterItem item) {
+    private void validateItemFromCharacter(CharacterEntity character, CharacterItem item) {
         if (!characterService.isItemFromCharacter(character, item)) {
             throw new ResponseStatusException(HttpStatus.FORBIDDEN);
         }
@@ -147,7 +147,7 @@ public class ItemService {
         validateCharacterFromUser(oAuth2User, character);
 
         WeaponCharacter item = weaponCharacterRepository.findById(itemId).orElseThrow();
-        validadeItemFromCharacter(character, item);
+        validateItemFromCharacter(character, item);
 
         if(dto.name() != null) item.setName(dto.name());
         if(dto.description() != null) item.setDescription(dto.description());
@@ -169,7 +169,7 @@ public class ItemService {
         validateCharacterFromUser(oAuth2User, character);
 
         ShieldCharacter item = shieldCharacterRepository.findById(itemId).orElseThrow();
-        validadeItemFromCharacter(character, item);
+        validateItemFromCharacter(character, item);
 
         if(dto.name() != null) item.setName(dto.name());
         if(dto.description() != null) item.setDescription(dto.description());
@@ -186,7 +186,7 @@ public class ItemService {
         validateCharacterFromUser(oAuth2User, character);
 
         UniformCharacter item = uniformCharacterRepository.findById(itemId).orElseThrow();
-        validadeItemFromCharacter(character, item);
+        validateItemFromCharacter(character, item);
 
         if(dto.name() != null) item.setName(dto.name());
         if(dto.description() != null) item.setDescription(dto.description());
@@ -203,7 +203,7 @@ public class ItemService {
         validateCharacterFromUser(oAuth2User, character);
 
         SpecialItemCharacter item = specialItemsCharacterRepository.findById(itemId).orElseThrow();
-        validadeItemFromCharacter(character, item);
+        validateItemFromCharacter(character, item);
 
         if(dto.name() != null) item.setName(dto.name());
         if(dto.description() != null) item.setDescription(dto.description());
@@ -218,7 +218,9 @@ public class ItemService {
     public void deleteItem(OAuth2User oAuth2User, CharacterEntity character, Long itemId) {
         validateCharacterFromUser(oAuth2User, character);
 
-        CharacterItem item = characterItemRepository.findById(itemId).orElseThrow();
+        CharacterItem item = characterItemRepository.findById(itemId)
+                .orElseThrow(() -> new RuntimeException("Item não encontrado"));
+        validateItemFromCharacter(character, item);
 
         character.getInventory().remove(item);
         characterItemRepository.delete(item);

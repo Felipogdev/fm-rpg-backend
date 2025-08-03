@@ -30,16 +30,16 @@ public class CharacterStatus {
     private CharacterEntity character;
 
     @Column(name = "current_hp")
-    private Integer currentHp = 4;
+    private Integer currentHp;
 
     @Column(name = "max_hp")
-    private Integer maxHp = 10;
+    private Integer maxHp;
 
     @Column (name = "current_cursed_energy")
-    private Integer currentCursedEnergy= 4;
+    private Integer currentCursedEnergy;
 
     @Column (name = "max_cursed_energy")
-    private Integer maxCursedEnergy=10;
+    private Integer maxCursedEnergy;
 
     @Column (name = "con")
     private Integer constitution;
@@ -77,4 +77,14 @@ public class CharacterStatus {
 
     @OneToMany(mappedBy = "status", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CharacterSkill> skills = new ArrayList<>();
+
+    public CharacterStatus(CharacterEntity character, Integer strength, Integer constitution, Integer intelligence, Integer dexterity, Integer wisdom, Integer charisma) {
+        this.character = character;
+        this.strength = strength != null ? strength : 8;
+        this.constitution = constitution != null ? constitution : 8;
+        this.intelligence = intelligence != null ? intelligence : 8;
+        this.dexterity = dexterity != null ? dexterity : 8;
+        this.wisdom = wisdom != null ? wisdom : 8;
+        this.charisma = charisma != null ? charisma : 8;
+    }
 }

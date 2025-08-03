@@ -1,6 +1,7 @@
 package com.fmrpg.fmbackend.controllers;
 
 import com.fmrpg.fmbackend.entities.User;
+import com.fmrpg.fmbackend.repositories.UserRepository;
 import com.fmrpg.fmbackend.services.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,9 +19,11 @@ import java.util.Map;
 public class UserController {
 
     private final UserService userService;
+    private final UserRepository userRepository;
 
-    public UserController(UserService userService) {
+    public UserController(UserService userService, UserRepository userRepository) {
         this.userService = userService;
+        this.userRepository = userRepository;
     }
 
     @GetMapping("/all")
@@ -30,10 +33,13 @@ public class UserController {
     }
 
     @GetMapping("/me")
-    public ResponseEntity<Principal> getCurrentUser(Principal principal) {
+    public ResponseEntity<User> getCurrentUser(Principal principal) {
+
         if (principal == null) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
         }
-        return ResponseEntity.ok(principal);
+
+        User user = userRepository.findByGoogleId(principal.getName()).orElseThrow();
+        return ResponseEntity.ok(user);
     }
 }

@@ -48,11 +48,11 @@ public class CharacterSkillsService {
     }
 
     @Transactional
-    public CharacterEntity updateCharacterSkill(CharacterEntity character, CharacterSkillsDto dto) {
+    public CharacterEntity updateCharacterSkill(CharacterEntity character, CharacterSkillsDto dto, Long skillId) {
         CharacterStatus status = character.getStatus();
 
         CharacterSkill characterSkill = characterSkillsRepository
-                .findByStatusAndSkillId(status, dto.id())
+                .findByStatusAndSkillId(status, skillId)
                 .orElseThrow(() -> new EntityNotFoundException("Skill not found for character"));
 
         if (dto.proficiency() != null) {
