@@ -6,6 +6,7 @@ import com.fmrpg.fmbackend.entities.techniquepkg.CursedAbility;
 import com.fmrpg.fmbackend.repositories.CharacterRepository;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import com.fmrpg.fmbackend.services.CursedAbilityService;
+import org.springframework.http.HttpEntity;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.oauth2.core.user.OAuth2User;
@@ -56,6 +57,16 @@ public class CursedAbilityController {
     ) {
         CharacterEntity character = characterRepository.findByPublicId(characterId);
         return ResponseEntity.ok(cursedAbilityService.getAbilities(oAuth2User,character));
+    }
+
+    @DeleteMapping("/{characterId}/{abilityId}")
+    public void deleteAbility(
+            @AuthenticationPrincipal OAuth2User oAuth2User,
+            @PathVariable("characterId")UUID characterId,
+            @PathVariable("abilityId") Long abilityId
+    ) {
+        CharacterEntity character = characterRepository.findByPublicId(characterId);
+        cursedAbilityService.deleteAbility(oAuth2User,character,abilityId);
     }
 
 

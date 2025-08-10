@@ -89,6 +89,15 @@ public class CursedAbilityService {
         return ability;
     }
 
+    public void deleteAbility(OAuth2User oAuth2User, CharacterEntity character, Long abilityId) {
+        validateCharacterFromUser(oAuth2User, character);
+        CursedAbility ability = cursedAbilityRepository.findById(abilityId)
+                .orElseThrow(() -> new RuntimeException("Habilidade não encontrada"));
+        validateAbilityFromTechnique(character.getTechnique(),ability);
+        character.getTechnique().getAbilities().remove(ability);
+        cursedAbilityRepository.delete(ability);
+    }
+
 
 
 }
