@@ -85,6 +85,9 @@ public class CursedAbilityService {
             ability.setAbilityCost(dto.abilityCost());
         }
 
+        if(dto.tier() != null) {
+            ability.setTier(dto.tier());
+        }
         cursedAbilityRepository.save(ability);
         return ability;
     }
@@ -94,6 +97,7 @@ public class CursedAbilityService {
         CursedAbility ability = cursedAbilityRepository.findById(abilityId)
                 .orElseThrow(() -> new RuntimeException("Habilidade não encontrada"));
         validateAbilityFromTechnique(character.getTechnique(),ability);
+
         character.getTechnique().getAbilities().remove(ability);
         cursedAbilityRepository.delete(ability);
     }

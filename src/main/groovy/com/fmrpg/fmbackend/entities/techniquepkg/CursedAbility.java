@@ -2,6 +2,8 @@ package com.fmrpg.fmbackend.entities.techniquepkg;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -31,9 +33,14 @@ public class CursedAbility {
     @JsonIgnore
     private CursedTechnique cursedTechnique;
 
+    @Min(1)
+    @Max(5)
+    private Integer tier;
+
     public CursedAbility(String name, String description ) {
         this.name = name;
         this.description = description;
         this.abilityCost = 0;
+        this.tier = 1;
     }
 }

@@ -3,6 +3,8 @@ package com.fmrpg.fmbackend.entities.techniquepkg;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.Getter;
 import lombok.Setter;
 
