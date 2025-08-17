@@ -33,7 +33,7 @@ public class CursedAbility {
     @JsonIgnore
     private CursedTechnique cursedTechnique;
 
-    @Min(1)
+    @Min(0)
     @Max(5)
     private Integer tier;
 

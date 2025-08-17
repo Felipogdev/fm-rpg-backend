@@ -5,6 +5,7 @@ import com.fmrpg.fmbackend.entities.User;
 import com.fmrpg.fmbackend.entities.characterpkg.CharacterEntity;
 import com.fmrpg.fmbackend.entities.techniquepkg.CursedAbility;
 import com.fmrpg.fmbackend.entities.techniquepkg.CursedTechnique;
+import com.fmrpg.fmbackend.enums.CursedAbilityCosts;
 import com.fmrpg.fmbackend.repositories.UserRepository;
 import com.fmrpg.fmbackend.repositories.cursedtechniquepkg.CursedAbilityRepository;
 import com.fmrpg.fmbackend.repositories.cursedtechniquepkg.CursedTechniqueRepository;
@@ -85,9 +86,16 @@ public class CursedAbilityService {
             ability.setAbilityCost(dto.abilityCost());
         }
 
-        if(dto.tier() != null) {
-            ability.setTier(dto.tier());
-        }
+        CursedAbilityCosts costEnum = switch(dto.tier()) {
+            case 0 -> CursedAbilityCosts.TIER0COST;
+            case 1 -> CursedAbilityCosts.TIER1COST;
+            case 2 -> CursedAbilityCosts.TIER2COST;
+            case 3 -> CursedAbilityCosts.TIER3COST;
+            case 4 -> CursedAbilityCosts.TIER4COST;
+            case 5 -> CursedAbilityCosts.TIER5COST;
+            default -> throw new IllegalArgumentException("Tier inválido: " + dto.tier());
+        };
+
         cursedAbilityRepository.save(ability);
         return ability;
     }
