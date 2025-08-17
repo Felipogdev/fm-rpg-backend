@@ -86,15 +86,18 @@ public class CursedAbilityService {
             ability.setAbilityCost(dto.abilityCost());
         }
 
-        CursedAbilityCosts costEnum = switch(dto.tier()) {
-            case 0 -> CursedAbilityCosts.TIER0COST;
-            case 1 -> CursedAbilityCosts.TIER1COST;
-            case 2 -> CursedAbilityCosts.TIER2COST;
-            case 3 -> CursedAbilityCosts.TIER3COST;
-            case 4 -> CursedAbilityCosts.TIER4COST;
-            case 5 -> CursedAbilityCosts.TIER5COST;
-            default -> throw new IllegalArgumentException("Tier inválido: " + dto.tier());
-        };
+        if(dto.tier() != null) {
+            ability.setTier(dto.tier());
+            CursedAbilityCosts costEnum = switch(dto.tier()) {
+                case 0 -> CursedAbilityCosts.TIER0COST;
+                case 1 -> CursedAbilityCosts.TIER1COST;
+                case 2 -> CursedAbilityCosts.TIER2COST;
+                case 3 -> CursedAbilityCosts.TIER3COST;
+                case 4 -> CursedAbilityCosts.TIER4COST;
+                case 5 -> CursedAbilityCosts.TIER5COST;
+                default -> throw new IllegalArgumentException("Tier inválido: " + dto.tier());
+                };
+            }
 
         cursedAbilityRepository.save(ability);
         return ability;
