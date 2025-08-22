@@ -190,30 +190,35 @@ public class CharacterService {
         List<CharacterMulticlass> multiclasses = character.getCharacterMulticlass();
 
         for (CharacterClassUpdateDto classDto : classDtos) {
+            if (classDto.level() == null) {
+                throw new IllegalArgumentException("Level cannot be null for classId=" + classDto.classId());
+            }
+
+            int level = classDto.level();
+
             CharacterClass characterClass = characterClassRepository.findById(classDto.classId())
-                    .orElseThrow(() -> new IllegalArgumentException("Character class not found"));
+                    .orElseThrow(() -> new IllegalArgumentException("Character class not found: " + classDto.classId()));
 
             Optional<CharacterMulticlass> existing = multiclasses.stream()
                     .filter(mc -> mc.getCharacterClass().getId().equals(classDto.classId()))
                     .findFirst();
 
-            if (existing.isPresent()) {
-                CharacterMulticlass multiclass = existing.get();
-                int newLevel = multiclass.getLevel() + classDto.levelChange();
-
-                if (newLevel <= 0) {
-                    multiclasses.remove(multiclass);
+            if (level <= 0) {
+                existing.ifPresent(multiclasses::remove);
+            } else {
+                if (existing.isPresent()) {
+                    existing.get().setLevel(level);
                 } else {
-                    multiclass.setLevel(newLevel);
+                    CharacterMulticlass newMulticlass = new CharacterMulticlass(character, characterClass);
+                    newMulticlass.setLevel(level);
+                    multiclasses.add(newMulticlass);
                 }
-            } else if (classDto.levelChange() > 0) {
-                CharacterMulticlass newMulticlass = new CharacterMulticlass(character, characterClass);
-                newMulticlass.setLevel(classDto.levelChange());
-                multiclasses.add(newMulticlass);
             }
         }
 
         character.setCharacterMulticlass(multiclasses);
     }
+
+
 
 }
